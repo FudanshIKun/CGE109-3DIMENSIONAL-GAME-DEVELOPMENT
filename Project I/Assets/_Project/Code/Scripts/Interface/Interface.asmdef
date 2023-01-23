@@ -1,0 +1,16 @@
+{
+    "name": "Interface",
+    "rootNamespace": "Wonderland.Interface",
+    "references": [
+        "GUID:8c8d40857bc66b04b839d03617633494"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
