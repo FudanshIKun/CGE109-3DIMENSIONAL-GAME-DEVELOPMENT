@@ -11,6 +11,7 @@ namespace Wonderland.Manager
         #region Singleton
 
         public static UIManager Instance;
+
         private void Singleton()
         {
             _root = GameObject.FindWithTag("UI").GetComponent<UIDocument>().rootVisualElement;
@@ -21,18 +22,19 @@ namespace Wonderland.Manager
             else
             {
                 Instance._root = _root;
+                Instance.SceneLoader = SceneLoader;
                 Destroy(gameObject);
             }
         }
 
         #endregion
-        
+
         private VisualElement _root;
         private VisualElement currentUxml;
-        
-        [Header("")] [Tooltip("")]
-        public VisualTreeAsset SignUpUXML;
+
+        [Header("")] [Tooltip("")] public VisualTreeAsset SignUpUXML;
         public VisualTreeAsset SignInUXML;
+
         #region Authentication Components
 
         public TextField userField;
@@ -44,11 +46,10 @@ namespace Wonderland.Manager
 
         #endregion
 
-        [Header("Scene Loader UI Assets")] 
-        public VisualTreeAsset LoadingUXML;
+        [Header("Scene Loader UI Assets")] public VisualTreeAsset LoadingUXML;
+        public GameObject SceneLoader;
 
-        [Header("Lobby UI Assets")]
-        public VisualTreeAsset LobbyUXML;
+        [Header("Lobby UI Assets")] public VisualTreeAsset LobbyUXML;
 
         #region UXML Managements
 
@@ -64,6 +65,7 @@ namespace Wonderland.Manager
                 // Remove the currentUxml from the parent templateContainer
                 currentUxml.RemoveFromHierarchy();
             }
+
             // Build a tree of VisualElement from new VisualTreeAsset and assigned to currentUxml ( VisualElement )
             currentUxml = newUXML.CloneTree();
             currentUxml.style.position = Position.Relative;
@@ -96,9 +98,40 @@ namespace Wonderland.Manager
             }
 
             // Add currentUxml to the root of UIDocument in the scene
-            _root.Insert(0,currentUxml);
-            
+            _root.Insert(0, currentUxml);
+
             //Debug.LogFormat("Change currentUxml to {0}", newUXML);
+        }
+
+        /// <summary>
+        /// This method is used to clear the current Uxml in the hierarchy right now
+        /// </summary>
+        public void ClearCurrentUxml()
+        {
+            if (_root.Contains(currentUxml))
+            {
+                // Remove the currentUxml from the parent templateContainer
+                currentUxml.RemoveFromHierarchy();
+            }
+        }
+
+        public void ClearRoot()
+        {
+            _root.Clear();
+        }
+
+        #endregion
+
+        #region Loading Screen Management
+
+        public void HideLoadingScreen()
+        {
+            Instance.SceneLoader.SetActive(false);
+        }
+
+        public void ShowLoadingScreen()
+        {
+            Instance.SceneLoader.SetActive(true);
         }
 
         #endregion
@@ -110,7 +143,7 @@ namespace Wonderland.Manager
 
         private void Start()
         {
-            
+            HideLoadingScreen();
         }
     }
 }

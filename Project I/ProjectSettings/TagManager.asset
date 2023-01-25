@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - System
+  - Audio
+  - UI
+  - LoadingScreen
   layers:
   - Default
   - TransparentFX

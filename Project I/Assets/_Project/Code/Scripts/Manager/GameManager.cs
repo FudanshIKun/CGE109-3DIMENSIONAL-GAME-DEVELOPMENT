@@ -27,7 +27,7 @@ namespace Wonderland.Manager
         #endregion
 
         #region Scene Management
-
+        
         public enum SceneType
         {
             Authentication,
@@ -61,16 +61,15 @@ namespace Wonderland.Manager
                 Debug.LogError("LoadNewScene encountered an error : The specified scene is not valid");
                 yield break;
             }
-            
-            // Set Screen's orientation
-            Screen.orientation = type;
-            
+
             // Load newScene
             AsyncOperation load = SceneManager.LoadSceneAsync(newScene.ToString());
             while (!load.isDone)
             {
                 yield return null;
             }
+            // Set Screen's orientation
+            Screen.orientation = type;
         }
 
         /// <summary>
@@ -85,6 +84,8 @@ namespace Wonderland.Manager
                 Debug.LogError("LoadNewScene encountered an error : The specified scene is not valid");
                 yield break;
             }
+            
+            UIManager.Instance.ClearRoot();
             
             // Set Screen's orientation
             Screen.orientation = type;

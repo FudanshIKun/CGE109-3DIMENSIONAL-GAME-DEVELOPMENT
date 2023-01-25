@@ -60,7 +60,7 @@ namespace Wonderland.Manager
             {
                 UIManager.Instance.errorOutput.text = "Please Enter A Username";
             }
-            else if (_email != "")
+            else if (_email == "")
             {
                 UIManager.Instance.errorOutput.text = "Please Enter A Email";
             }
@@ -307,7 +307,7 @@ namespace Wonderland.Manager
 
         void Start()
         {
-            throw new NotImplementedException();
+            
         }
 
         private void Update()
@@ -323,7 +323,10 @@ namespace Wonderland.Manager
             _firebaseAuth.StateChanged -= AuthStateChanged;
             _firebaseAuth = null;
         }
-        
-        
+
+        private void OnApplicationQuit()
+        {
+            SignOut();
+        }
     }
 }
