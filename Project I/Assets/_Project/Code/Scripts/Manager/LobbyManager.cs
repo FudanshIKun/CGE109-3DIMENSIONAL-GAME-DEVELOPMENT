@@ -14,5 +14,10 @@ namespace Wonderland.Manager
         }
 
         #endregion
+
+        private void Start()
+        {
+            
+        }
     }
 }

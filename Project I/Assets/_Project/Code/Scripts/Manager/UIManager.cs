@@ -14,7 +14,6 @@ namespace Wonderland.Manager
 
         private void Singleton()
         {
-            _root = GameObject.FindWithTag("UI").GetComponent<UIDocument>().rootVisualElement;
             if (Instance == null)
             {
                 Instance = this;
@@ -98,7 +97,7 @@ namespace Wonderland.Manager
             }
 
             // Add currentUxml to the root of UIDocument in the scene
-            _root.Insert(0, currentUxml);
+            _root.Insert(1, currentUxml);
 
             //Debug.LogFormat("Change currentUxml to {0}", newUXML);
         }
@@ -115,7 +114,7 @@ namespace Wonderland.Manager
             }
         }
 
-        public void ClearRoot()
+        public void ClearUI()
         {
             _root.Clear();
         }
@@ -138,6 +137,7 @@ namespace Wonderland.Manager
 
         private void Awake()
         {
+            _root = GameObject.FindWithTag("UI").GetComponent<UIDocument>().rootVisualElement;
             Singleton();
         }
 

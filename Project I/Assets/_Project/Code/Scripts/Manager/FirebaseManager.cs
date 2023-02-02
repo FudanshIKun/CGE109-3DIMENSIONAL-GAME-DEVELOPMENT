@@ -1,9 +1,13 @@
 using System;
 using System.Collections;
 using UnityEngine;
+
+//Firebase
 using Firebase;
 using Firebase.Database;
 using Firebase.Auth;
+using Firebase.Extensions;
+using Firebase.Storage;
 
 namespace Wonderland.Manager
 {
@@ -30,6 +34,8 @@ namespace Wonderland.Manager
         private FirebaseAuth _firebaseAuth;
         private FirebaseUser user;
         private DatabaseReference _databaseReference;
+        private FirebaseStorage _storage;
+        private StorageReference _storageReferencee;
         [HideInInspector] public bool isAuthenticated;
 
         #region Authentication Methods
@@ -76,7 +82,8 @@ namespace Wonderland.Manager
                 
                 if (signUpTask.Exception != null)
                 {
-                    FirebaseException firebaseException = (FirebaseException)signUpTask.Exception.GetBaseException();
+                    FirebaseException firebaseException = 
+                        (FirebaseException)signUpTask.Exception.GetBaseException();
                     AuthError error = (AuthError)firebaseException.ErrorCode;
                     string output = "Unknow Error, Please Try Again";
 
@@ -104,7 +111,7 @@ namespace Wonderland.Manager
                 else
                 {
                     //Get The User After Registration Success
-                    user = signUpTask.Result;
+                    FirebaseUser newUser = signUpTask.Result;
                     UserProfile profile = new UserProfile
                     {
                         DisplayName = _username,
@@ -113,15 +120,16 @@ namespace Wonderland.Manager
                         //PhotoUrl = new System.Uri("Default Photo Url!"),
                     };
 
-                    var defaultUserTask = user.UpdateUserProfileAsync(profile);
+                    var defaultUserTask = newUser.UpdateUserProfileAsync(profile);
 
                     yield return new WaitUntil(predicate: () => defaultUserTask.IsCompleted);
                     
                     if (defaultUserTask.Exception != null)
                     {
                         //Delete the user if user update failed
-                        user.DeleteAsync();
-                        FirebaseException firebaseException = (FirebaseException)defaultUserTask.Exception.GetBaseException();
+                        newUser.DeleteAsync();
+                        FirebaseException firebaseException = 
+                            (FirebaseException)defaultUserTask.Exception.GetBaseException();
                         AuthError error = (AuthError)firebaseException.ErrorCode;
                         string output = "Unknow Error, Please Try Again";
 
@@ -139,9 +147,13 @@ namespace Wonderland.Manager
                     }
                     else
                     {
-                        Debug.Log($"Firebase User Created Successfully : {user.DisplayName} ({user.UserId})");
-
-                        //Temporary
+                        user = newUser;
+                        Debug.LogFormat($"Firebase User Created Successfully : {user.DisplayName} ({user.UserId})");
+                        _databaseReference.Child("users").Child(_username);
+                        _databaseReference.Child("users").Child(_username).Child(user.UserId);
+                        _databaseReference.Child("users").Child(_username).Child("email").SetValueAsync(_email);
+                        
+                        
                         UIManager.Instance.ChangeUxml(UIManager.Instance.SignInUXML);
                         UIManager.Instance.errorOutput.text = "Please SignIn to Enter The Game";
                     }
@@ -159,7 +171,8 @@ namespace Wonderland.Manager
 
             if (signInTask.Exception != null)
             {
-                FirebaseException firebaseException = (FirebaseException)signInTask.Exception.GetBaseException();
+                FirebaseException firebaseException = 
+                    (FirebaseException)signInTask.Exception.GetBaseException();
                 AuthError error = (AuthError)firebaseException.ErrorCode;
                 string output = "Unknow Error, Please Try Again";
 
@@ -189,7 +202,8 @@ namespace Wonderland.Manager
                 user = signInTask.Result;
                 isAuthenticated = true;
                 Debug.LogFormat($"Successfully Signed In: {user.DisplayName}");
-                GameManager.Instance.LoadScene(GameManager.SceneType.Lobby, ScreenOrientation.AutoRotation);
+                GameManager.Instance.LoadSceneWithLoaderAsync
+                    (GameManager.SceneType.Lobby);
             }
         }
         
@@ -228,14 +242,23 @@ namespace Wonderland.Manager
                 {
                     //TODO: Add LobbyManager "ChangeProfilePicture()"
                     //LobbyManager.Instance.ChangeProfilePicture();
-                    Debug.Log("Profile Image Updated Successfully");
+                    Logging.FirebaseLogger.Log("Profile Image Updated Successfully");
                 }
             }
         }
 
         public void SignOut()
         {
-            _firebaseAuth.SignOut();
+            StartCoroutine(SignOutAsync());
+        }
+
+        private IEnumerator SignOutAsync()
+        {
+            if (_firebaseAuth != null && user != null && isAuthenticated)
+            {
+                _firebaseAuth.SignOut();
+            }
+            yield return null;
         }
 
         #endregion
@@ -271,6 +294,8 @@ namespace Wonderland.Manager
         {
             _firebaseAuth = FirebaseAuth.DefaultInstance;
             _databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
+            _storage = FirebaseStorage.DefaultInstance;
+            _storageReferencee = FirebaseStorage.DefaultInstance.RootReference;
 
             _firebaseAuth.StateChanged += AuthStateChanged;
             AuthStateChanged(this, null);
@@ -285,12 +310,13 @@ namespace Wonderland.Manager
                 bool signedIn = user != _firebaseAuth.CurrentUser && _firebaseAuth.CurrentUser != null;
                 if (!signedIn && user != null)
                 {
-                    Debug.Log("Signed Out");
+                    Logging.FirebaseLogger.Log("Signed Out");
                 }
                 
                 user = _firebaseAuth.CurrentUser;
                 if (signedIn)
                 {
+                    Logging.FirebaseLogger.Log($"Signed In : {user.DisplayName} {user.UserId}");
                     Debug.Log($"Signed In : {user.DisplayName} {user.UserId}");
                 }
             }

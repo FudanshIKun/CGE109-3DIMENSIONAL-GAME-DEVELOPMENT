@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -39,63 +39,48 @@ namespace Wonderland.Manager
 
         #region Methods
 
-        public void LoadScene(SceneType newScene, ScreenOrientation type)
-        {
-            StartCoroutine(LoadSceneAsync(newScene, type));
-        }
-
-        public void LoadSceneWithLoaderTransition(SceneType newScene, ScreenOrientation type)
-        {
-            StartCoroutine(LoadSceneWithLoaderTransitionAsync(newScene, type));
-        }
-
         /// <summary>
         /// This method is used to load new scene with specific orientation and without Loading transition
         /// </summary>
         /// <param name="new Scene, ScreenOrientation"></param>
-        private IEnumerator LoadSceneAsync(SceneType newScene, ScreenOrientation type)
+        public async void LoadSceneAsync(SceneType newScene)
         {
-            // Check if the newScene exists
-            if (!SceneManager.GetSceneByName(newScene.ToString()).IsValid())
-            {
-                Debug.LogError("LoadNewScene encountered an error : The specified scene is not valid");
-                yield break;
-            }
-
             // Load newScene
             AsyncOperation load = SceneManager.LoadSceneAsync(newScene.ToString());
-            while (!load.isDone)
+            load.allowSceneActivation = false;
+
+            do
             {
-                yield return null;
-            }
-            // Set Screen's orientation
-            Screen.orientation = type;
+                await Task.Delay(100);
+            } while (load.progress < 0.9f);
+
+            await Task.Delay(1000);
+
+            load.allowSceneActivation = true;
         }
 
         /// <summary>
         /// This method is used to load new scene with specific orientation and with Loading transition
         /// </summary>
         /// <param name="new Scene, ScreenOrientation"></param>
-        private IEnumerator LoadSceneWithLoaderTransitionAsync(SceneType newScene, ScreenOrientation type)
+        public async void LoadSceneWithLoaderAsync(SceneType newScene)
         {
-            // Check if the newScene exists
-            if (!SceneManager.GetSceneByName(newScene.ToString()).IsValid())
-            {
-                Debug.LogError("LoadNewScene encountered an error : The specified scene is not valid");
-                yield break;
-            }
-            
-            UIManager.Instance.ClearRoot();
-            
-            // Set Screen's orientation
-            Screen.orientation = type;
-            
+
             // Load newScene
             AsyncOperation load = SceneManager.LoadSceneAsync(newScene.ToString());
-            while (!load.isDone)
-            {
-                yield return null;
-            }
+            load.allowSceneActivation = false;
+            
+            // Show Loading UI
+            UIManager.Instance.ClearUI();
+            UIManager.Instance.ShowLoadingScreen();
+
+            do {
+                await Task.Delay(100);
+            } while (load.progress < 0.9f);
+
+            await Task.Delay(1000);
+
+            load.allowSceneActivation = true;
         }
 
         #endregion
@@ -104,6 +89,7 @@ namespace Wonderland.Manager
 
         public void Awake()
         {
+            Logging.LoadLogger();
             Singleton();
         }
 
