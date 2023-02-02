@@ -1,6 +1,6 @@
 {
-    "name": "InputAction",
-    "rootNamespace": "Wonderland.InputAction",
+    "name": "InputActions",
+    "rootNamespace": "Wonderland.InputActions",
     "references": [
         "Unity.InputSystem"
     ],

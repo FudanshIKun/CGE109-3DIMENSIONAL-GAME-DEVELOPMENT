@@ -1,5 +1,5 @@
 using UnityEngine;
-using Wonderland.InputAction;
+using Wonderland.InputActions;
 
 
 namespace Wonderland.GamePlay

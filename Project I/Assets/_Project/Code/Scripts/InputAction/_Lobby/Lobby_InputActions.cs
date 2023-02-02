@@ -15,12 +15,14 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public partial class @Lobby_InputActions : IInputActionCollection2, IDisposable
+namespace Wonderland.InputActions
 {
-    public InputActionAsset asset { get; }
-    public @Lobby_InputActions()
+    public partial class @Lobby_InputActions : IInputActionCollection2, IDisposable
     {
-        asset = InputActionAsset.FromJson(@"{
+        public InputActionAsset asset { get; }
+        public @Lobby_InputActions()
+        {
+            asset = InputActionAsset.FromJson(@"{
     ""name"": ""Lobby_InputActions"",
     ""maps"": [
         {
@@ -155,164 +157,165 @@ public partial class @Lobby_InputActions : IInputActionCollection2, IDisposable
         }
     ]
 }");
+            // Touch
+            m_Touch = asset.FindActionMap("Touch", throwIfNotFound: true);
+            m_Touch_PrimaryFingerPosition = m_Touch.FindAction("PrimaryFingerPosition", throwIfNotFound: true);
+            m_Touch_SecondaryFingerPosition = m_Touch.FindAction("SecondaryFingerPosition", throwIfNotFound: true);
+            m_Touch_SecondaryTouchContact = m_Touch.FindAction("SecondaryTouchContact", throwIfNotFound: true);
+        }
+
+        public void Dispose()
+        {
+            UnityEngine.Object.Destroy(asset);
+        }
+
+        public InputBinding? bindingMask
+        {
+            get => asset.bindingMask;
+            set => asset.bindingMask = value;
+        }
+
+        public ReadOnlyArray<InputDevice>? devices
+        {
+            get => asset.devices;
+            set => asset.devices = value;
+        }
+
+        public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
+
+        public bool Contains(InputAction action)
+        {
+            return asset.Contains(action);
+        }
+
+        public IEnumerator<InputAction> GetEnumerator()
+        {
+            return asset.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public void Enable()
+        {
+            asset.Enable();
+        }
+
+        public void Disable()
+        {
+            asset.Disable();
+        }
+        public IEnumerable<InputBinding> bindings => asset.bindings;
+
+        public InputAction FindAction(string actionNameOrId, bool throwIfNotFound = false)
+        {
+            return asset.FindAction(actionNameOrId, throwIfNotFound);
+        }
+        public int FindBinding(InputBinding bindingMask, out InputAction action)
+        {
+            return asset.FindBinding(bindingMask, out action);
+        }
+
         // Touch
-        m_Touch = asset.FindActionMap("Touch", throwIfNotFound: true);
-        m_Touch_PrimaryFingerPosition = m_Touch.FindAction("PrimaryFingerPosition", throwIfNotFound: true);
-        m_Touch_SecondaryFingerPosition = m_Touch.FindAction("SecondaryFingerPosition", throwIfNotFound: true);
-        m_Touch_SecondaryTouchContact = m_Touch.FindAction("SecondaryTouchContact", throwIfNotFound: true);
-    }
-
-    public void Dispose()
-    {
-        UnityEngine.Object.Destroy(asset);
-    }
-
-    public InputBinding? bindingMask
-    {
-        get => asset.bindingMask;
-        set => asset.bindingMask = value;
-    }
-
-    public ReadOnlyArray<InputDevice>? devices
-    {
-        get => asset.devices;
-        set => asset.devices = value;
-    }
-
-    public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
-
-    public bool Contains(InputAction action)
-    {
-        return asset.Contains(action);
-    }
-
-    public IEnumerator<InputAction> GetEnumerator()
-    {
-        return asset.GetEnumerator();
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
-    public void Enable()
-    {
-        asset.Enable();
-    }
-
-    public void Disable()
-    {
-        asset.Disable();
-    }
-    public IEnumerable<InputBinding> bindings => asset.bindings;
-
-    public InputAction FindAction(string actionNameOrId, bool throwIfNotFound = false)
-    {
-        return asset.FindAction(actionNameOrId, throwIfNotFound);
-    }
-    public int FindBinding(InputBinding bindingMask, out InputAction action)
-    {
-        return asset.FindBinding(bindingMask, out action);
-    }
-
-    // Touch
-    private readonly InputActionMap m_Touch;
-    private ITouchActions m_TouchActionsCallbackInterface;
-    private readonly InputAction m_Touch_PrimaryFingerPosition;
-    private readonly InputAction m_Touch_SecondaryFingerPosition;
-    private readonly InputAction m_Touch_SecondaryTouchContact;
-    public struct TouchActions
-    {
-        private @Lobby_InputActions m_Wrapper;
-        public TouchActions(@Lobby_InputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @PrimaryFingerPosition => m_Wrapper.m_Touch_PrimaryFingerPosition;
-        public InputAction @SecondaryFingerPosition => m_Wrapper.m_Touch_SecondaryFingerPosition;
-        public InputAction @SecondaryTouchContact => m_Wrapper.m_Touch_SecondaryTouchContact;
-        public InputActionMap Get() { return m_Wrapper.m_Touch; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(TouchActions set) { return set.Get(); }
-        public void SetCallbacks(ITouchActions instance)
+        private readonly InputActionMap m_Touch;
+        private ITouchActions m_TouchActionsCallbackInterface;
+        private readonly InputAction m_Touch_PrimaryFingerPosition;
+        private readonly InputAction m_Touch_SecondaryFingerPosition;
+        private readonly InputAction m_Touch_SecondaryTouchContact;
+        public struct TouchActions
         {
-            if (m_Wrapper.m_TouchActionsCallbackInterface != null)
+            private @Lobby_InputActions m_Wrapper;
+            public TouchActions(@Lobby_InputActions wrapper) { m_Wrapper = wrapper; }
+            public InputAction @PrimaryFingerPosition => m_Wrapper.m_Touch_PrimaryFingerPosition;
+            public InputAction @SecondaryFingerPosition => m_Wrapper.m_Touch_SecondaryFingerPosition;
+            public InputAction @SecondaryTouchContact => m_Wrapper.m_Touch_SecondaryTouchContact;
+            public InputActionMap Get() { return m_Wrapper.m_Touch; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(TouchActions set) { return set.Get(); }
+            public void SetCallbacks(ITouchActions instance)
             {
-                @PrimaryFingerPosition.started -= m_Wrapper.m_TouchActionsCallbackInterface.OnPrimaryFingerPosition;
-                @PrimaryFingerPosition.performed -= m_Wrapper.m_TouchActionsCallbackInterface.OnPrimaryFingerPosition;
-                @PrimaryFingerPosition.canceled -= m_Wrapper.m_TouchActionsCallbackInterface.OnPrimaryFingerPosition;
-                @SecondaryFingerPosition.started -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryFingerPosition;
-                @SecondaryFingerPosition.performed -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryFingerPosition;
-                @SecondaryFingerPosition.canceled -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryFingerPosition;
-                @SecondaryTouchContact.started -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryTouchContact;
-                @SecondaryTouchContact.performed -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryTouchContact;
-                @SecondaryTouchContact.canceled -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryTouchContact;
-            }
-            m_Wrapper.m_TouchActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @PrimaryFingerPosition.started += instance.OnPrimaryFingerPosition;
-                @PrimaryFingerPosition.performed += instance.OnPrimaryFingerPosition;
-                @PrimaryFingerPosition.canceled += instance.OnPrimaryFingerPosition;
-                @SecondaryFingerPosition.started += instance.OnSecondaryFingerPosition;
-                @SecondaryFingerPosition.performed += instance.OnSecondaryFingerPosition;
-                @SecondaryFingerPosition.canceled += instance.OnSecondaryFingerPosition;
-                @SecondaryTouchContact.started += instance.OnSecondaryTouchContact;
-                @SecondaryTouchContact.performed += instance.OnSecondaryTouchContact;
-                @SecondaryTouchContact.canceled += instance.OnSecondaryTouchContact;
+                if (m_Wrapper.m_TouchActionsCallbackInterface != null)
+                {
+                    @PrimaryFingerPosition.started -= m_Wrapper.m_TouchActionsCallbackInterface.OnPrimaryFingerPosition;
+                    @PrimaryFingerPosition.performed -= m_Wrapper.m_TouchActionsCallbackInterface.OnPrimaryFingerPosition;
+                    @PrimaryFingerPosition.canceled -= m_Wrapper.m_TouchActionsCallbackInterface.OnPrimaryFingerPosition;
+                    @SecondaryFingerPosition.started -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryFingerPosition;
+                    @SecondaryFingerPosition.performed -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryFingerPosition;
+                    @SecondaryFingerPosition.canceled -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryFingerPosition;
+                    @SecondaryTouchContact.started -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryTouchContact;
+                    @SecondaryTouchContact.performed -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryTouchContact;
+                    @SecondaryTouchContact.canceled -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryTouchContact;
+                }
+                m_Wrapper.m_TouchActionsCallbackInterface = instance;
+                if (instance != null)
+                {
+                    @PrimaryFingerPosition.started += instance.OnPrimaryFingerPosition;
+                    @PrimaryFingerPosition.performed += instance.OnPrimaryFingerPosition;
+                    @PrimaryFingerPosition.canceled += instance.OnPrimaryFingerPosition;
+                    @SecondaryFingerPosition.started += instance.OnSecondaryFingerPosition;
+                    @SecondaryFingerPosition.performed += instance.OnSecondaryFingerPosition;
+                    @SecondaryFingerPosition.canceled += instance.OnSecondaryFingerPosition;
+                    @SecondaryTouchContact.started += instance.OnSecondaryTouchContact;
+                    @SecondaryTouchContact.performed += instance.OnSecondaryTouchContact;
+                    @SecondaryTouchContact.canceled += instance.OnSecondaryTouchContact;
+                }
             }
         }
-    }
-    public TouchActions @Touch => new TouchActions(this);
-    private int m_KeyboardMouseSchemeIndex = -1;
-    public InputControlScheme KeyboardMouseScheme
-    {
-        get
+        public TouchActions @Touch => new TouchActions(this);
+        private int m_KeyboardMouseSchemeIndex = -1;
+        public InputControlScheme KeyboardMouseScheme
         {
-            if (m_KeyboardMouseSchemeIndex == -1) m_KeyboardMouseSchemeIndex = asset.FindControlSchemeIndex("Keyboard&Mouse");
-            return asset.controlSchemes[m_KeyboardMouseSchemeIndex];
+            get
+            {
+                if (m_KeyboardMouseSchemeIndex == -1) m_KeyboardMouseSchemeIndex = asset.FindControlSchemeIndex("Keyboard&Mouse");
+                return asset.controlSchemes[m_KeyboardMouseSchemeIndex];
+            }
         }
-    }
-    private int m_GamepadSchemeIndex = -1;
-    public InputControlScheme GamepadScheme
-    {
-        get
+        private int m_GamepadSchemeIndex = -1;
+        public InputControlScheme GamepadScheme
         {
-            if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
-            return asset.controlSchemes[m_GamepadSchemeIndex];
+            get
+            {
+                if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
+                return asset.controlSchemes[m_GamepadSchemeIndex];
+            }
         }
-    }
-    private int m_TouchSchemeIndex = -1;
-    public InputControlScheme TouchScheme
-    {
-        get
+        private int m_TouchSchemeIndex = -1;
+        public InputControlScheme TouchScheme
         {
-            if (m_TouchSchemeIndex == -1) m_TouchSchemeIndex = asset.FindControlSchemeIndex("Touch");
-            return asset.controlSchemes[m_TouchSchemeIndex];
+            get
+            {
+                if (m_TouchSchemeIndex == -1) m_TouchSchemeIndex = asset.FindControlSchemeIndex("Touch");
+                return asset.controlSchemes[m_TouchSchemeIndex];
+            }
         }
-    }
-    private int m_JoystickSchemeIndex = -1;
-    public InputControlScheme JoystickScheme
-    {
-        get
+        private int m_JoystickSchemeIndex = -1;
+        public InputControlScheme JoystickScheme
         {
-            if (m_JoystickSchemeIndex == -1) m_JoystickSchemeIndex = asset.FindControlSchemeIndex("Joystick");
-            return asset.controlSchemes[m_JoystickSchemeIndex];
+            get
+            {
+                if (m_JoystickSchemeIndex == -1) m_JoystickSchemeIndex = asset.FindControlSchemeIndex("Joystick");
+                return asset.controlSchemes[m_JoystickSchemeIndex];
+            }
         }
-    }
-    private int m_XRSchemeIndex = -1;
-    public InputControlScheme XRScheme
-    {
-        get
+        private int m_XRSchemeIndex = -1;
+        public InputControlScheme XRScheme
         {
-            if (m_XRSchemeIndex == -1) m_XRSchemeIndex = asset.FindControlSchemeIndex("XR");
-            return asset.controlSchemes[m_XRSchemeIndex];
+            get
+            {
+                if (m_XRSchemeIndex == -1) m_XRSchemeIndex = asset.FindControlSchemeIndex("XR");
+                return asset.controlSchemes[m_XRSchemeIndex];
+            }
         }
-    }
-    public interface ITouchActions
-    {
-        void OnPrimaryFingerPosition(InputAction.CallbackContext context);
-        void OnSecondaryFingerPosition(InputAction.CallbackContext context);
-        void OnSecondaryTouchContact(InputAction.CallbackContext context);
+        public interface ITouchActions
+        {
+            void OnPrimaryFingerPosition(InputAction.CallbackContext context);
+            void OnSecondaryFingerPosition(InputAction.CallbackContext context);
+            void OnSecondaryTouchContact(InputAction.CallbackContext context);
+        }
     }
 }

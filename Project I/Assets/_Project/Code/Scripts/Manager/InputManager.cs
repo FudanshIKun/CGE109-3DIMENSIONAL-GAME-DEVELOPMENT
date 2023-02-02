@@ -14,6 +14,7 @@ namespace Wonderland.Manager
             if (Instance == null)
             {
                 Instance = this;
+                DontDestroyOnLoad(gameObject);
             }
             else
             {
@@ -45,7 +46,10 @@ namespace Wonderland.Manager
 
         private void Update()
         {
-            Debug.Log(_playerInput.actions.name);
+            if (_playerInput.actions != null)
+            {
+                Logging.InputLogger.Log(_playerInput.actions.name);
+            }
         }
 
         private void OnDisable()
