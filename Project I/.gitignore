@@ -91,3 +91,7 @@ Assets/GeneratedLocalRepo/
 
 Assets/StreamingAssets/google-services-desktop.json
 Assets/Plugin/Android/Firebase/
+
+# UModeler Lite Package
+/[Aa]ssets/[Tt]ripolygon
+/[Aa]ssets/[Tt]ripolygon/.meta

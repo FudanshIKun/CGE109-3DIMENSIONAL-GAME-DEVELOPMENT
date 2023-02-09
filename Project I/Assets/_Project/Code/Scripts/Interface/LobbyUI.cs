@@ -4,7 +4,7 @@ using Wonderland.Manager;
 
 namespace Wonderland.Interface
 {
-    public class LobbyUI : MonoBehaviour
+    public class LobbyUI : SceneUI
     {
         
     }

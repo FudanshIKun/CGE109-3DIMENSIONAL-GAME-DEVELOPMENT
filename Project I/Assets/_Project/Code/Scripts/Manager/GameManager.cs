@@ -1,6 +1,8 @@
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Wonderland.GamePlay;
 
 namespace Wonderland.Manager
 {
@@ -20,6 +22,7 @@ namespace Wonderland.Manager
             else
             {
                 Instance.currentScene = currentScene;
+                Instance.Setting = Setting;
                 Destroy(gameObject);
             }
         }
@@ -27,6 +30,11 @@ namespace Wonderland.Manager
         #endregion
 
         #region Scene Management
+        
+        [Header("Scene's Setting")]
+        public SceneSetting Setting;
+        
+        public static event Action LoadNewScene;
         
         public enum SceneType
         {
@@ -48,14 +56,15 @@ namespace Wonderland.Manager
             // Load newScene
             AsyncOperation load = SceneManager.LoadSceneAsync(newScene.ToString());
             load.allowSceneActivation = false;
-
+            LoadNewScene?.Invoke();
+            
             do
             {
                 await Task.Delay(100);
             } while (load.progress < 0.9f);
 
-            await Task.Delay(1000);
-
+            await Task.Delay(1500);
+            
             load.allowSceneActivation = true;
         }
 
@@ -65,22 +74,22 @@ namespace Wonderland.Manager
         /// <param name="new Scene, ScreenOrientation"></param>
         public async void LoadSceneWithLoaderAsync(SceneType newScene)
         {
-
             // Load newScene
             AsyncOperation load = SceneManager.LoadSceneAsync(newScene.ToString());
             load.allowSceneActivation = false;
             
             // Show Loading UI
-            UIManager.Instance.ClearUI();
             UIManager.Instance.ShowLoadingScreen();
+            LoadNewScene?.Invoke();
 
             do {
                 await Task.Delay(100);
             } while (load.progress < 0.9f);
 
-            await Task.Delay(1000);
-
+            await Task.Delay(1500);
+            
             load.allowSceneActivation = true;
+            UIManager.Instance.HideLoadingScreen();
         }
 
         #endregion
@@ -91,11 +100,6 @@ namespace Wonderland.Manager
         {
             Logging.LoadLogger();
             Singleton();
-        }
-
-        private void Start()
-        {
-            
         }
     }
 }

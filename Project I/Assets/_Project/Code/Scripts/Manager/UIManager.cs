@@ -1,8 +1,6 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace Wonderland.Manager
 {
@@ -22,7 +20,8 @@ namespace Wonderland.Manager
             else
             {
                 Instance._root = _root;
-                Instance.SceneLoader = SceneLoader;
+                Instance.defaultCanvas = defaultCanvas;
+                Instance.loadingScreen = loadingScreen;
                 Destroy(gameObject);
             }
         }
@@ -30,28 +29,18 @@ namespace Wonderland.Manager
         #endregion
 
         private VisualElement _root;
-        private VisualElement currentUxml;
-
-        [Header("")] [Tooltip("")] public VisualTreeAsset SignUpUXML;
-        public VisualTreeAsset SignInUXML;
-
-        #region Authentication Components
-
-        public TextField userField;
-        public TextField emailField;
-        public TextField passwordField;
-        public TextField confirmField;
-        public RadioButton rememberPassword;
-        public Label errorOutput;
-
-        #endregion
-
-        [Header("Scene Loader UI Assets")] public VisualTreeAsset LoadingUXML;
-        public GameObject SceneLoader;
-
-        [Header("Lobby UI Assets")] public VisualTreeAsset LobbyUXML;
+        private VisualElement _currentUxml;
+        public VisualElement currentUxml
+        {
+            get { return _currentUxml; }
+            set { _currentUxml = value; }
+        }
+        private GameObject defaultCanvas;
+        private GameObject loadingScreen;
 
         #region UXML Managements
+
+        public static event Action UxmlChanged;
 
         /// <summary>
         /// This method is used to change UXML file of the UIDocument in the scene
@@ -60,47 +49,22 @@ namespace Wonderland.Manager
         /// <param name="new UXML"></param>
         public void ChangeUxml(VisualTreeAsset newUXML)
         {
-            if (_root.Contains(currentUxml))
+            if (_root.Contains(_currentUxml))
             {
                 // Remove the currentUxml from the parent templateContainer
-                currentUxml.RemoveFromHierarchy();
+                _currentUxml.RemoveFromHierarchy();
             }
 
             // Build a tree of VisualElement from new VisualTreeAsset and assigned to currentUxml ( VisualElement )
-            currentUxml = newUXML.CloneTree();
-            currentUxml.style.position = Position.Relative;
-            currentUxml.style.height = Screen.safeArea.height;
+            _currentUxml = newUXML.CloneTree();
+            _currentUxml.style.position = Position.Relative;
+            _currentUxml.style.height = Screen.safeArea.height;
 
-            // Check If The Loaded Uxml Is Authentication UI Type
-            if (currentUxml.Q<Label>("Authentication-Type") != null)
-            {
-                switch (currentUxml.Q<Label>("Authentication-Type").text)
-                {
-                    case "New Account":
-                        userField = currentUxml.Q<TextField>("User-Field");
-                        emailField = currentUxml.Q<TextField>("Email-Field");
-                        passwordField = currentUxml.Q<TextField>("Password-Field");
-                        confirmField = currentUxml.Q<TextField>("Confirm-Field");
-                        rememberPassword = currentUxml.Q<RadioButton>("RememberPassowrd");
-                        errorOutput = currentUxml.Q<Label>("ErrorOutput");
-                        var signUpButton = currentUxml.Q<Button>("Authentication-Button");
-                        signUpButton.clicked += FirebaseManager.Instance.SignUp;
-                        break;
-                    case "Sign In":
-                        emailField = currentUxml.Q<TextField>("Email-Field");
-                        passwordField = currentUxml.Q<TextField>("Password-Field");
-                        rememberPassword = currentUxml.Q<RadioButton>("RememberPassword");
-                        errorOutput = currentUxml.Q<Label>("ErrorOutput");
-                        var signInButton = currentUxml.Q<Button>("Authentication-Button");
-                        signInButton.clicked += FirebaseManager.Instance.SignIn;
-                        break;
-                }
-            }
+            // Invoke Any Function that attach to UxmlChanged Event In That Scene
+            UxmlChanged?.Invoke();
 
             // Add currentUxml to the root of UIDocument in the scene
-            _root.Insert(1, currentUxml);
-
-            //Debug.LogFormat("Change currentUxml to {0}", newUXML);
+            _root.Insert(1, _currentUxml);
         }
 
         /// <summary>
@@ -108,10 +72,10 @@ namespace Wonderland.Manager
         /// </summary>
         public void ClearCurrentUxml()
         {
-            if (_root.Contains(currentUxml))
+            if (_root.Contains(_currentUxml))
             {
                 // Remove the currentUxml from the parent templateContainer
-                currentUxml.RemoveFromHierarchy();
+                _currentUxml.RemoveFromHierarchy();
             }
         }
 
@@ -126,25 +90,24 @@ namespace Wonderland.Manager
 
         public void HideLoadingScreen()
         {
-            Instance.SceneLoader.SetActive(false);
+            loadingScreen.SetActive(false);
         }
 
         public void ShowLoadingScreen()
         {
-            Instance.SceneLoader.SetActive(true);
+            ClearUI();
+            loadingScreen.SetActive(true);
         }
 
         #endregion
 
         private void Awake()
         {
-            _root = GameObject.FindWithTag("UI").GetComponent<UIDocument>().rootVisualElement;
-            Singleton();
-        }
-
-        private void Start()
-        {
+            _root = GameObject.FindWithTag("UIDocument").GetComponent<UIDocument>().rootVisualElement;
+            defaultCanvas = GameObject.FindWithTag("UI");
+            loadingScreen = defaultCanvas.transform.GetChild(0).gameObject;
             HideLoadingScreen();
+            Singleton();
         }
     }
 }
