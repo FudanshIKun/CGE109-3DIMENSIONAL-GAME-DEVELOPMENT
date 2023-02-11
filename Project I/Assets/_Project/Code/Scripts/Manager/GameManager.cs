@@ -89,6 +89,7 @@ namespace Wonderland.Manager
             await Task.Delay(1500);
             
             load.allowSceneActivation = true;
+            await Task.Delay(1500);
             UIManager.Instance.HideLoadingScreen();
         }
 

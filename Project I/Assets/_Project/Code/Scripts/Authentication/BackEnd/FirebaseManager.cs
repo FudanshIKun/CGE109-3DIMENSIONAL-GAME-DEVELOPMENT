@@ -21,6 +21,7 @@ namespace Wonderland.Auth
         public static FirebaseManager Instance;
         private void Singleton()
         {
+            DontDestroyOnLoad(gameObject);
             if (Instance == null)
             {
                 Instance = this;
@@ -34,8 +35,8 @@ namespace Wonderland.Auth
 
         #endregion
 
-        private FirebaseAuth _firebaseAuth;
         private FirebaseUser user;
+        private FirebaseAuth _firebaseAuth;
         private DatabaseReference _databaseReference;
         private FirebaseStorage _storage;
         private StorageReference _storageReferencee;
@@ -44,7 +45,7 @@ namespace Wonderland.Auth
         #region Authentication Methods
 
         /// <summary>
-        /// This method is used to sign Up user to the game's database with email and password
+        /// This method is used to sign Up user to the Authentication System with email and password
         /// </summary>
         public void SignUp()
         {
@@ -55,7 +56,7 @@ namespace Wonderland.Auth
         } 
         
         /// <summary>
-        /// This method is used to sign In user to the game's database with email and password
+        /// This method is used to sign In user to the Authentication System with email and password
         /// </summary>
         public void SignIn()
         {
@@ -63,23 +64,23 @@ namespace Wonderland.Auth
                 AuthenticationUI.Instance.passwordField.value));
         } 
         
-        private IEnumerator SignUpAsync(string _username ,string _email, string _password, string _confirmPassword)
+        private IEnumerator SignUpAsync(string username ,string email, string password, string confirmPassword)
         {
-            if (_username == "")
+            if (username == "")
             {
                 AuthenticationUI.Instance.errorOutput.text = "Please Enter A Username";
             }
-            else if (_email == "")
+            else if (email == "")
             {
                 AuthenticationUI.Instance.errorOutput.text = "Please Enter A Email";
             }
-            else if (_password != _confirmPassword)
+            else if (password != confirmPassword)
             {
                 AuthenticationUI.Instance.errorOutput.text = "Password Do Not Match!";
             }
             else
             {
-                var signUpTask = _firebaseAuth.CreateUserWithEmailAndPasswordAsync(_email, _password);
+                var signUpTask = _firebaseAuth.CreateUserWithEmailAndPasswordAsync(email, password);
 
                 yield return new WaitUntil(predicate: () => signUpTask.IsCompleted);
                 
@@ -115,9 +116,11 @@ namespace Wonderland.Auth
                 {
                     //Get The User After Registration Success
                     FirebaseUser newUser = signUpTask.Result;
+                    
+                    //Create User Authentication Profile
                     UserProfile profile = new UserProfile
                     {
-                        DisplayName = _username,
+                        DisplayName = username,
 
                         //TODO: Give Profile Default Photo
                         //PhotoUrl = new System.Uri("Default Photo Url!"),
@@ -152,21 +155,51 @@ namespace Wonderland.Auth
                     {
                         user = newUser;
                         Debug.LogFormat($"Firebase User Created Successfully : {user.DisplayName} ({user.UserId})");
-                        _databaseReference.Child("users").Child(_username);
-                        _databaseReference.Child("users").Child(_username).Child(user.UserId);
-                        _databaseReference.Child("users").Child(_username).Child("email").SetValueAsync(_email);
-                        
-                        
-                        UIManager.Instance.ChangeUxml(AuthenticationUI.Instance.SignInUXML);
-                        AuthenticationUI.Instance.errorOutput.text = "Please SignIn to Enter The Game";
+
+                        var databaseUserInfoTask = _databaseReference.Child("users").Child(user.UserId).Child("username").SetValueAsync(username);
+
+                        yield return new WaitUntil(predicate: (() => databaseUserInfoTask.IsCompleted));
+
+                        if (databaseUserInfoTask.Exception != null)
+                        {
+                            FirebaseException firebaseException = 
+                                (FirebaseException)databaseUserInfoTask.Exception.GetBaseException();
+                            AuthError error = (AuthError)firebaseException.ErrorCode;
+                            string output = "Unknow Error, Please Try Again";
+
+                            switch (error)
+                            {
+                                case AuthError.Failure:
+                                    output = "Database Updating Failed";
+                                    break;
+                                case AuthError.SessionExpired:
+                                    output = "Session Expired ,Please Try Again";
+                                    break;
+                            }
+
+                            AuthenticationUI.Instance.errorOutput.text = output;
+                        }
+                        else
+                        {
+                            #region Default GameData For New User
+
+                            _databaseReference.Child("users").Child(user.UserId).Child("GameData")
+                                .Child("Cat In Posession").SetValueAsync(0);
+                            _databaseReference.Child("users").Child(user.UserId).Child("GameData").Child("");
+
+                            #endregion
+                            
+                            UIManager.Instance.ChangeUxml(AuthenticationUI.Instance.SignInUXML);
+                            AuthenticationUI.Instance.errorOutput.text = "Please SignIn to Enter The Game";
+                        }
                     }
                 }
             }
         }
         
-        private IEnumerator SignInAsync(string _email, string _password)
+        private IEnumerator SignInAsync(string email, string password)
         {
-            Credential credential = EmailAuthProvider.GetCredential(_email, _password);
+            Credential credential = EmailAuthProvider.GetCredential(email, password);
 
             var signInTask = _firebaseAuth.SignInWithCredentialAsync(credential);
 
@@ -203,18 +236,18 @@ namespace Wonderland.Auth
             else
             {
                 user = signInTask.Result;
+                
+                //TODO: Check If User SignIn For The First Time With Timestamp
+                Logging.FirebaseLogger.Log(user.Metadata.CreationTimestamp);
+
                 isAuthenticated = true;
-                Debug.LogFormat($"Successfully Signed In: {user.DisplayName}");
+                Debug.LogFormat($"Successfully Signed In: {user.DisplayName} {user.UserId}");
                 GameManager.Instance.LoadSceneWithLoaderAsync
                     (GameManager.SceneType.Lobby);
             }
         }
         
-        public void UpdateProfilePicture(string newProfilePictureURL)
-        {
-            
-        }
-
+        /*
         private IEnumerator UpdateProfilePictureAsync(string newProfilePictureURL)
         {
             if (user != null)
@@ -249,12 +282,21 @@ namespace Wonderland.Auth
                 }
             }
         }
+        */
 
+        /// <summary>
+        /// This method is used to sign Out user Out of the Authentication System
+        /// </summary>
         public void SignOut()
         {
-            StartCoroutine(SignOutAsync());
+            if (_firebaseAuth != null && user != null)
+            {
+                Debug.LogFormat($"Signed Out: {user.DisplayName} {user.UserId}");
+                _firebaseAuth.SignOut();
+            }
         }
 
+        /*
         private IEnumerator SignOutAsync()
         {
             if (_firebaseAuth != null && user != null)
@@ -264,6 +306,7 @@ namespace Wonderland.Auth
             }
             yield return null;
         }
+        */
 
         #endregion
 
@@ -334,15 +377,15 @@ namespace Wonderland.Auth
             StartCoroutine(CheckAndFixDependencies());
         }
         
+        private void OnApplicationQuit()
+        {
+            SignOut();
+        }
+        
         private void OnDestroy()
         {
             _firebaseAuth.StateChanged -= AuthStateChanged;
             _firebaseAuth = null;
-        }
-
-        private void OnApplicationQuit()
-        {
-            SignOut();
         }
     }
 }

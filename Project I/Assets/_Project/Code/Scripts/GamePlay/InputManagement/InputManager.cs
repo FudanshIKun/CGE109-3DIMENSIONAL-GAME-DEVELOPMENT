@@ -77,26 +77,7 @@ namespace Wonderland.GamePlay.InputManagement
                     //TODO: Set Desktop Input Setting Environment
                     break;
                 case DeviceType.Handheld:
-                    _MobileInput = new MobileInputActions();
-                    if (Setting.inputSetting.isTouchable)
-                    {
-                        TouchDetection _touch = gameObject.AddComponent<TouchDetection>();
-                        _controlsList.Add(_touch);
-                        Logging.InputLogger.Log("TouchDetection Added");
-                    }
-                    if (Setting.inputSetting.isPinchable)
-                    {
-                        PinchDetection _pinch = gameObject.AddComponent<PinchDetection>();
-                        _controlsList.Add(_pinch);
-                        Logging.InputLogger.Log("PinchDetection Added");
-                    }
-
-                    if (Setting.inputSetting.isSwipable)
-                    {
-                        SwipeDetection _swipe = gameObject.AddComponent<SwipeDetection>();
-                        _controlsList.Add(_swipe);
-                        Logging.InputLogger.Log("SwipeDetection Added");
-                    }
+                    //TODO: Set Handheld Input Setting Environment
                     break;
             }
             */
