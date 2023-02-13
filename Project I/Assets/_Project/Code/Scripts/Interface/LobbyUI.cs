@@ -12,11 +12,31 @@ namespace Wonderland.Interface
         [Header("UI Assets")]
         public VisualTreeAsset lobbyUxml;
 
+        #region Lobby Components
+
+        private Button LogoutButton;
+        private Button PlayButton;
+
+        #endregion
+
         #region Methods
+
+        private void OnLogoutButtonClicked()
+        {
+            
+        }
+
+        private void OnPlayButtonClicked()
+        {
+            
+        }
 
         private void OnUxmlChange()
         {
-            
+            LogoutButton = UIManager.Instance.currentUxml.Q<Button>("Logout");
+            PlayButton = UIManager.Instance.currentUxml.Q<Button>("Play");
+            LogoutButton.clicked += OnLogoutButtonClicked;
+            PlayButton.clicked += OnPlayButtonClicked;
         }
 
         #endregion
@@ -32,7 +52,7 @@ namespace Wonderland.Interface
                 Destroy(gameObject);
             }
         }
-        
+
         private void OnEnable()
         {
             UIManager.UxmlChanged += OnUxmlChange;
