@@ -23,14 +23,14 @@ namespace Wonderland.GamePlay.InputManagement
             }
             else
             {
-                Instance.playerInput = playerInput;
+                Instance._playerInput = _playerInput;
                 Destroy(gameObject);
             }
         }
 
         #endregion
 
-        private PlayerInput playerInput;
+        private PlayerInput _playerInput;
         public MobileInputActions _MobileInput;
         List<IControls> _controlsList;
 
@@ -105,8 +105,8 @@ namespace Wonderland.GamePlay.InputManagement
 
         private void Awake()
         {
-            playerInput = GetComponent<PlayerInput>();
-            playerInput.camera = Camera.main;
+            _playerInput = GetComponent<PlayerInput>();
+            _playerInput.camera = Camera.main;
             Singleton();
             Instance.CompileControlsInScene();
         }

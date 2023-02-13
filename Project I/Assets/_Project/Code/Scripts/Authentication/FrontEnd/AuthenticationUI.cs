@@ -8,6 +8,7 @@ namespace Wonderland.Auth
     {
         public static AuthenticationUI Instance;
         
+        [Header("UI Assets")]
         public VisualTreeAsset SignUpUXML;
         public VisualTreeAsset SignInUXML;
 

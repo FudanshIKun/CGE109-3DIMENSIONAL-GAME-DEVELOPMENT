@@ -2,7 +2,9 @@
     "name": "Lobby",
     "rootNamespace": "Wonderland.GamePlay.Lobby",
     "references": [
-        "GUID:812e5458717014b448cb01ef524a6a96"
+        "GUID:812e5458717014b448cb01ef524a6a96",
+        "GUID:8c8d40857bc66b04b839d03617633494",
+        "GUID:77394e54058cd39449f952aa6ed6eb55"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
