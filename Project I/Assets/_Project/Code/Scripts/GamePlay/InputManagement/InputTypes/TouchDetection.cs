@@ -58,6 +58,7 @@ namespace Wonderland.GamePlay.InputManagement
         private void TouchEnd(Vector2 Position, GameObject touched, float time)
         {
             Logging.InputLogger.Log("Have been Pressed For : " + (int)time);
+            isTouching = false;
             StopCoroutine(TimeCounter());
         }
 
@@ -67,7 +68,7 @@ namespace Wonderland.GamePlay.InputManagement
         /// <param name="gameObject"></param>
         private void DetectTouch(GameObject gameObject)
         {
-            if (gameObject.GetComponent<ITouchable>() != null)
+            if ( gameObject != null && gameObject.GetComponent<ITouchable>() != null)
             {
                 gameObject.GetComponent<ITouchable>().TouchInteraction();
             }

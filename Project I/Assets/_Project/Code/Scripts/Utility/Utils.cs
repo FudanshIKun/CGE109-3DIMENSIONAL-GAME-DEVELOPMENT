@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Wonderland.Utility
@@ -20,10 +18,12 @@ namespace Wonderland.Utility
             RaycastHit2D hit2D = Physics2D.GetRayIntersection(ray);
             if (hit.collider != null)
             {
+                Debug.DrawLine(position, hit.collider.transform.position);
                 return hit.collider.gameObject;
             }
             if (hit2D.collider != null)
             {
+                Debug.DrawLine(position, hit2D.collider.transform.position);
                 return hit2D.collider.gameObject;
             }
             return null;
