@@ -2,7 +2,7 @@
     "name": "Manager",
     "rootNamespace": "Wonderland.Manager",
     "references": [
-        "GUID:812e5458717014b448cb01ef524a6a96"
+        "GUID:dcbc730ce5196cb468434da5c2a268ad"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

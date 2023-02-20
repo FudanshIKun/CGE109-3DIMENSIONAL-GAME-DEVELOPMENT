@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Wonderland.GamePlay;
+using Wonderland.Utility;
 
 namespace Wonderland.Manager
 {
@@ -40,7 +40,7 @@ namespace Wonderland.Manager
         {
             Authentication,
             Lobby,
-            DailyMiniGame
+            KittyRun
         }
 
         public SceneType currentScene;
@@ -93,7 +93,6 @@ namespace Wonderland.Manager
             
             load.allowSceneActivation = true;
             await Task.Delay(1500);
-            UIManager.Instance.HideLoadingScreen();
         }
 
         #endregion

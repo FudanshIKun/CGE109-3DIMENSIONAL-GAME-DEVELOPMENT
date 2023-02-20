@@ -15,4 +15,4 @@ MonoBehaviour:
   inputSetting:
     isTouchable: 1
     isPinchable: 1
-    isSwipable: 1
+    isSwipable: 0

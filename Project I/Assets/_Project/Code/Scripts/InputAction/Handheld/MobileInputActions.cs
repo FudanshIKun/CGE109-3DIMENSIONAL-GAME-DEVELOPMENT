@@ -30,7 +30,7 @@ namespace Wonderland.InputActions
             ""id"": ""60ecc5fd-9206-4171-90c7-7f4e63649209"",
             ""actions"": [
                 {
-                    ""name"": ""PrimaryFingerValue"",
+                    ""name"": ""PrimaryTouchValue"",
                     ""type"": ""Value"",
                     ""id"": ""74bdae08-4852-4f17-a157-fe9512549f7b"",
                     ""expectedControlType"": ""Vector2"",
@@ -39,7 +39,16 @@ namespace Wonderland.InputActions
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""SecondaryFingerValue"",
+                    ""name"": ""PrimaryTouchContact"",
+                    ""type"": ""Button"",
+                    ""id"": ""20a79d09-34a8-4e5c-a1ab-5cf47147c942"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SecondaryTouchValue"",
                     ""type"": ""Value"",
                     ""id"": ""23654dae-687d-4fef-8fc1-353f253429b3"",
                     ""expectedControlType"": ""Vector2"",
@@ -48,7 +57,7 @@ namespace Wonderland.InputActions
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""SecondaryTouchButton"",
+                    ""name"": ""SecondaryTouchContact"",
                     ""type"": ""Button"",
                     ""id"": ""9bf22dd6-e07f-4a5f-a50f-d277775c0a2d"",
                     ""expectedControlType"": ""Button"",
@@ -65,7 +74,7 @@ namespace Wonderland.InputActions
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SecondaryFingerValue"",
+                    ""action"": ""SecondaryTouchValue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -76,18 +85,29 @@ namespace Wonderland.InputActions
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SecondaryTouchButton"",
+                    ""action"": ""SecondaryTouchContact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""1aa6bd9b-38cf-4b37-b19e-a8bb7cabe060"",
-                    ""path"": ""<Touchscreen>/touch0/position"",
+                    ""path"": ""<Touchscreen>/primaryTouch/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""PrimaryFingerValue"",
+                    ""action"": ""PrimaryTouchValue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ce6f9f94-147b-4e28-9866-a6ebb799bf69"",
+                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PrimaryTouchContact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -159,9 +179,10 @@ namespace Wonderland.InputActions
 }");
             // Touch
             m_Touch = asset.FindActionMap("Touch", throwIfNotFound: true);
-            m_Touch_PrimaryFingerValue = m_Touch.FindAction("PrimaryFingerValue", throwIfNotFound: true);
-            m_Touch_SecondaryFingerValue = m_Touch.FindAction("SecondaryFingerValue", throwIfNotFound: true);
-            m_Touch_SecondaryTouchButton = m_Touch.FindAction("SecondaryTouchButton", throwIfNotFound: true);
+            m_Touch_PrimaryTouchValue = m_Touch.FindAction("PrimaryTouchValue", throwIfNotFound: true);
+            m_Touch_PrimaryTouchContact = m_Touch.FindAction("PrimaryTouchContact", throwIfNotFound: true);
+            m_Touch_SecondaryTouchValue = m_Touch.FindAction("SecondaryTouchValue", throwIfNotFound: true);
+            m_Touch_SecondaryTouchContact = m_Touch.FindAction("SecondaryTouchContact", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -221,16 +242,18 @@ namespace Wonderland.InputActions
         // Touch
         private readonly InputActionMap m_Touch;
         private ITouchActions m_TouchActionsCallbackInterface;
-        private readonly InputAction m_Touch_PrimaryFingerValue;
-        private readonly InputAction m_Touch_SecondaryFingerValue;
-        private readonly InputAction m_Touch_SecondaryTouchButton;
+        private readonly InputAction m_Touch_PrimaryTouchValue;
+        private readonly InputAction m_Touch_PrimaryTouchContact;
+        private readonly InputAction m_Touch_SecondaryTouchValue;
+        private readonly InputAction m_Touch_SecondaryTouchContact;
         public struct TouchActions
         {
             private @MobileInputActions m_Wrapper;
             public TouchActions(@MobileInputActions wrapper) { m_Wrapper = wrapper; }
-            public InputAction @PrimaryFingerValue => m_Wrapper.m_Touch_PrimaryFingerValue;
-            public InputAction @SecondaryFingerValue => m_Wrapper.m_Touch_SecondaryFingerValue;
-            public InputAction @SecondaryTouchButton => m_Wrapper.m_Touch_SecondaryTouchButton;
+            public InputAction @PrimaryTouchValue => m_Wrapper.m_Touch_PrimaryTouchValue;
+            public InputAction @PrimaryTouchContact => m_Wrapper.m_Touch_PrimaryTouchContact;
+            public InputAction @SecondaryTouchValue => m_Wrapper.m_Touch_SecondaryTouchValue;
+            public InputAction @SecondaryTouchContact => m_Wrapper.m_Touch_SecondaryTouchContact;
             public InputActionMap Get() { return m_Wrapper.m_Touch; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -240,28 +263,34 @@ namespace Wonderland.InputActions
             {
                 if (m_Wrapper.m_TouchActionsCallbackInterface != null)
                 {
-                    @PrimaryFingerValue.started -= m_Wrapper.m_TouchActionsCallbackInterface.OnPrimaryFingerValue;
-                    @PrimaryFingerValue.performed -= m_Wrapper.m_TouchActionsCallbackInterface.OnPrimaryFingerValue;
-                    @PrimaryFingerValue.canceled -= m_Wrapper.m_TouchActionsCallbackInterface.OnPrimaryFingerValue;
-                    @SecondaryFingerValue.started -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryFingerValue;
-                    @SecondaryFingerValue.performed -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryFingerValue;
-                    @SecondaryFingerValue.canceled -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryFingerValue;
-                    @SecondaryTouchButton.started -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryTouchButton;
-                    @SecondaryTouchButton.performed -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryTouchButton;
-                    @SecondaryTouchButton.canceled -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryTouchButton;
+                    @PrimaryTouchValue.started -= m_Wrapper.m_TouchActionsCallbackInterface.OnPrimaryTouchValue;
+                    @PrimaryTouchValue.performed -= m_Wrapper.m_TouchActionsCallbackInterface.OnPrimaryTouchValue;
+                    @PrimaryTouchValue.canceled -= m_Wrapper.m_TouchActionsCallbackInterface.OnPrimaryTouchValue;
+                    @PrimaryTouchContact.started -= m_Wrapper.m_TouchActionsCallbackInterface.OnPrimaryTouchContact;
+                    @PrimaryTouchContact.performed -= m_Wrapper.m_TouchActionsCallbackInterface.OnPrimaryTouchContact;
+                    @PrimaryTouchContact.canceled -= m_Wrapper.m_TouchActionsCallbackInterface.OnPrimaryTouchContact;
+                    @SecondaryTouchValue.started -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryTouchValue;
+                    @SecondaryTouchValue.performed -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryTouchValue;
+                    @SecondaryTouchValue.canceled -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryTouchValue;
+                    @SecondaryTouchContact.started -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryTouchContact;
+                    @SecondaryTouchContact.performed -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryTouchContact;
+                    @SecondaryTouchContact.canceled -= m_Wrapper.m_TouchActionsCallbackInterface.OnSecondaryTouchContact;
                 }
                 m_Wrapper.m_TouchActionsCallbackInterface = instance;
                 if (instance != null)
                 {
-                    @PrimaryFingerValue.started += instance.OnPrimaryFingerValue;
-                    @PrimaryFingerValue.performed += instance.OnPrimaryFingerValue;
-                    @PrimaryFingerValue.canceled += instance.OnPrimaryFingerValue;
-                    @SecondaryFingerValue.started += instance.OnSecondaryFingerValue;
-                    @SecondaryFingerValue.performed += instance.OnSecondaryFingerValue;
-                    @SecondaryFingerValue.canceled += instance.OnSecondaryFingerValue;
-                    @SecondaryTouchButton.started += instance.OnSecondaryTouchButton;
-                    @SecondaryTouchButton.performed += instance.OnSecondaryTouchButton;
-                    @SecondaryTouchButton.canceled += instance.OnSecondaryTouchButton;
+                    @PrimaryTouchValue.started += instance.OnPrimaryTouchValue;
+                    @PrimaryTouchValue.performed += instance.OnPrimaryTouchValue;
+                    @PrimaryTouchValue.canceled += instance.OnPrimaryTouchValue;
+                    @PrimaryTouchContact.started += instance.OnPrimaryTouchContact;
+                    @PrimaryTouchContact.performed += instance.OnPrimaryTouchContact;
+                    @PrimaryTouchContact.canceled += instance.OnPrimaryTouchContact;
+                    @SecondaryTouchValue.started += instance.OnSecondaryTouchValue;
+                    @SecondaryTouchValue.performed += instance.OnSecondaryTouchValue;
+                    @SecondaryTouchValue.canceled += instance.OnSecondaryTouchValue;
+                    @SecondaryTouchContact.started += instance.OnSecondaryTouchContact;
+                    @SecondaryTouchContact.performed += instance.OnSecondaryTouchContact;
+                    @SecondaryTouchContact.canceled += instance.OnSecondaryTouchContact;
                 }
             }
         }
@@ -313,9 +342,10 @@ namespace Wonderland.InputActions
         }
         public interface ITouchActions
         {
-            void OnPrimaryFingerValue(InputAction.CallbackContext context);
-            void OnSecondaryFingerValue(InputAction.CallbackContext context);
-            void OnSecondaryTouchButton(InputAction.CallbackContext context);
+            void OnPrimaryTouchValue(InputAction.CallbackContext context);
+            void OnPrimaryTouchContact(InputAction.CallbackContext context);
+            void OnSecondaryTouchValue(InputAction.CallbackContext context);
+            void OnSecondaryTouchContact(InputAction.CallbackContext context);
         }
     }
 }

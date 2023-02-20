@@ -1,6 +1,6 @@
 using UnityEngine;
 using Wonderland.Manager;
-using Wonderland.Interface;
+using Wonderland.UserInterface;
 
 namespace Wonderland.GamePlay.Lobby
 {
@@ -16,8 +16,6 @@ namespace Wonderland.GamePlay.Lobby
         private void InstantiateCats()
         {
             //TODO: Instantiate Cats In Scene At Each CatStation Furniture Type By Get Data Of Amount Of Cat From DataManager
-            
-            
         }
 
         public void LoadProfilePicture()
@@ -29,7 +27,7 @@ namespace Wonderland.GamePlay.Lobby
 
         private void Start()
         {
-            UIManager.Instance.ChangeUxml(LobbyUI.Instance.lobbyUxml);
+            UIManager.Instance.ChangeUxml(LobbyUI.Instance.mainLobbyUxml);
         }
     }
 }

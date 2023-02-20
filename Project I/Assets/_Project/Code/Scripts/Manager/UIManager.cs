@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Wonderland.Utility;
 
 namespace Wonderland.Manager
 {
@@ -43,6 +44,16 @@ namespace Wonderland.Manager
         public static event Action UxmlChanged;
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string GetCurrentUxmlName()
+        {
+            string currentMainPanel = currentUxml.Q<GroupBox>().name;
+            return currentMainPanel;
+        }
+        
+        /// <summary>
         /// This method is used to change UXML file of the UIDocument in the scene
         /// Mainly use for SignUp and SignIn interface
         /// </summary>
@@ -64,7 +75,7 @@ namespace Wonderland.Manager
             UxmlChanged?.Invoke();
 
             // Add currentUxml to the root of UIDocument in the scene
-            _root.Insert(1, _currentUxml);
+            _root.Add(_currentUxml);
         }
 
         /// <summary>
@@ -78,7 +89,10 @@ namespace Wonderland.Manager
                 _currentUxml.RemoveFromHierarchy();
             }
         }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public void ClearUI()
         {
             _root.Clear();
@@ -88,11 +102,17 @@ namespace Wonderland.Manager
 
         #region Loading Screen Management
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void HideLoadingScreen()
         {
             loadingScreen.SetActive(false);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void ShowLoadingScreen()
         {
             ClearUI();

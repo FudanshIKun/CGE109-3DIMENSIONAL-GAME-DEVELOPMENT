@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Wonderland.Utility;
 
 //Firebase
 using Firebase;
@@ -246,57 +247,15 @@ namespace Wonderland.Auth
                     (GameManager.SceneType.Lobby);
             }
         }
-        
-        /*
-        private IEnumerator UpdateProfilePictureAsync(string newProfilePictureURL)
-        {
-            if (user != null)
-            {
-                UserProfile profile = new UserProfile();
-                try
-                {
-                    UserProfile _profile = new UserProfile()
-                    {
-                        DisplayName = profile.DisplayName,
-                        PhotoUrl = new System.Uri(newProfilePictureURL),
-                    };
-                    profile = _profile;
-                }
-                catch
-                {
-                    yield break;
-                }
-
-                var ProfilePictureTask = user.UpdateUserProfileAsync(profile);
-                yield return new WaitUntil(predicate:() => ProfilePictureTask.IsCompleted);
-
-                if (ProfilePictureTask.Exception != null)
-                {
-                    Debug.LogError($"Update Profile Picture was unseccessful: {ProfilePictureTask.Exception}");
-                }
-                else
-                {
-                    //TODO: Add LobbyManager "ChangeProfilePicture()"
-                    //LobbyManager.Instance.ChangeProfilePicture();
-                    Logging.FirebaseLogger.Log("Profile Image Updated Successfully");
-                }
-            }
-        }
-        */
 
         /// <summary>
         /// This method is used to sign Out user Out of the Authentication System
         /// </summary>
         public void SignOut()
         {
-            if (_firebaseAuth != null && user != null)
-            {
-                Debug.LogFormat($"Signed Out: {user.DisplayName} {user.UserId}");
-                _firebaseAuth.SignOut();
-            }
+            StartCoroutine(SignOutAsync());
         }
-
-        /*
+        
         private IEnumerator SignOutAsync()
         {
             if (_firebaseAuth != null && user != null)
@@ -306,7 +265,7 @@ namespace Wonderland.Auth
             }
             yield return null;
         }
-        */
+        
 
         #endregion
 
@@ -316,7 +275,7 @@ namespace Wonderland.Auth
 
         #endregion
 
-        #region Firebase Initialization
+        #region Initialization
 
         // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator CheckAndFixDependencies()

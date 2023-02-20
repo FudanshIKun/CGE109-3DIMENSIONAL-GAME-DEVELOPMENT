@@ -3,7 +3,8 @@
     "rootNamespace": "Wonderland.Auth",
     "references": [
         "GUID:8c8d40857bc66b04b839d03617633494",
-        "GUID:77394e54058cd39449f952aa6ed6eb55"
+        "GUID:77394e54058cd39449f952aa6ed6eb55",
+        "GUID:dcbc730ce5196cb468434da5c2a268ad"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

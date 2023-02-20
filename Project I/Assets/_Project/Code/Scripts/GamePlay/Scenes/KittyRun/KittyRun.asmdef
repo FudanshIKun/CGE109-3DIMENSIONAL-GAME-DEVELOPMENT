@@ -1,0 +1,16 @@
+{
+    "name": "KittyRun",
+    "rootNamespace": "Wonderland.GamePlay.KittyRun",
+    "references": [
+        "GUID:812e5458717014b448cb01ef524a6a96"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -34,34 +34,31 @@ namespace Wonderland.Auth
         }
         private void OnUxmlChange()
         {
-            if (UIManager.Instance.currentUxml.Q<Label>("Authentication-Type") != null)
+            VisualElement currentUxml = UIManager.Instance.currentUxml;
+            switch (UIManager.Instance.GetCurrentUxmlName())
             {
-                VisualElement currentUxml = UIManager.Instance.currentUxml;
-                switch (UIManager.Instance.currentUxml.Q<Label>("Authentication-Type").text)
-                {
-                    case "New Account":
-                        userField = currentUxml.Q<TextField>("User-Field");
-                        emailField = currentUxml.Q<TextField>("Email-Field");
-                        passwordField = currentUxml.Q<TextField>("Password-Field");
-                        confirmField = currentUxml.Q<TextField>("Confirm-Field");
-                        rememberPassword = currentUxml.Q<RadioButton>("RememberPassowrd");
-                        errorOutput = currentUxml.Q<Label>("ErrorOutput");
-                        var signUpButton = currentUxml.Q<Button>("Authentication-Button");
-                        signUpButton.clicked += FirebaseManager.Instance.SignUp;
-                        var SignInTab = currentUxml.Q<Button>("SignIn");
-                        SignInTab.clicked += LoadSignInTab;
-                        break;
-                    case "Sign In":
-                        emailField = currentUxml.Q<TextField>("Email-Field");
-                        passwordField = currentUxml.Q<TextField>("Password-Field");
-                        rememberPassword = currentUxml.Q<RadioButton>("RememberPassword");
-                        errorOutput = currentUxml.Q<Label>("ErrorOutput");
-                        var signInButton = currentUxml.Q<Button>("Authentication-Button");
-                        signInButton.clicked += FirebaseManager.Instance.SignIn;
-                        var SignUpTab = currentUxml.Q<Button>("SignUp");
-                        SignUpTab.clicked += LoadSignUpTab;
-                        break;
-                }
+                case "SignUpPanel":
+                    userField = currentUxml.Q<TextField>("User-Field");
+                    emailField = currentUxml.Q<TextField>("Email-Field");
+                    passwordField = currentUxml.Q<TextField>("Password-Field");
+                    confirmField = currentUxml.Q<TextField>("Confirm-Field");
+                    rememberPassword = currentUxml.Q<RadioButton>("RememberPassowrd");
+                    errorOutput = currentUxml.Q<Label>("ErrorOutput");
+                    var signUpButton = currentUxml.Q<Button>("Authentication-Button");
+                    signUpButton.clicked += FirebaseManager.Instance.SignUp;
+                    var SignInTab = currentUxml.Q<Button>("SignIn");
+                    SignInTab.clicked += LoadSignInTab;
+                    break;
+                case "SignInPanel":
+                    emailField = currentUxml.Q<TextField>("Email-Field");
+                    passwordField = currentUxml.Q<TextField>("Password-Field");
+                    rememberPassword = currentUxml.Q<RadioButton>("RememberPassword");
+                    errorOutput = currentUxml.Q<Label>("ErrorOutput");
+                    var signInButton = currentUxml.Q<Button>("Authentication-Button");
+                    signInButton.clicked += FirebaseManager.Instance.SignIn;
+                    var SignUpTab = currentUxml.Q<Button>("SignUp");
+                    SignUpTab.clicked += LoadSignUpTab;
+                    break;
             }
         }
 
