@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Wonderland.GamePlay
 {
-    public class Object : MonoBehaviour
+    public class Character : MonoBehaviour
     {
         
     }

@@ -40,7 +40,7 @@ namespace Wonderland.Manager
         {
             Authentication,
             Lobby,
-            KittyRun
+            NetRunning
         }
 
         public SceneType currentScene;

@@ -48,6 +48,7 @@ namespace Wonderland.GamePlay.Input
         
         private void SwipeStart(Vector2 screenPosition, GameObject swiped, float time)
         {
+            //TODO: Check If Swipe Start at UpperScreen Or BottomScreen
             startPosition = screenPosition;
             startTime = time;
         }

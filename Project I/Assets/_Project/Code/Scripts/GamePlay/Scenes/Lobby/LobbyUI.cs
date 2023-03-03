@@ -31,7 +31,7 @@ namespace Wonderland.UserInterface
 
         private void OnPlayButtonClicked()
         {
-            GameManager.Instance.LoadSceneWithLoaderAsync(GameManager.SceneType.KittyRun);
+            GameManager.Instance.LoadSceneWithLoaderAsync(GameManager.SceneType.NetRunning);
         }
 
         private void OnYesSignoutClicked()

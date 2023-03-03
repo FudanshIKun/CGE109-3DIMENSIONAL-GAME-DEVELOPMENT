@@ -42,14 +42,6 @@ namespace Wonderland.GamePlay.Input
         public delegate void EndPrimaryTouch(Vector2 position, GameObject interacted, float time);
         public event EndPrimaryTouch OnEndPrimaryTouchEvent;
 
-        //
-        public delegate void StartSecondayTouch(Vector2 position);
-        public event StartSecondayTouch OnStartSecondaryTouchEvent;
-        
-        //
-        public delegate void EndSecondayTouch(Vector2 position);
-        public event EndSecondayTouch OnEndSecondaryTouchEvent;
-
         #endregion
 
         #region Fields

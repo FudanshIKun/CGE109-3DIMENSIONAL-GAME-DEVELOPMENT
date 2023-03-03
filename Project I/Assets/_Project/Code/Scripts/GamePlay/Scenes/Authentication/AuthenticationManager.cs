@@ -8,7 +8,7 @@ namespace Wonderland.GamePlay.Authentication
     {
         void Start()
         {
-            UIManager.Instance.ChangeUxml(AuthenticationUI.Instance.SignInUXML);
+            UIManager.Instance.ChangeUxml(AuthUI.Instance.signInUxml);
         }
     }
 }
