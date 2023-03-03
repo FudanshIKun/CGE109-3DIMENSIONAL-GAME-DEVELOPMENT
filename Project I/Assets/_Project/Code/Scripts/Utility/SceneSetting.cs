@@ -15,6 +15,8 @@ namespace Wonderland.Utility
         [Serializable]
         public struct SceneSystem
         {
+            public bool isGameScene;
+            
             public enum WorldType
             {
                 TwoDimensional,

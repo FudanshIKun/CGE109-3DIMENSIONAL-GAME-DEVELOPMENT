@@ -91,7 +91,7 @@ namespace Wonderland.Manager
         }
         
         /// <summary>
-        /// 
+        /// Delete Every Uxml Template out of UIDocument's Root
         /// </summary>
         public void ClearUI()
         {
@@ -101,18 +101,12 @@ namespace Wonderland.Manager
         #endregion
 
         #region Loading Screen Management
-
-        /// <summary>
-        /// 
-        /// </summary>
+        
         public void HideLoadingScreen()
         {
             loadingScreen.SetActive(false);
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
+        
         public void ShowLoadingScreen()
         {
             ClearUI();

@@ -8,12 +8,12 @@ namespace Wonderland.GamePlay.Lobby
     {
         #region Methods
         
-        private void SetRoom()
+        private void SetLobby()
         {
             //TODO: Instantiate Furniture In Room By Furniture Position From DataManager
         }
         
-        private void InstantiateCats()
+        private void LoadCats()
         {
             //TODO: Instantiate Cats In Scene At Each CatStation Furniture Type By Get Data Of Amount Of Cat From DataManager
         }

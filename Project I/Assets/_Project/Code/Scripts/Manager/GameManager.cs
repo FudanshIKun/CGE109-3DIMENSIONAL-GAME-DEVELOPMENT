@@ -48,10 +48,6 @@ namespace Wonderland.Manager
         #region Methods
 
         // ReSharper disable Unity.PerformanceAnalysis
-        /// <summary>
-        /// This method is used to load new scene with specific orientation and without Loading transition
-        /// </summary>
-        /// <param name="new Scene"></param>
         public async void LoadSceneAsync(SceneType newScene)
         {
             // Load newScene
@@ -71,10 +67,6 @@ namespace Wonderland.Manager
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
-        /// <summary>
-        /// This method is used to load new scene with specific orientation and with Loading transition
-        /// </summary>
-        /// <param name="new Scene"></param>
         public async void LoadSceneWithLoaderAsync(SceneType newScene)
         {
             // Load newScene

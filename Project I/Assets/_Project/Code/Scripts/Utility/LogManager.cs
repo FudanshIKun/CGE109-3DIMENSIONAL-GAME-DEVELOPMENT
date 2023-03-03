@@ -6,16 +6,24 @@ namespace Wonderland.Utility
     {
         public static Logger UILogger = new Logger(Debug.unityLogger.logHandler);
         public static Logger FirebaseLogger = new Logger(Debug.unityLogger.logHandler);
-        public static Logger InputLogger = new Logger(Debug.unityLogger.logHandler);
+        public static Logger InputSystemLogger = new Logger(Debug.unityLogger.logHandler);
+        public static Logger InputControls = new Logger(Debug.unityLogger.logHandler);
         public static Logger GamePlayLogger = new Logger(Debug.unityLogger.logHandler);
 
         public static void LoadLogger()
         {
-            // Call This Function On Application Start
+            // Firebase Logger
             FirebaseLogger.logEnabled = true;
-            InputLogger.logEnabled = true;
+            
+            // Input Logger
+            InputSystemLogger.logEnabled = false;
+            InputControls.logEnabled = false;
+            
+            // GamePlay Logger
             GamePlayLogger.logEnabled = true;
-            UILogger.logEnabled = true;
+            
+            // UserInterface Logger
+            UILogger.logEnabled = false;
         }
     }
 }
