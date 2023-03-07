@@ -40,7 +40,7 @@ namespace Wonderland.GamePlay.Authentication
                     ConfirmPasswordField = currentUxml.Q<TextField>("Confirm-Field");
                     ErrorText = currentUxml.Q<Label>("ErrorOutput");
                     var signUpButton = currentUxml.Q<Button>("Authentication-Button");
-                    signUpButton.clicked += AuthenticationHandler.Instance.SignUp;
+                    signUpButton.clicked += AuthenticationHandler.Instance.OnClickSignUp;
                     var SignInTab = currentUxml.Q<Button>("SignIn");
                     SignInTab.clicked += LoadSignInTab;
                     break;
@@ -49,7 +49,7 @@ namespace Wonderland.GamePlay.Authentication
                     PasswordField = currentUxml.Q<TextField>("Password-Field");
                     ErrorText = currentUxml.Q<Label>("ErrorOutput");
                     var signInButton = currentUxml.Q<Button>("Authentication-Button");
-                    signInButton.clicked += AuthenticationHandler.Instance.SignIn;
+                    signInButton.clicked += AuthenticationHandler.Instance.OnClickSignIn;
                     var SignUpTab = currentUxml.Q<Button>("SignUp");
                     SignUpTab.clicked += LoadSignUpTab;
                     break;

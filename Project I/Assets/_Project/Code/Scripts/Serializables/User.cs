@@ -6,14 +6,13 @@ namespace Wonderland
     [Serializable]
     public class User : MonoBehaviour
     {
-        public string userName;
         public string displayName;
         public string userId;
-        public string localId;
 
         public User()
         {
-            
+            displayName = AuthAPI.GetAuthUser().DisplayName;
+            userId = AuthAPI.GetAuthUser().UserId;
         }
     }
 }

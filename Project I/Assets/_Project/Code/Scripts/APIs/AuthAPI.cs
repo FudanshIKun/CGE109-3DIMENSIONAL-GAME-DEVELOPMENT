@@ -7,7 +7,7 @@ namespace Wonderland
     {
         private static readonly FirebaseAuth Auth = FirebaseAuth.DefaultInstance;
         
-        public static async Task<RequestState> SignUp(string email, string password) =>
+        public static async Task<RequestState> SignUpRequest(string email, string password) =>
             await Auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWith(task =>
             {
                 if (task.IsCanceled)
@@ -19,7 +19,7 @@ namespace Wonderland
                 return new RequestState();
             });
         
-        public static async Task<RequestState> SignIn(string email, string password) =>
+        public static async Task<RequestState> SignInRequest(string email, string password) =>
             await Auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWith(task =>
             {
                 if (task.IsCanceled)
@@ -33,8 +33,8 @@ namespace Wonderland
 
         public static bool IsSignedIn() => Auth.CurrentUser != null;
 
-        public static string GetUserId() => Auth.CurrentUser.UserId;
-        
+        public static FirebaseUser GetAuthUser() => Auth.CurrentUser;
+
         public static void SignOut() => Auth.SignOut();
     }
 }
