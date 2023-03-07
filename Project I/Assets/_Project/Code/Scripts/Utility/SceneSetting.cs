@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Wonderland.Utility
+namespace Wonderland
 {
     [CreateAssetMenu(fileName = "Setting", menuName = "Setting/New Scene Setting")]
     [Serializable]

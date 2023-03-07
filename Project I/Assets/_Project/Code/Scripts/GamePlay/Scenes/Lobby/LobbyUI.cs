@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Wonderland.Manager;
+using Wonderland;
 
-namespace Wonderland.UserInterface
+namespace Wonderland.GamePlay.Lobby
 {
     public class LobbyUI : MonoBehaviour
     {
@@ -26,12 +26,12 @@ namespace Wonderland.UserInterface
 
         private void OnLogoutButtonClicked()
         {
-            UIManager.Instance.ChangeUxml(logoutLobbyUxml);
+            MainManager.Instance.uiManager.ChangeUxml(logoutLobbyUxml);
         }
 
         private void OnPlayButtonClicked()
         {
-            GameManager.Instance.LoadSceneWithLoaderAsync(GameManager.SceneType.NetRunning);
+            MainManager.Instance.gameManager.LoadSceneWithLoaderAsync(GameManager.SceneType.NetRunning);
         }
 
         private void OnYesSignoutClicked()
@@ -41,13 +41,13 @@ namespace Wonderland.UserInterface
 
         private void OnNoSignoutClicked()
         {
-            UIManager.Instance.ChangeUxml(mainLobbyUxml);
+            MainManager.Instance.uiManager.ChangeUxml(mainLobbyUxml);
         }
 
         private void OnUxmlChange()
         {
-            VisualElement currentUxml = UIManager.Instance.currentUxml;
-            switch (UIManager.Instance.GetCurrentUxmlName()){
+            VisualElement currentUxml = MainManager.Instance.uiManager.currentUxml;
+            switch (MainManager.Instance.uiManager.GetCurrentUxmlName()){
                 case "LobbyPanel" :
                     logoutButton = currentUxml.Q<Button>("Logout");
                     playButton = currentUxml.Q<Button>("Play");

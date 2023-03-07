@@ -1,4 +1,5 @@
 using UnityEngine;
+using Wonderland;
 
 namespace Wonderland.GamePlay.NetRunning
 {
@@ -38,6 +39,26 @@ namespace Wonderland.GamePlay.NetRunning
         {
             _Player = GameObject.FindWithTag("Player").GetComponent<Player>();
             _Runner = GameObject.FindWithTag("Player").GetComponent<Runner>();
+        }
+
+        private void Start()
+        {
+            if (InputManager.Instance != null && InputManager.Instance.gameObject.GetComponent<SwipeDetection>() != null)
+            {
+                SwipeDetection.LeftSwipe += _Runner.TurnLeft;
+                SwipeDetection.RightSwipe += _Runner.TurnRight;
+                SwipeDetection.UpSwipe += _Runner.Jump;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (InputManager.Instance != null && InputManager.Instance.gameObject.GetComponent<SwipeDetection>() != null)
+            {
+                SwipeDetection.LeftSwipe -= _Runner.TurnLeft;
+                SwipeDetection.RightSwipe -= _Runner.TurnRight;
+                SwipeDetection.UpSwipe -= _Runner.Jump;
+            }
         }
     }
 }

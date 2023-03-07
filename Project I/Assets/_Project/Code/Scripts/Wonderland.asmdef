@@ -1,0 +1,17 @@
+{
+    "name": "Wonderland",
+    "rootNamespace": "Wonderland",
+    "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:309a030fa10aae74189af78a55eb5df5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

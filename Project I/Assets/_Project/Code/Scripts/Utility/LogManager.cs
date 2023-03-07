@@ -1,19 +1,25 @@
 using UnityEngine;
 
-namespace Wonderland.Utility
+namespace Wonderland
 {
     public static class Logging
     {
-        public static Logger UILogger = new Logger(Debug.unityLogger.logHandler);
-        public static Logger FirebaseLogger = new Logger(Debug.unityLogger.logHandler);
+        public static Logger APILogger = new Logger(Debug.unityLogger.logHandler);
+        public static Logger AuhLogger = new Logger(Debug.unityLogger.logHandler);
+        public static Logger ManagerLogger = new Logger(Debug.unityLogger.logHandler);
         public static Logger InputSystemLogger = new Logger(Debug.unityLogger.logHandler);
         public static Logger InputControls = new Logger(Debug.unityLogger.logHandler);
+        public static Logger UILogger = new Logger(Debug.unityLogger.logHandler);
         public static Logger GamePlayLogger = new Logger(Debug.unityLogger.logHandler);
 
         public static void LoadLogger()
         {
-            // Firebase Logger
-            FirebaseLogger.logEnabled = true;
+            // API Logger
+            APILogger.logEnabled = true;
+            AuhLogger.logEnabled = true;
+            
+            // Manager Logger
+            ManagerLogger.logEnabled = true;
             
             // Input Logger
             InputSystemLogger.logEnabled = false;
@@ -23,7 +29,7 @@ namespace Wonderland.Utility
             GamePlayLogger.logEnabled = true;
             
             // UserInterface Logger
-            UILogger.logEnabled = false;
+            UILogger.logEnabled = true;
         }
     }
 }

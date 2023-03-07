@@ -1,6 +1,5 @@
 using UnityEngine;
-using Wonderland.Manager;
-using Wonderland.UserInterface;
+using Wonderland;
 
 namespace Wonderland.GamePlay.Lobby
 {
@@ -27,7 +26,7 @@ namespace Wonderland.GamePlay.Lobby
 
         private void Start()
         {
-            UIManager.Instance.ChangeUxml(LobbyUI.Instance.mainLobbyUxml);
+            MainManager.Instance.uiManager.ChangeUxml(LobbyUI.Instance.mainLobbyUxml);
         }
     }
 }

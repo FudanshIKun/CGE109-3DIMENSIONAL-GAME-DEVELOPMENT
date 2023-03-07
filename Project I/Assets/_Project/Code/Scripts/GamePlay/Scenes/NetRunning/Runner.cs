@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using Wonderland.Utility;
-using Wonderland.GamePlay.Input;
+using Wonderland;
 
 namespace Wonderland.GamePlay.NetRunning
 {
@@ -43,7 +41,7 @@ namespace Wonderland.GamePlay.NetRunning
         
         #region Movement Methods
 
-        private void TurnLeft()
+        public void TurnLeft()
         {
             if (currentState == Running)
             {
@@ -57,7 +55,7 @@ namespace Wonderland.GamePlay.NetRunning
             _rigidbody.MovePosition( new Vector3(_rigidbody.position.x - turnDistance, _rigidbody.position.y,_rigidbody.position.z));
         }
 
-        private void TurnRight()
+        public void TurnRight()
         {
             if (currentState == Running)
             {
@@ -71,7 +69,7 @@ namespace Wonderland.GamePlay.NetRunning
             _rigidbody.MovePosition( new Vector3(_rigidbody.position.x + turnDistance, _rigidbody.position.y,_rigidbody.position.z));
         }
 
-        private void Jump()
+        public void Jump()
         {
             StartCoroutine(JumpLogic());
         }
@@ -107,26 +105,6 @@ namespace Wonderland.GamePlay.NetRunning
         private void Update()
         {
             currentState.UpdateState(this);
-        }
-
-        private void OnEnable()
-        {
-            if (InputManager.Instance != null && InputManager.Instance.gameObject.GetComponent<SwipeDetection>() != null)
-            {
-                SwipeDetection.LeftSwipe += TurnLeft;
-                SwipeDetection.RightSwipe += TurnRight;
-                SwipeDetection.UpSwipe += Jump;
-            }
-        }
-
-        private void OnDisable()
-        {
-            if (InputManager.Instance != null && InputManager.Instance.gameObject.GetComponent<SwipeDetection>() != null)
-            {
-                SwipeDetection.LeftSwipe -= TurnLeft;
-                SwipeDetection.RightSwipe -= TurnRight;
-                SwipeDetection.UpSwipe -= Jump;
-            }
         }
     }
 }
