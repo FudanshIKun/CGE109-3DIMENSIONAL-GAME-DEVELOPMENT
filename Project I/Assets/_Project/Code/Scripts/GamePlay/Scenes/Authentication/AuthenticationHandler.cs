@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -42,5 +43,22 @@ namespace Wonderland.GamePlay.Authentication
         }
 
         #endregion
+
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        private void Start()
+        {
+            MainManager.Instance.uiManager.ChangeUxml(AuthenticationUI.Instance.signInUxml);
+        }
     }
 }

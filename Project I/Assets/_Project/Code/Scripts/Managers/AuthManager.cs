@@ -107,16 +107,6 @@ namespace Wonderland
             });
         }
 
-        private void Awake()
-        {
-            
-        }
-
-        private void OnEnable()
-        {
-            
-        }
-
         private void OnApplicationQuit()
         {
             AuthAPI.SignOut();

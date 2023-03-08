@@ -97,15 +97,15 @@ namespace Wonderland
         public override void OnEnable()
         {
             base.OnEnable();
-            InputManager.Instance.OnStartPrimaryTouchEvent += SwipeStart;
-            InputManager.Instance.OnEndPrimaryTouchEvent += SwipeEnd;
+            MainManager.Instance.inputManager.OnStartPrimaryTouchEvent += SwipeStart;
+            MainManager.Instance.inputManager.OnEndPrimaryTouchEvent += SwipeEnd;
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
-            InputManager.Instance.OnStartPrimaryTouchEvent -= SwipeStart;
-            InputManager.Instance.OnEndPrimaryTouchEvent -= SwipeEnd;
+            MainManager.Instance.inputManager.OnStartPrimaryTouchEvent -= SwipeStart;
+            MainManager.Instance.inputManager.OnEndPrimaryTouchEvent -= SwipeEnd;
         }
     }
 }

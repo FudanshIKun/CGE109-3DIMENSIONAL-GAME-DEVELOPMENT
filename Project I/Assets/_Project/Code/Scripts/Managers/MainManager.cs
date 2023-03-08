@@ -14,6 +14,7 @@ namespace Wonderland
         private List<IManager> _managers = new List<IManager>();
 
         public GameManager gameManager;
+        public InputManager inputManager;
         public UIManager uiManager;
         
         private void Singleton()
@@ -35,6 +36,8 @@ namespace Wonderland
             Logging.ManagerLogger.Log("Instance Updated");
             Instance.gameManager.currentScene = gameManager.currentScene;
             Instance.gameManager.Setting = gameManager.Setting;
+            Instance.inputManager._playerInput = inputManager._playerInput;
+            Instance.inputManager._mainCamera = inputManager._mainCamera;
             Instance.uiManager._root = uiManager._root;
             Instance.uiManager.defaultCanvas = uiManager.defaultCanvas;
             Instance.uiManager.loadingScreen = uiManager.loadingScreen;
@@ -60,6 +63,10 @@ namespace Wonderland
                 {
                     case "GameManager":
                         gameManager = manager.GetComponent<GameManager>();
+                        Logging.ManagerLogger.Log(manager.name + "Has Been Assigned");
+                        break;
+                    case "InputManager":
+                        inputManager = manager.GetComponent<InputManager>();
                         Logging.ManagerLogger.Log(manager.name + "Has Been Assigned");
                         break;
                     case "UIManager":
@@ -101,6 +108,7 @@ namespace Wonderland
         private void OnEnable()
         {
             Singleton();
+            Instance.inputManager.CompileControlsInScene();
         }
     }
 }

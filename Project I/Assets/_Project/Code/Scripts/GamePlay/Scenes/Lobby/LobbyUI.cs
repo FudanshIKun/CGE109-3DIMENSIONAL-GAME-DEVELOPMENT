@@ -5,7 +5,7 @@ using Wonderland;
 
 namespace Wonderland.GamePlay.Lobby
 {
-    public class LobbyUI : MonoBehaviour
+    public class LobbyUI : UIHandler
     {
         public static LobbyUI Instance;
         

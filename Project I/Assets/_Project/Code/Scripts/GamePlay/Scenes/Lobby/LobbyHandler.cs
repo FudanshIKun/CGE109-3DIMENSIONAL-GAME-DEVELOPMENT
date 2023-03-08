@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Wonderland.GamePlay.Lobby
 {
-    public class LobbyHandler : MonoBehaviour
+    public class LobbyHandler : SceneHandler
     {
         #region Methods
         

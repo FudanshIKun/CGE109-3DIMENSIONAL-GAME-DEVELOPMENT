@@ -1078,7 +1078,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1248915301}
-  - component: {fileID: 1248915300}
+  - component: {fileID: 1248915302}
   m_Layer: 0
   m_Name: MainManager
   m_TagString: System
@@ -1086,18 +1086,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1248915300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1248915299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de3f38910e91fc44f86ec86a1d5f333c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1248915301
 Transform:
   m_ObjectHideFlags: 0
@@ -1116,6 +1104,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1248915302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248915299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6051211c155d9e74eb3d1fdfdebf456d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  inputManager: {fileID: 0}
+  uiManager: {fileID: 0}
 --- !u!1 &1289428972
 GameObject:
   m_ObjectHideFlags: 0
@@ -1627,6 +1630,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5982241688641567998, guid: 8b805069b929a4a4e9cbbf47ad218183,
+        type: 3}
+      propertyPath: Setting
+      value: 
+      objectReference: {fileID: 11400000, guid: 7c42a676633c74142884cf1d88c3c2cc,
+        type: 2}
+    - target: {fileID: 5982241688641567998, guid: 8b805069b929a4a4e9cbbf47ad218183,
+        type: 3}
+      propertyPath: currentScene
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5982241688641567999, guid: 8b805069b929a4a4e9cbbf47ad218183,
         type: 3}
       propertyPath: m_RootOrder
@@ -1798,6 +1812,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1775207953}
   - component: {fileID: 1775207952}
+  - component: {fileID: 1775207954}
   m_Layer: 5
   m_Name: UIDocument
   m_TagString: UIDocument
@@ -1837,6 +1852,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1775207954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775207950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c500d96f35b2b90488d3a5da300642fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1780888795
 GameObject:
   m_ObjectHideFlags: 0

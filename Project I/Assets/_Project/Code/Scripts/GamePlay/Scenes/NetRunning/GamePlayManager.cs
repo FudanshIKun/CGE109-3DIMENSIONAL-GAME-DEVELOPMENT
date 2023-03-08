@@ -3,7 +3,7 @@ using Wonderland;
 
 namespace Wonderland.GamePlay.NetRunning
 {
-    public class GamePlayManager : MonoBehaviour
+    public class GamePlayManager : SceneHandler
     {
         public static GamePlayManager Instance;
         
@@ -43,7 +43,7 @@ namespace Wonderland.GamePlay.NetRunning
 
         private void Start()
         {
-            if (InputManager.Instance != null && InputManager.Instance.gameObject.GetComponent<SwipeDetection>() != null)
+            if (MainManager.Instance.inputManager != null && MainManager.Instance.inputManager.gameObject.GetComponent<SwipeDetection>() != null)
             {
                 SwipeDetection.LeftSwipe += _Runner.TurnLeft;
                 SwipeDetection.RightSwipe += _Runner.TurnRight;
@@ -53,7 +53,7 @@ namespace Wonderland.GamePlay.NetRunning
 
         private void OnDisable()
         {
-            if (InputManager.Instance != null && InputManager.Instance.gameObject.GetComponent<SwipeDetection>() != null)
+            if (MainManager.Instance.inputManager != null && MainManager.Instance.inputManager.gameObject.GetComponent<SwipeDetection>() != null)
             {
                 SwipeDetection.LeftSwipe -= _Runner.TurnLeft;
                 SwipeDetection.RightSwipe -= _Runner.TurnRight;

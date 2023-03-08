@@ -4,7 +4,7 @@ using Wonderland;
 
 namespace Wonderland.GamePlay.NetRunning
 {
-    public class NetRunningUI : MonoBehaviour
+    public class NetRunningUI : UIHandler
     {
         
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,26 +8,10 @@ using Wonderland.InputActions;
 namespace Wonderland
 {
     [RequireComponent(typeof(PlayerInput))]
-    public class InputManager : MonoBehaviour
+    public class InputManager : IManager
     {
         #region Singleton
-
-        public static InputManager Instance;
-
-        private void Singleton()
-        {
-            if (Instance == null)
-            {
-                Instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Instance._playerInput = _playerInput;
-                Instance._mainCamera = _mainCamera;
-                Destroy(gameObject);
-            }
-        }
+        
 
         #endregion
 
@@ -44,9 +29,9 @@ namespace Wonderland
 
         #region Fields
 
-        private PlayerInput _playerInput;
-        private Camera _mainCamera;
-        public HandheldInputAction HandheldInputAction;
+        [HideInInspector] public PlayerInput _playerInput;
+        [HideInInspector] public Camera _mainCamera;
+        public static HandheldInputAction HandheldInputAction;
         private List<IControls> _controlsList;
 
         #endregion
@@ -70,7 +55,7 @@ namespace Wonderland
         /// <summary>
         /// 
         /// </summary>
-        private void CompileControlsInScene()
+        public void CompileControlsInScene()
         {
             //
             if (_controlsList == null)
@@ -125,7 +110,7 @@ namespace Wonderland
         /// <summary>
         /// 
         /// </summary>
-        private void DisCompileControlsInPreviousScene()
+        public void DisCompileControlsInPreviousScene()
         {
             if (_controlsList == null)
             {
@@ -160,13 +145,6 @@ namespace Wonderland
             _playerInput = GetComponent<PlayerInput>();
             _playerInput.camera = Camera.main;
             _mainCamera = _playerInput.camera;
-            Singleton();
-            Instance.CompileControlsInScene();
-        }
-
-        private void OnEnable()
-        {
-            HandheldInputAction?.Enable();
         }
 
         private void Start()
@@ -175,13 +153,14 @@ namespace Wonderland
             GameManager.LoadNewScene += DisCompileControlsInPreviousScene;
             
             //
+            HandheldInputAction.Enable();
             HandheldInputAction.Touch.PrimaryTouchContact.started += context => StartTouchPrimary(context);
             HandheldInputAction.Touch.PrimaryTouchContact.canceled += context => EndTouchPrimary(context);
         }
 
         private void OnDisable()
         {
-            HandheldInputAction?.Disable();
+            HandheldInputAction.Disable();
         }
     }
 }
