@@ -13,8 +13,9 @@ namespace Wonderland
         [Header("Scene's Setting")] 
         public SceneHandler currentSceneHandler;
         public UIHandler currentUIHandler;
-        public SceneSetting Setting;
-        public SceneType currentScene;
+        public SceneSetting setting;
+        public SceneType currentscene;
+        public static SceneType CurrentScene;
         
         public static event Action LoadNewScene;
 

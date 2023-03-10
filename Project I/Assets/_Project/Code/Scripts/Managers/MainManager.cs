@@ -11,7 +11,7 @@ namespace Wonderland
         #region Singleton
 
         public static MainManager Instance;
-        private List<IManager> _managers = new List<IManager>();
+        private readonly List<IManager> _managers = new List<IManager>();
 
         public GameManager gameManager;
         public InputManager inputManager;
@@ -34,8 +34,8 @@ namespace Wonderland
         private void UpdateInstance()
         {
             Logging.ManagerLogger.Log("Instance Updated");
-            Instance.gameManager.currentScene = gameManager.currentScene;
-            Instance.gameManager.Setting = gameManager.Setting;
+            GameManager.CurrentScene = gameManager.currentscene;
+            Instance.gameManager.setting = gameManager.setting;
             Instance.inputManager._playerInput = inputManager._playerInput;
             Instance.inputManager._mainCamera = inputManager._mainCamera;
             Instance.uiManager._root = uiManager._root;

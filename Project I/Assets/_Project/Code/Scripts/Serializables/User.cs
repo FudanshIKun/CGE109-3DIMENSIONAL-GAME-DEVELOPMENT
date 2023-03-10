@@ -1,4 +1,5 @@
 using System;
+using Firebase.Auth;
 using UnityEngine;
 
 namespace Wonderland
@@ -6,13 +7,15 @@ namespace Wonderland
     [Serializable]
     public class User : MonoBehaviour
     {
+        public FirebaseUser authUser;
         public string displayName;
         public string userId;
 
-        public User()
+        public User(FirebaseUser user)
         {
-            displayName = AuthAPI.GetAuthUser().DisplayName;
-            userId = AuthAPI.GetAuthUser().UserId;
+            authUser = user;
+            displayName = authUser.DisplayName;
+            userId = authUser.UserId;
         }
     }
 }

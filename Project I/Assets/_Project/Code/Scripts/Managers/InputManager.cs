@@ -69,10 +69,10 @@ namespace Wonderland
                 HandheldInputAction = new HandheldInputAction();
             }
 
-            if (MainManager.Instance.gameManager.Setting != null)
+            if (MainManager.Instance.gameManager.setting != null)
             {
                 //
-                if (MainManager.Instance.gameManager.Setting.inputSetting.isTouchable)
+                if (MainManager.Instance.gameManager.setting.inputSetting.isTouchable)
                 {
                     if (GetComponent<TouchDetection>() == null)
                     {
@@ -89,7 +89,7 @@ namespace Wonderland
                 }
 
                 //
-                if (MainManager.Instance.gameManager.Setting.inputSetting.isSwipable)
+                if (MainManager.Instance.gameManager.setting.inputSetting.isSwipable)
                 {
                     if (GetComponent<SwipeDetection>() == null)
                     {

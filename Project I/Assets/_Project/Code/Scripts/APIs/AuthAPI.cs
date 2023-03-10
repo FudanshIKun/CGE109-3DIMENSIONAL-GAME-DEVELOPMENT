@@ -31,6 +31,8 @@ namespace Wonderland
                 return new RequestState();
             });
 
+        //public static async Task<RequestState> SignOutRequest()
+
         public static bool IsSignedIn() => Auth.CurrentUser != null;
 
         public static FirebaseUser GetAuthUser() => Auth.CurrentUser;

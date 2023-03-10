@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Firebase;
-using Firebase.Auth;
 
 namespace Wonderland.GamePlay.Authentication
 {
@@ -38,7 +35,7 @@ namespace Wonderland.GamePlay.Authentication
             if(signInTask.Exception == null)
             {
                 MainManager.Instance.gameManager.LoadSceneWithLoaderAsync
-                    (GameManager.SceneType.Lobby);
+                    (IManager.SceneType.Lobby);
             }
         }
 

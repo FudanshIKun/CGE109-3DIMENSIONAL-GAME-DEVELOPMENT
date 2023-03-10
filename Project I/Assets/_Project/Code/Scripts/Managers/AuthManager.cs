@@ -16,6 +16,8 @@ namespace Wonderland
         private string AuthKey = "";
         private string DatabaseURL = "";
 
+        public static User currentUser;
+
         public static async Task SignUpAsync(string email, string password, string confirmPassword,
             Label errorText)
         {
@@ -61,7 +63,7 @@ namespace Wonderland
                     else
                     {
                         //TODO: Post Newuser To Database After SignUp Successfully
-                        //Debug.LogFormat($"Firebase User Created Successfully : {_user.DisplayName} ({_user.UserId})");
+                        Debug.LogFormat($"Firebase User Created Successfully : {currentUser.displayName} ({currentUser.userId})");
                     }
                 });
             }
@@ -100,16 +102,21 @@ namespace Wonderland
                 }
                 else
                 {
-                    //TODO: User Management After SignIn Successfully
+                    currentUser = new User(AuthAPI.GetAuthUser());
                     AuthAPI.IsSignedIn();
-                    //Debug.LogFormat($"Successfully Signed In: {_user.DisplayName} {_user.UserId}");
+                    Debug.LogFormat($"Successfully Signed In: {currentUser.displayName} {currentUser.userId}");
                 }
             });
         }
 
+        public static async Task SignOutAsync()
+        {
+            
+        }
+        
         private void OnApplicationQuit()
         {
-            AuthAPI.SignOut();
+            SignOutAsync();
         }
     }
 }
