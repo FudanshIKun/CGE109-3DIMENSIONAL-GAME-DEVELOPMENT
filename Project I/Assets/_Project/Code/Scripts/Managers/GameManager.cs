@@ -10,10 +10,7 @@ namespace Wonderland
 
         #region Scene Management
 
-        [Header("Scene's Setting")] 
-        public SceneHandler currentSceneHandler;
-        public UIHandler currentUIHandler;
-        public SceneSetting setting;
+        [Header("Scene's Setting")]
         public SceneType currentscene;
         public static SceneType CurrentScene;
         

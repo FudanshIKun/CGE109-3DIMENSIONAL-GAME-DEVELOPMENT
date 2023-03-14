@@ -13,9 +13,6 @@ namespace Wonderland
 {
     public class AuthManager : IManager
     {
-        private string AuthKey = "";
-        private string DatabaseURL = "";
-
         public static User currentUser;
 
         public static async Task SignUpAsync(string email, string password, string confirmPassword,

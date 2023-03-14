@@ -6,12 +6,12 @@ namespace Wonderland
     {
         private void OnEnable()
         {
-            MainManager.Instance.gameManager.currentUIHandler = this;
+            MainManager.Instance.uiHandler = this;
         }
         
         private void OnDisable()
         {
-            MainManager.Instance.gameManager.currentUIHandler = null;
+            MainManager.Instance.uiHandler = null;
         }
     }
 }

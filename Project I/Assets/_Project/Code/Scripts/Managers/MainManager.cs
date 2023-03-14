@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Wonderland
 {
@@ -13,10 +14,23 @@ namespace Wonderland
         public static MainManager Instance;
         private readonly List<IManager> _managers = new List<IManager>();
 
+        #region Managers
+
+        [Header("Managers")]
         public GameManager gameManager;
         public InputManager inputManager;
         public UIManager uiManager;
         
+        #endregion
+
+        #region Handlers
+
+        [Header("Handler")]
+        public SceneHandler sceneHandler;
+        public UIHandler uiHandler;        
+
+        #endregion
+
         private void Singleton()
         {
             if (Instance == null)
@@ -35,7 +49,7 @@ namespace Wonderland
         {
             Logging.ManagerLogger.Log("Instance Updated");
             GameManager.CurrentScene = gameManager.currentscene;
-            Instance.gameManager.setting = gameManager.setting;
+            Instance.sceneHandler.sceneInfo = sceneHandler.sceneInfo;
             Instance.inputManager._playerInput = inputManager._playerInput;
             Instance.inputManager._mainCamera = inputManager._mainCamera;
             Instance.uiManager._root = uiManager._root;

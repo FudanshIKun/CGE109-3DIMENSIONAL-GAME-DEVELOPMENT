@@ -4,14 +4,15 @@ namespace Wonderland
 {
     public class SceneHandler : MonoBehaviour
     {
+        public SceneSetting sceneInfo;
         private void OnEnable()
         {
-            MainManager.Instance.gameManager.currentSceneHandler = this;
+            MainManager.Instance.sceneHandler = this;
         }
         
         private void OnDisable()
         {
-            MainManager.Instance.gameManager.currentSceneHandler = null;
+            MainManager.Instance.sceneHandler = null;
         }
     }
 }

@@ -8,12 +8,20 @@ namespace Wonderland
 {
     public class DatabaseManager : MonoBehaviour
     {
-        public void PostToDatabase()
+        private string databaseURL = "https://project-id.firebaseio.com/users"; 
+        private string AuthKey = "secret ;D";
+        
+        public void SubmitToDatabase()
+        {
+            //TODO: PostToDatabase();   
+        }
+        
+        private void PostToDatabase()
         {
             //TODO: Post Any Input Data To Database
         }
 
-        public void RetrieveFromDatabase()
+        private void RetrieveFromDatabase()
         {
             //TODO: Retrieve Any Required Data From Database
         }
