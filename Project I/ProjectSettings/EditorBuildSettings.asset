@@ -6,12 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Project/Level/Scenes/Authentication/Authentication.unity
+    path: Assets/_Project/Level/Scenes/Authorization/Authorization.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/_Project/Level/Scenes/Lobby/Lobby.unity
     guid: bd5e10e59b8028b458ac6450f138b761
   - enabled: 1
-    path: Assets/_Project/Level/Scenes/NetRunning/NetRunning.unity
+    path: Assets/_Project/Level/Scenes/BeatRunner/BeatRunner.unity
     guid: dec69d7fe6c05894594e756fbc81c2fb
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 1b496e27dfdd9da4b80fbe1dac015e2b,
+      type: 2}
+    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000,
+      guid: 935df8f45194a614e8aa12b1c25b3353, type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
+      guid: 712d94a0595ee9f49ad4e76446e56c1e, type: 2}

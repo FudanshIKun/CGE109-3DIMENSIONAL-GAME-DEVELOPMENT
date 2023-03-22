@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Wonderland
 {
@@ -7,13 +8,13 @@ namespace Wonderland
     [Serializable]
     public class SceneSetting : ScriptableObject
     {
-        public SceneSystem sceneSeting;
-        public InputSystem inputSetting;
-        public CameraSystem cameraSetting;
+        public Scene sceneSetting;
+        public Input inputSetting;
+        public Camera cameraSetting;
         
 
         [Serializable]
-        public struct SceneSystem
+        public struct Scene
         {
             public bool isGameScene;
             
@@ -27,15 +28,15 @@ namespace Wonderland
         }
         
         [Serializable]
-        public struct InputSystem
+        public struct Input
         {
-            [Header("Handheld Inputs"),Tooltip("Currently Unity New Input System Doesn't Support Multi Finger Touch")]
-            public bool isTouchable;
-            public bool isSwipable;
+            [Header("Handheld Inputs")]
+            public bool touchable;
+            public bool swipable;
         }
         
         [Serializable]
-        public struct CameraSystem
+        public struct Camera
         {
             public bool setCameraToStartPosition;
             public Vector3 cameraStartPosition;

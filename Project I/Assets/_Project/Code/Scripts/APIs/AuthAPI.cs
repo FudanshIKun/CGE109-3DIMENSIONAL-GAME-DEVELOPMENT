@@ -1,42 +1,40 @@
 using System.Threading.Tasks;
 using Firebase.Auth;
+using UnityEngine;
 
-namespace Wonderland
+namespace Wonderland.API
 {
     public static class AuthAPI
     {
         private static readonly FirebaseAuth Auth = FirebaseAuth.DefaultInstance;
-        
-        public static async Task<RequestState> SignUpRequest(string email, string password) =>
-            await Auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWith(task =>
-            {
-                if (task.IsCanceled)
-                    return new RequestState().MakeFaulted("New user creation was canceled.");
 
-                if (task.IsFaulted)
-                    return new RequestState().MakeFaulted(task.Exception?.GetBaseException().Message);
+        public static async Task SignUpRequest(string email, string password)
+        {
+            await Auth.CreateUserWithEmailAndPasswordAsync(email, password);
+            Debug.LogFormat(
+                $"Successfully SignUp User: {email}");
+        }
 
-                return new RequestState();
-            });
-        
-        public static async Task<RequestState> SignInRequest(string email, string password) =>
-            await Auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWith(task =>
-            {
-                if (task.IsCanceled)
-                    return new RequestState().MakeFaulted("Sign in was canceled.");
+        public static async Task UpdateUserProfileRequest(UserProfile userProfile)
+        {
+            await Auth.CurrentUser.UpdateUserProfileAsync(userProfile);
+        }
 
-                if (task.IsFaulted)
-                    return new RequestState().MakeFaulted(task.Exception?.GetBaseException().Message);
+        public static async Task SignInRequest(string email, string password)
+        {
+            await Auth.SignInWithEmailAndPasswordAsync(email, password);
+            Debug.LogFormat(
+                $"Successfully SignIn User: {Auth.CurrentUser.Email} {Auth.CurrentUser.UserId}");
+        }
 
-                return new RequestState();
-            });
-
-        //public static async Task<RequestState> SignOutRequest()
+        public static void SignOutRequest()
+        {
+            Auth.SignOut();
+            Debug.Log("Successfully SignOut User");
+        }
 
         public static bool IsSignedIn() => Auth.CurrentUser != null;
 
-        public static FirebaseUser GetAuthUser() => Auth.CurrentUser;
-
-        public static void SignOut() => Auth.SignOut();
+        public static FirebaseUser GetAuthCurrentUser() => Auth.CurrentUser;
     }
 }

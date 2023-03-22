@@ -1,0 +1,16 @@
+{
+    "name": "Authorization",
+    "rootNamespace": "Wonderland.GamePlay.Authorization",
+    "references": [
+        "GUID:ba54df8fc75f6e44682110606a0a5c24"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

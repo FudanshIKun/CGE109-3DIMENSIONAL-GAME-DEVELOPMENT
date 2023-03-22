@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Wonderland;
+using Wonderland.Management;
 
 namespace Wonderland.GamePlay.Lobby
 {
@@ -15,10 +15,10 @@ namespace Wonderland.GamePlay.Lobby
 
         #region Lobby Components
 
-        private Button logoutButton;
-        private Button playButton;
-        private Button yesButton;
-        private Button noButton;
+        private Button _logoutButton;
+        private Button _playButton;
+        private Button _yesButton;
+        private Button _noButton;
         
         #endregion
 
@@ -31,7 +31,7 @@ namespace Wonderland.GamePlay.Lobby
 
         private void OnPlayButtonClicked()
         {
-            MainManager.Instance.gameManager.LoadSceneWithLoaderAsync(GameManager.SceneType.NetRunning);
+            MainManager.Instance.gameManager.LoadSceneWithLoaderAsync(IManager.SceneType.BeatRunner);
         }
 
         private void OnYesSignoutClicked()
@@ -46,19 +46,19 @@ namespace Wonderland.GamePlay.Lobby
 
         private void OnUxmlChange()
         {
-            VisualElement currentUxml = MainManager.Instance.uiManager.currentUxml;
+            VisualElement currentUxml = MainManager.Instance.uiManager.CurrentUxml;
             switch (MainManager.Instance.uiManager.GetCurrentUxmlName()){
                 case "LobbyPanel" :
-                    logoutButton = currentUxml.Q<Button>("Logout");
-                    playButton = currentUxml.Q<Button>("Play");
-                    logoutButton.clicked += OnLogoutButtonClicked;
-                    playButton.clicked += OnPlayButtonClicked;
+                    _logoutButton = currentUxml.Q<Button>("Logout");
+                    _playButton = currentUxml.Q<Button>("Play");
+                    _logoutButton.clicked += OnLogoutButtonClicked;
+                    _playButton.clicked += OnPlayButtonClicked;
                     break;
                 case "LogoutPanel" :
-                    yesButton = currentUxml.Q<Button>("YesButton");
-                    noButton = currentUxml.Q<Button>("NoButton");
-                    yesButton.clicked += OnYesSignoutClicked;
-                    noButton.clicked += OnNoSignoutClicked;
+                    _yesButton = currentUxml.Q<Button>("YesButton");
+                    _noButton = currentUxml.Q<Button>("NoButton");
+                    _yesButton.clicked += OnYesSignoutClicked;
+                    _noButton.clicked += OnNoSignoutClicked;
                     break;
             }
         }

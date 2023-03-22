@@ -4,31 +4,40 @@ namespace Wonderland
 {
     public static class Logging
     {
-        public static Logger APILogger = new Logger(Debug.unityLogger.logHandler);
-        public static Logger AuhLogger = new Logger(Debug.unityLogger.logHandler);
-        public static Logger ManagerLogger = new Logger(Debug.unityLogger.logHandler);
-        public static Logger InputSystemLogger = new Logger(Debug.unityLogger.logHandler);
-        public static Logger InputControls = new Logger(Debug.unityLogger.logHandler);
-        public static Logger UILogger = new Logger(Debug.unityLogger.logHandler);
-        public static Logger GamePlayLogger = new Logger(Debug.unityLogger.logHandler);
+        // APIs
+        public static readonly Logger AuthLogger = new Logger(Debug.unityLogger.logHandler);
+        public static readonly Logger FirestoreLogger = new Logger(Debug.unityLogger.logHandler);
+        
+        // Main System
+        public static readonly Logger ManagerLogger = new Logger(Debug.unityLogger.logHandler);
+        
+        // Input System
+        public static readonly Logger InputSystemLogger = new Logger(Debug.unityLogger.logHandler);
+        public static readonly Logger DetectionLogger = new Logger(Debug.unityLogger.logHandler);
+        
+        // UserInterface
+        public static readonly Logger UILogger = new Logger(Debug.unityLogger.logHandler);
+        
+        // GamePlay System
+        public static readonly Logger GamePlayLogger = new Logger(Debug.unityLogger.logHandler);
 
         public static void LoadLogger()
         {
-            // API Logger
-            APILogger.logEnabled = true;
-            AuhLogger.logEnabled = true;
+            // APIs
+            AuthLogger.logEnabled = true;
+            FirestoreLogger.logEnabled = true;
             
-            // Manager Logger
-            ManagerLogger.logEnabled = true;
+            // Main System
+            ManagerLogger.logEnabled = false;
             
-            // Input Logger
+            // Input System
             InputSystemLogger.logEnabled = false;
-            InputControls.logEnabled = false;
+            DetectionLogger.logEnabled = false;
             
-            // GamePlay Logger
+            // GamePlay System
             GamePlayLogger.logEnabled = true;
             
-            // UserInterface Logger
+            // UserInterface
             UILogger.logEnabled = true;
         }
     }

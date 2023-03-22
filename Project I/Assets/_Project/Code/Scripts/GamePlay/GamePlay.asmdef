@@ -2,8 +2,7 @@
     "name": "GamePlay",
     "rootNamespace": "Wonderland.GamePlay",
     "references": [
-        "GUID:cbf3c212b1e49ef488dc3b7fe2795f5a",
-        "GUID:dcbc730ce5196cb468434da5c2a268ad"
+        "GUID:cbf3c212b1e49ef488dc3b7fe2795f5a"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

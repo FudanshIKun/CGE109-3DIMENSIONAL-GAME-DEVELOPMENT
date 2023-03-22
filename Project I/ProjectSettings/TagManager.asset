@@ -5,10 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - System
-  - Audio
   - UI
-  - LoadingScreen
   - UIDocument
+  - Manager
+  - Object
   layers:
   - Default
   - TransparentFX
@@ -16,10 +16,10 @@ TagManager:
   - 
   - Water
   - UI
+  - Object
   - Player
   - Beat
-  - 
-  - 
+  - PostProcess
   - 
   - 
   - 
