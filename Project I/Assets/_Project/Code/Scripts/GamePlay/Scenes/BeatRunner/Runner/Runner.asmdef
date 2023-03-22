@@ -1,8 +1,8 @@
 {
-    "name": "Lobby",
-    "rootNamespace": "Wonderland.GamePlay.Lobby",
+    "name": "Runner",
+    "rootNamespace": "Wonderland.GamePlay.BeatRunner.Runner",
     "references": [
-        "GUID:812e5458717014b448cb01ef524a6a96",
+        "GUID:cbf3c212b1e49ef488dc3b7fe2795f5a",
         "GUID:ba54df8fc75f6e44682110606a0a5c24"
     ],
     "includePlatforms": [],
