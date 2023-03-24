@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Wonderland.Management;
 
-namespace Wonderland.GamePlay.BeatRunner
+namespace Wonderland.GamePlay.BeatRunner.Runner
 {
     public class RunnerHandler : MonoBehaviour
     {
