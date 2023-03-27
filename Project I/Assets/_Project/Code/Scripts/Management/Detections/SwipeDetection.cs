@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Wonderland.Management
 {
     [RequireComponent(typeof(InputManager))]
-    public class SwipeDetection : IControls
+    public class SwipeDetection : Controls
     {
         #region Setting
         

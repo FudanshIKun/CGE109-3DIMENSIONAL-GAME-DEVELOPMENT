@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Wonderland
+namespace Wonderland.Objects
 {
     public class Object : MonoBehaviour
     {

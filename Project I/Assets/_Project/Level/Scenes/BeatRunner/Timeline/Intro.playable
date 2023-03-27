@@ -25,13 +25,13 @@ MonoBehaviour:
     m_Start: 0
     m_ClipIn: 0
     m_Asset: {fileID: -2460458964907166711}
-    m_Duration: 2.033333333333333
+    m_Duration: 1.8
     m_TimeScale: 1
     m_ParentTrack: {fileID: -6048081436634757798}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: -1
-    m_BlendOutDuration: 1.5666666666666664
+    m_BlendOutDuration: 1.6
     m_MixInCurve:
       serializedVersion: 2
       m_Curve:
@@ -91,15 +91,15 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: StartVirtualCamera
   - m_Version: 1
-    m_Start: 0.4666666666666667
+    m_Start: 0.2
     m_ClipIn: 0
     m_Asset: {fileID: -428944124418590673}
-    m_Duration: 6.566666666666661
+    m_Duration: 1.8
     m_TimeScale: 1
     m_ParentTrack: {fileID: -6048081436634757798}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 1.5666666666666664
+    m_BlendInDuration: 1.6
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2

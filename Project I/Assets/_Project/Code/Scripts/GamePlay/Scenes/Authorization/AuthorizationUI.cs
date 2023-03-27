@@ -20,9 +20,9 @@ namespace Wonderland.GamePlay.Authorization
 
         #endregion
 
-        private void OnClickSignUp() => AuthenticationHandler.SignUpAsync(UserNameField.value, EmailField.value, PasswordField.value, ConfirmPasswordField.value, ErrorText);
+        private void OnClickSignUp() => FirebaseManager.SignUpAsync(UserNameField.value, EmailField.value, PasswordField.value, ConfirmPasswordField.value, ErrorText);
 
-        private void OnClickSignIn() => AuthenticationHandler.SignInAsync(EmailField.value, PasswordField.value, ErrorText);
+        private void OnClickSignIn() => FirebaseManager.SignInAsync(EmailField.value, PasswordField.value, ErrorText);
         
         private void LoadSignUpTab()
         {

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2198673228659626625}
   - component: {fileID: 2198673228659626624}
   - component: {fileID: 7372763553805199613}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: InputManager
-  m_TagString: System
+  m_TagString: Manager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2198673228659626624
 MonoBehaviour:
@@ -88,3 +88,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28b4f3525cc084f4c9c9932bb404f59e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInput: {fileID: 0}
+  mainCamera: {fileID: 0}

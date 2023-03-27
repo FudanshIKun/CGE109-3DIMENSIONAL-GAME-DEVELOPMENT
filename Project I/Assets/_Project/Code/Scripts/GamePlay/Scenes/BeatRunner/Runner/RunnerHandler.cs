@@ -12,7 +12,7 @@ namespace Wonderland.GamePlay.BeatRunner.Runner
 
         #region Methods
 
-        public IEnumerator LoadRunnerCoroutine()
+        public IEnumerator CreateRunnerCoroutine()
         {
             yield return null;
         }

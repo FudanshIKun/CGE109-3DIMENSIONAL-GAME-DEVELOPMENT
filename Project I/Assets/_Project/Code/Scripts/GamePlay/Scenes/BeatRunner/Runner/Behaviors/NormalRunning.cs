@@ -4,8 +4,6 @@ namespace Wonderland.GamePlay.BeatRunner.Runner
 {
     public class NormalRunning : MonoBehaviour, IRunningBehavior
     {
-        #region Methods
-
         public void Run()
         {
             
@@ -26,6 +24,9 @@ namespace Wonderland.GamePlay.BeatRunner.Runner
             
         }
 
-        #endregion
+        public void Attack()
+        {
+            
+        }
     }
 }

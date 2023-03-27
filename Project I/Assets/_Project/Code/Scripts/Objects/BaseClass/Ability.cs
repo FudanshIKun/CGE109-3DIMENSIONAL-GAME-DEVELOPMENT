@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Wonderland
+namespace Wonderland.Objects
 {
     [Serializable]
     public class Ability : MonoBehaviour

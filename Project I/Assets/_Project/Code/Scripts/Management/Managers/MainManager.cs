@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Wonderland.API;
 
 namespace Wonderland.Management
@@ -13,7 +14,8 @@ namespace Wonderland.Management
         
         #region Managers
 
-        [Header("Managers")]
+        [Header("Managers")] 
+        public FirebaseManager firebaseManager;
         public GameManager gameManager;
         public InputManager inputManager;
         public UIManager uiManager;

@@ -4,14 +4,16 @@ using Firebase.Auth;
 using Firebase.Firestore;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Wonderland.API;
 
 namespace Wonderland.Management
 {
-    public class AuthenticationHandler : MonoBehaviour
+    public class FirebaseManager : IManager
     {
-
+        
+        
         #region Methods
-
+        
         public static async void SignUpAsync(string userName, string email, string password, string confirmPassword, Label errorText)
         {
             if(string.IsNullOrEmpty(userName))
@@ -30,7 +32,7 @@ namespace Wonderland.Management
             {
                 try
                 {
-                    await AuthManager.SignUp(userName, email, password);
+                    await AuthAPI.SignUp(userName, email, password);
                     MainManager.Instance.gameManager.LoadSceneWithLoaderAsync
                         (IManager.SceneType.Lobby);
                 }
@@ -83,9 +85,9 @@ namespace Wonderland.Management
             {
                 try
                 {
-                    await AuthManager.SignIn(email, password);
+                    await AuthAPI.SignIn(email, password);
                     MainManager.Instance.gameManager.LoadSceneWithLoaderAsync
-                        (IManager.SceneType.Lobby);
+                        (SceneType.Lobby);
                 }
                 catch (FirebaseException firebaseException)
                 {
@@ -122,6 +124,11 @@ namespace Wonderland.Management
             }
         }
 
+        public static async void SignOutAsync()
+        {
+            
+        }
+        
         #endregion
     }
 }

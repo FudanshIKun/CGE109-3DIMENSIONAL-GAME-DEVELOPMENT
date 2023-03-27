@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Firebase.Auth;
 using Firebase.Firestore;
 
 namespace Wonderland.API
@@ -10,7 +9,7 @@ namespace Wonderland.API
         private static readonly FirebaseFirestore Firestore = FirebaseFirestore.DefaultInstance;
 
         public static readonly DocumentReference UserInfoDocRef =
-            Firestore.Collection("Users").Document(AuthAPI.GetAuthCurrentUser().Email);
+            Firestore.Collection("Users").Document(AuthAPI.GetCurrentAuthUser().Email);
 
         public static async Task PostToFirestoreRequest(DocumentReference docRef, Dictionary<string, object> dictionary) =>
             await docRef.SetAsync(dictionary);

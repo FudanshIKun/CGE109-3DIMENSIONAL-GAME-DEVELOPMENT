@@ -1,10 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using Wonderland.Objects;
 
 namespace Wonderland.Management
 {
     [RequireComponent(typeof(InputManager))]
-    public class TouchDetection : IControls
+    public class TouchDetection : Controls
     {
         #region Fields
 

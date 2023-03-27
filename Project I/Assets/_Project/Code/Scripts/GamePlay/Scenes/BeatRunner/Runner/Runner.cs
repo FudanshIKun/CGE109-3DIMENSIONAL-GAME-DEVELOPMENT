@@ -1,6 +1,5 @@
-using System;
-using System.Collections;
 using UnityEngine;
+using Wonderland.API;
 using Wonderland.Management;
 
 namespace Wonderland.GamePlay.BeatRunner.Runner
@@ -8,11 +7,34 @@ namespace Wonderland.GamePlay.BeatRunner.Runner
     public class Runner : Player
     {
         #region Setting
-        
+
         [Header("Physics Settings")]
-        [Header("Running Behavior")]
+
+        #region Running Settings
+
+        [SerializeField] float moveSpeed;
+        [SerializeField] float maxSpeed;
+
+        #endregion
+
+        #region Jumping Settings
+
+        [SerializeField] float jumpHeight = 5;
+        [SerializeField] float gravityScale = 5;
+        [SerializeField] float fallGravityScale = 15;
+        public bool IsGrounded { get; private set; }
+        public LayerMask groundLayer;
+
+        #endregion
         
         #endregion
+        
+        public Runner() : base(
+            AuthAPI.GetCurrentUser().UserName, 
+            AuthAPI.GetCurrentUser().DisplayName)
+        {
+            
+        }
         
         #region Fields
         
@@ -27,24 +49,14 @@ namespace Wonderland.GamePlay.BeatRunner.Runner
 
         #endregion
 
-        #region Behavior Methods
+        #region Methods
 
-        private void Running()
+        private void Movement()
         {
             
         }
 
-        private void Jumping()
-        {
-            
-        }
-
-        private void TurnLeft()
-        {
-            
-        }
-        
-        private void TurnRight()
+        private void Interaction()
         {
             
         }
@@ -69,10 +81,15 @@ namespace Wonderland.GamePlay.BeatRunner.Runner
 
         private void FixedUpdate()
         {
-            
+            Movement();
         }
 
         private void Update()
+        {
+            Interaction();
+        }
+
+        private void LateUpdate()
         {
             
         }

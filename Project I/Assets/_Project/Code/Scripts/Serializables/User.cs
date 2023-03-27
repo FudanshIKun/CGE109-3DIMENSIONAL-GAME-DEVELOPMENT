@@ -10,45 +10,34 @@ namespace Wonderland
     {
         #region Fields
 
-        private string UserEmailRef { get; }
-        public string UserEmail => UserEmailRef;
-
-        private FirebaseUser FirebaseUserRef { get; }
-        public FirebaseUser FirebaseUser => FirebaseUserRef;
+        public FirebaseUser FirebaseUser { get; private set; }
+        public string UserEmail { get; private set; }
+        public string UserName { get; set; }
+        public string DisplayName { get; set; }
 
         #endregion
 
         #region Dictionary
 
-        private Dictionary<string,object> UserInfoDict { get; set; }
-        public Dictionary<string, object> UserInfo
-        {
-            get => UserInfoDict;
-            set => UserInfoDict = value;
-        }
-        
-        private Dictionary<string, object> UserGameDataDict { get; set; }
+        public Dictionary<string,object> UserInfo { get; set; }
 
-        public Dictionary<string, object> UserGameData
-        {
-            get => UserGameDataDict;
-            set => UserGameDataDict = value;
-        }
+        public Dictionary<string, object> UserGameData{ get; set; }
 
         #endregion
 
         public User(FirebaseUser user)
         {
-            FirebaseUserRef = user;
-            UserEmailRef = user.Email;
+            FirebaseUser = user;
+            UserName = null;
+            UserEmail = user.Email;
             UserGameData = new Dictionary<string, object>()
             {
                 
             };
             UserInfo = new Dictionary<string, object>
             {
-                {"UserName", null},
                 {"UserID", user.UserId},
+                {"UserName", null},
                 {"DisplayName", user.DisplayName},
                 {"GameData", UserGameData}
             };

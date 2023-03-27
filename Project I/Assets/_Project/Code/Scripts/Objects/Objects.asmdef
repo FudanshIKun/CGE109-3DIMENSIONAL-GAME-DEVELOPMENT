@@ -1,9 +1,7 @@
 {
-    "name": "API",
-    "rootNamespace": "Wonderland.API",
-    "references": [
-        "GUID:cbf3c212b1e49ef488dc3b7fe2795f5a"
-    ],
+    "name": "Objects",
+    "rootNamespace": "Wonderland.Objects",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

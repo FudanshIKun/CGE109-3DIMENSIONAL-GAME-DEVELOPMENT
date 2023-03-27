@@ -1,4 +1,4 @@
-namespace Wonderland
+namespace Wonderland.Objects
 {
     public interface ITouchable
     {

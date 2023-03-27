@@ -6,5 +6,6 @@ namespace Wonderland.GamePlay.BeatRunner.Runner
         void Jump();
         void TurnLeft();
         void TurnRight();
+        void Attack();
     }
 }

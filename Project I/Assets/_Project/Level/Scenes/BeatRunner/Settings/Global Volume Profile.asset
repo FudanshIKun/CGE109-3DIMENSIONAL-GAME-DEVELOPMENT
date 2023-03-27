@@ -18,7 +18,7 @@ MonoBehaviour:
     value: 1
   gradingMode:
     overrideState: 1
-    value: 1
+    value: 0
   externalLut:
     overrideState: 0
     value: {fileID: 0}
@@ -52,14 +52,14 @@ MonoBehaviour:
     overrideState: 0
     value: 1
   temperature:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: -0
   tint:
     overrideState: 0
     value: 0
   colorFilter:
-    overrideState: 0
-    value: {r: 1, g: 1, b: 1, a: 1}
+    overrideState: 1
+    value: {r: 0.759434, g: 0.8492334, b: 1, a: 1}
   hueShift:
     overrideState: 0
     value: 0
@@ -67,8 +67,8 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   brightness:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: -20
   postExposure:
     overrideState: 0
     value: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
     value: 0
   mixerRedOutBlueIn:
     overrideState: 0
-    value: 0
+    value: 1
   mixerGreenOutRedIn:
     overrideState: 0
     value: 0
@@ -104,13 +104,13 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    value: {x: 0.983317, y: 0.96177477, z: 1, w: 0}
   gamma:
     overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    value: {x: 0.5646824, y: 0.9193715, z: 1, w: 0}
   gain:
     overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    value: {x: 0.73369503, y: 0.78996706, z: 1, w: -0.09075439}
   masterCurve:
     overrideState: 0
     value:
@@ -1329,10 +1329,10 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 5
+    value: 20
   threshold:
     overrideState: 1
-    value: 1
+    value: 1.5
   softKnee:
     overrideState: 0
     value: 0.5
@@ -1396,7 +1396,7 @@ MonoBehaviour:
     value: 0
   intensity:
     overrideState: 1
-    value: 1.06
+    value: 1
   color:
     overrideState: 0
     value: {r: 0, g: 0, b: 0, a: 1}
@@ -1445,10 +1445,10 @@ MonoBehaviour:
     value: {x: 50, y: 95}
   minLuminance:
     overrideState: 1
-    value: -0.85
+    value: -1
   maxLuminance:
     overrideState: 1
-    value: 9
+    value: 2
   keyValue:
     overrideState: 0
     value: 1

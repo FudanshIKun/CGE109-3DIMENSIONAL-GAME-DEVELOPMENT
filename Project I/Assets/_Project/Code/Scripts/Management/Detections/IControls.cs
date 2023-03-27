@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Wonderland.Management
 {
-    public class IControls : MonoBehaviour
+    public class Controls : MonoBehaviour
     {
         public virtual void OnEnable()
         {

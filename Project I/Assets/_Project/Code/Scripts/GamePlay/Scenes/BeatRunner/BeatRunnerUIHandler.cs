@@ -1,8 +1,9 @@
 using UnityEngine;
+using Wonderland.Management;
 
 namespace Wonderland.GamePlay.BeatRunner
 {
-    public class BeatRunnerUIHandler : MonoBehaviour
+    public class BeatRunnerUIHandler : UIHandler
     {
         
     }

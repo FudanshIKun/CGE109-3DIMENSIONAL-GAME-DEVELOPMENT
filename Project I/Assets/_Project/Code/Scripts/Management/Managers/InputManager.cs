@@ -14,7 +14,7 @@ namespace Wonderland.Management
         [HideInInspector] public PlayerInput playerInput;
         [HideInInspector] public Camera mainCamera;
         private static HandheldInputAction _handheldInputAction;
-        private List<IControls> _controlsList;
+        private List<Controls> _controlsList;
 
         #endregion
         
@@ -54,7 +54,7 @@ namespace Wonderland.Management
             //
             if (_controlsList == null)
             {
-                _controlsList = new List<IControls>();
+                _controlsList = new List<Controls>();
             }
 
             //
@@ -108,7 +108,7 @@ namespace Wonderland.Management
         {
             if (_controlsList == null)
             {
-                _controlsList = new List<IControls>();
+                _controlsList = new List<Controls>();
             }
             else
             {

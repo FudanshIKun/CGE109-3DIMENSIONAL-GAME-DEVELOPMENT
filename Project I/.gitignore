@@ -94,4 +94,10 @@ Assets/Plugin/Android/Firebase/
 
 # UModeler Lite Package
 /[Aa]ssets/[Tt]ripolygon
+/[Aa]ssets/[Tt]ripolygon.meta
 /[Aa]ssets/[Tt]ripolygon/.meta
+
+#ChatGPT Script Generator Package
+/[Aa]ssets/ChatGPT Script Generator
+/[Aa]ssets/ChatGPT Script Generator.meta
+/[Aa]ssets/ChatGPT Script Generator/.meta
