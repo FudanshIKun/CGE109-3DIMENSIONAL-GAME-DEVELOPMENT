@@ -87,17 +87,25 @@ crashlytics-build.properties
 [Aa]ssets/[Ss]treamingAssets/aa/*  
 
 # This may be different if it is changed in Android Resolver settings
-Assets/GeneratedLocalRepo/
+[Aa]ssets/GeneratedLocalRepo/
 
-Assets/StreamingAssets/google-services-desktop.json
-Assets/Plugin/Android/Firebase/
+[Aa]ssets/StreamingAssets/google-services-desktop.json
+[Aa]ssets/Plugin/Android/Firebase/
+
+#Unity Packages Assets
 
 # UModeler Lite Package
 /[Aa]ssets/[Tt]ripolygon
 /[Aa]ssets/[Tt]ripolygon.meta
-/[Aa]ssets/[Tt]ripolygon/.meta
 
 #ChatGPT Script Generator Package
-/[Aa]ssets/ChatGPT Script Generator
-/[Aa]ssets/ChatGPT Script Generator.meta
-/[Aa]ssets/ChatGPT Script Generator/.meta
+/[Aa]ssets/[Cc]hatGPT Script Generator
+/[Aa]ssets/[Cc]hatGPT Script Generator.meta
+
+#Inspector Graph
+/[Aa]ssets/[Gg]iantParticleGames
+/[Aa]ssets/[Gg]iantParticleGames.meta
+
+#HeightFog
+/[Aa]ssets/[Hh]eight Fog
+/[Aa]ssets/[Hh]eight Fog.meta

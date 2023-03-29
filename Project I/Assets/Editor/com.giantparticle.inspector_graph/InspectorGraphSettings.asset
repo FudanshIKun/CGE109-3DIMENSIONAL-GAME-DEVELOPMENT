@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e98e4fe4c4a4e3cbfc89527164dac30, type: 3}
+  m_Name: InspectorGraphSettings
+  m_EditorClassIdentifier: 
+  _maxPreviewWindows: 50
+  _maxWindows: 100
+  _filters:
+  - FullyQualifiedName: UnityEngine.GameObject
+    ShowType: 1
+    ExpandType: 0
+  - FullyQualifiedName: UnityEditor.MonoScript
+    ShowType: 0
+    ExpandType: 0
+  - FullyQualifiedName: UnityEngine.U2D.SpriteAtlas
+    ShowType: 1
+    ExpandType: 0
