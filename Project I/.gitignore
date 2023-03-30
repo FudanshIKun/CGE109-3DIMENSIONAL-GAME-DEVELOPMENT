@@ -105,3 +105,6 @@ crashlytics-build.properties
 #Inspector Graph
 /[Aa]ssets/[Gg]iantParticleGames
 /[Aa]ssets/[Gg]iantParticleGames.meta
+
+#Height Fog
+/[Aa]ssets/Height Fog/README.pdf.meta
