@@ -24,8 +24,8 @@ namespace Wonderland.Management
 
         #region Handlers
         
-        public static GameSceneHandler GameSceneHandler;
-        public static GamePlayHandler GamePlayHandler;
+        public static GamesceneHandler GameSceneHandler;
+        public static GameplayHandler GamePlayHandler;
         public static SceneHandler SceneHandler;
         public static UIHandler UIHandler;
 
@@ -136,11 +136,6 @@ namespace Wonderland.Management
         {
             Singleton();
             Instance.inputManager.CompileControlsInScene();
-        }
-
-        private void OnApplicationQuit()
-        {
-            AuthAPI.SignOutRequest();
         }
     }
 }

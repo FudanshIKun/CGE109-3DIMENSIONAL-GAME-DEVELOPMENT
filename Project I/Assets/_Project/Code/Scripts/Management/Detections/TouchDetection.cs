@@ -21,22 +21,12 @@ namespace Wonderland.Management
             isTouching = true;
             currentTouched = touched;
             DetectTouch(currentTouched);
-            StartCoroutine(TimeCounter());
         }
-        
-        private IEnumerator TimeCounter()
-        {
-            while (isTouching)
-            {
-                yield return null;
-            }
-        }
-        
+
         private void TouchEnd(Vector2 position, GameObject touched, float time)
         {
             isTouching = false;
             UnDetectTouch(currentTouched);
-            StopCoroutine(TimeCounter());
         }
         
         private void DetectTouch(GameObject touchedObject)

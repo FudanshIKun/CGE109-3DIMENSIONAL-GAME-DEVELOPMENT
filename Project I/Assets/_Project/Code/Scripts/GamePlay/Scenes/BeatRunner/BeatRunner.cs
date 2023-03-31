@@ -4,7 +4,7 @@ using Wonderland.Management;
 
 namespace Wonderland.GamePlay.BeatRunner
 {
-    public class BeatRunnerHandler : GameplayHandler
+    public class BeatRunner : SceneHandler
     {
         #region Handlers
 

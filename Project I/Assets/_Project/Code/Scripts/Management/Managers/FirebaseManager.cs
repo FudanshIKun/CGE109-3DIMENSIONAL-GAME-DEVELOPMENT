@@ -10,9 +10,14 @@ namespace Wonderland.Management
 {
     public class FirebaseManager : IManager
     {
-        
-        
-        #region Methods
+        #region Authentication Fields
+
+        private static FirebaseAuth Auth { get; set; }
+        private static User CurrentUser { get; set; }
+
+        #endregion
+
+        #region Authentication Methods
         
         public static async void SignUpAsync(string userName, string email, string password, string confirmPassword, Label errorText)
         {
@@ -32,9 +37,24 @@ namespace Wonderland.Management
             {
                 try
                 {
-                    await AuthAPI.SignUp(userName, email, password);
+                    await AuthAPI.SignUp(Auth, email, password);
+                    
+                    CurrentUser = new User(Auth.CurrentUser)
+                    {
+                        UserName = userName,
+                        UserInfo =
+                        {
+                            ["UserName"] = userName
+                        } 
+                    };
+                    
+                    UserInfoDocumentReference =
+                        Firestore.Collection("Users").Document(Auth.CurrentUser.Email);
+                    
+                    await FirestoreAPI.PostToFirestore(UserInfoDocumentReference, CurrentUser.UserInfo);
+                    
                     MainManager.Instance.gameManager.LoadSceneWithLoaderAsync
-                        (IManager.SceneType.Lobby);
+                        (SceneType.Lobby);
                 }
                 catch (FirebaseException firebaseException)
                 {
@@ -85,7 +105,18 @@ namespace Wonderland.Management
             {
                 try
                 {
-                    await AuthAPI.SignIn(email, password);
+                    await AuthAPI.SignIn(Auth, email, password);
+
+                    CurrentUser = new User(Auth.CurrentUser);
+                    
+                    UserInfoDocumentReference =
+                        Firestore.Collection("Users").Document(Auth.CurrentUser.Email);
+                    
+                    await FirestoreAPI.RetrieveFromFirestore(UserInfoDocumentReference).ContinueWith(loadUserInfoTask =>
+                    {
+                        CurrentUser.UserInfo = loadUserInfoTask.Result;
+                    });
+                    
                     MainManager.Instance.gameManager.LoadSceneWithLoaderAsync
                         (SceneType.Lobby);
                 }
@@ -128,7 +159,38 @@ namespace Wonderland.Management
         {
             
         }
+
+        public static bool IsSignedIn() => Auth.CurrentUser != null;
+        public static User GetCurrentUser() => CurrentUser;
         
         #endregion
+
+        #region Firestore Fields
+
+        private static FirebaseFirestore Firestore { get; set; }
+
+        private static DocumentReference UserInfoDocumentReference{ get; set; }
+
+        #endregion
+        
+        #region Initialize Firebase Methods
+
+        private void InitializeFirebase()
+        {
+            Auth = FirebaseAuth.DefaultInstance;
+            Firestore = FirebaseFirestore.DefaultInstance;
+        }
+
+        #endregion
+
+        private void Awake()
+        {
+            InitializeFirebase();
+        }
+
+        private void OnApplicationQuit()
+        {
+            AuthAPI.SignOut(Auth);
+        }
     }
 }

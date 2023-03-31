@@ -1,3 +1,5 @@
+using System;
+using System.Linq.Expressions;
 using UnityEngine;
 using Wonderland.API;
 using Wonderland.Management;
@@ -30,8 +32,8 @@ namespace Wonderland.GamePlay.BeatRunner.Runner
         #endregion
         
         public Runner() : base(
-            AuthAPI.GetCurrentUser().UserName, 
-            AuthAPI.GetCurrentUser().DisplayName)
+            FirebaseManager.GetCurrentUser().UserName, 
+            FirebaseManager.GetCurrentUser().DisplayName)
         {
             
         }
@@ -45,21 +47,7 @@ namespace Wonderland.GamePlay.BeatRunner.Runner
 
         #region Behavior Fields
 
-        private IRunningBehavior _runningBehavior;
-
-        #endregion
-
-        #region Methods
-
-        private void Movement()
-        {
-            
-        }
-
-        private void Interaction()
-        {
-            
-        }
+        private IRunnerBehavior CurrentBehavior { get; set; }
 
         #endregion
 
@@ -71,7 +59,13 @@ namespace Wonderland.GamePlay.BeatRunner.Runner
 
         private void OnEnable()
         {
-            
+            if (CurrentBehavior != null)
+            {
+                SwipeDetection.UpSwipe += CurrentBehavior.UpSwipe;
+                SwipeDetection.DownSwipe += CurrentBehavior.DownSwipe;
+                SwipeDetection.LeftSwipe += CurrentBehavior.LefSwipe;
+                SwipeDetection.RightSwipe += CurrentBehavior.RightSwipe;
+            }
         }
 
         private void Start()
@@ -81,17 +75,28 @@ namespace Wonderland.GamePlay.BeatRunner.Runner
 
         private void FixedUpdate()
         {
-            Movement();
+            
         }
 
         private void Update()
         {
-            Interaction();
+            
         }
 
         private void LateUpdate()
         {
             
+        }
+
+        private void OnDisable()
+        {
+            if (CurrentBehavior != null)
+            {
+                SwipeDetection.UpSwipe -= CurrentBehavior.UpSwipe;
+                SwipeDetection.DownSwipe -= CurrentBehavior.DownSwipe;
+                SwipeDetection.LeftSwipe -= CurrentBehavior.LefSwipe;
+                SwipeDetection.RightSwipe -= CurrentBehavior.RightSwipe;
+            }
         }
     }
 }

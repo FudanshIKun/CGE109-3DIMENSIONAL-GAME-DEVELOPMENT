@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace Wonderland
 {
+    [Serializable]
     public class Player : MonoBehaviour
     {
         [Header("Player Information")]
