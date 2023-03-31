@@ -64,47 +64,31 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-# Packed Addressables
-/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
-
-# Temporary auto-generated Android Assets
-/[Aa]ssets/[Ss]treamingAssets/aa.meta
-/[Aa]ssets/[Ss]treamingAssets/aa/*
-
 # Firebase packages file
 /[Aa]ssets/Editor Default Resources/
-
 /[Aa]ssets/ExternalDependencyManager/
-
 /[Aa]ssets/Firebase/
-
 /[Aa]ssets/Parse/
-
 /[Aa]ssets/Plugins/
+# Firebase PlugIns
 
-# Temporary auto-generated Android Assets
 [Aa]ssets/[Ss]treamingAssets/aa.meta
-[Aa]ssets/[Ss]treamingAssets/aa/*  
+[Aa]ssets/[Ss]treamingAssets/aa/* 
+# Temporary auto-generated Android Assets
 
-# This may be different if it is changed in Android Resolver settings
-[Aa]ssets/GeneratedLocalRepo/
+#ThirdParty Assets
+*.pdf
+/[Aa]ssets/_ThirdParty Assets/[Tt]ripolygon
+/[Aa]ssets/_ThirdParty Assets/[Tt]ripolygon.meta
+#Umodeler
 
-[Aa]ssets/StreamingAssets/google-services-desktop.json
-[Aa]ssets/Plugin/Android/Firebase/
-
-#Unity Packages Assets
-
-# UModeler Lite Package
-/[Aa]ssets/[Tt]ripolygon
-/[Aa]ssets/[Tt]ripolygon.meta
-
-#ChatGPT Script Generator Package
-/[Aa]ssets/[Cc]hatGPT Script Generator
-/[Aa]ssets/[Cc]hatGPT Script Generator.meta
-
+/[Aa]ssets/_ThirdParty Assets/[Gg]iantParticleGames
+/[Aa]ssets/_ThirdParty Assets/[Gg]iantParticleGames.meta
 #Inspector Graph
-/[Aa]ssets/[Gg]iantParticleGames
-/[Aa]ssets/[Gg]iantParticleGames.meta
 
-#Height Fog
-/[Aa]ssets/Height Fog/README.pdf.meta
+/[Aa]ssets/_ThirdParty Assets/[Cc]hatGPT Script Generator
+/[Aa]ssets/_ThirdParty Assets/[Cc]hatGPT Script Generator.meta
+#ChatGPT Script Generator
+
+#/[Aa]ssets/_ThirdParty Assets/
+#[Aa]ssets/_ThirdParty Assets/

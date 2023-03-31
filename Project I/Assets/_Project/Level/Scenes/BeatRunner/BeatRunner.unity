@@ -16,8 +16,8 @@ RenderSettings:
   serializedVersion: 9
   m_Fog: 0
   m_FogColor: {r: 0.38470095, g: 0.6150251, b: 0.8962264, a: 1}
-  m_FogMode: 2
-  m_FogDensity: 0.03
+  m_FogMode: 1
+  m_FogDensity: 0.07
   m_LinearFogStart: 0
   m_LinearFogEnd: 1000
   m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
@@ -27,7 +27,7 @@ RenderSettings:
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0, g: 0, b: 0, a: 1}
   m_SkyboxMaterial: {fileID: 0}
-  m_HaloStrength: 0.5
+  m_HaloStrength: 0
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
@@ -8815,7 +8815,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &568576737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8862,7 +8862,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 568576736}
   m_LocalRotation: {x: -0.12216925, y: 0.8755354, z: -0.29494262, w: -0.36265865}
-  m_LocalPosition: {x: 6, y: 5, z: 22}
+  m_LocalPosition: {x: 6, y: 5, z: 106}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10392,7 +10392,7 @@ MonoBehaviour:
     activePolygonGroupId: 0
   backfaces_: 0
   materials:
-  - {fileID: 2100000, guid: d796195484135344b98a9ac2ebf04480, type: 2}
+  - {fileID: 0}
   originalMaterials: []
   editMode: 1
   recalculateTangents: 1
@@ -15157,7 +15157,7 @@ MonoBehaviour:
     activePolygonGroupId: 0
   backfaces_: 0
   materials:
-  - {fileID: 2100000, guid: d796195484135344b98a9ac2ebf04480, type: 2}
+  - {fileID: 0}
   originalMaterials: []
   editMode: 1
   recalculateTangents: 1
@@ -15760,7 +15760,7 @@ MonoBehaviour:
     activePolygonGroupId: 0
   backfaces_: 0
   materials:
-  - {fileID: 2100000, guid: d796195484135344b98a9ac2ebf04480, type: 2}
+  - {fileID: 0}
   originalMaterials: []
   editMode: 1
   recalculateTangents: 1
@@ -16593,7 +16593,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013608852}
-  m_Mesh: {fileID: -2088423370225539377, guid: 19dc43465a485d947922a29aab973d71, type: 3}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1013608856
 Transform:
   m_ObjectHideFlags: 0
@@ -16602,8 +16602,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013608852}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 109.50219}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 100}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -16660,8 +16660,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6488577, y: 2.078504, z: 2.5146773}
-  m_Center: {x: 0, y: 0.20087847, z: -0.25658336}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!43 &1026748034
 Mesh:
   m_ObjectHideFlags: 0
@@ -19956,8 +19956,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1230699319}
-  m_LocalRotation: {x: 0.532703, y: -0.110084675, z: 0.07013168, w: 0.8361761}
-  m_LocalPosition: {x: 7.218338, y: 65, z: 101.61401}
+  m_LocalRotation: {x: -0.12216925, y: 0.8755354, z: -0.29494262, w: -0.36265865}
+  m_LocalPosition: {x: 6, y: 5, z: 106}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25058,7 +25058,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1343235367}
   m_LocalRotation: {x: 0.532703, y: -0.110084675, z: 0.07013168, w: 0.8361761}
-  m_LocalPosition: {x: 7.218338, y: 65, z: 101.61401}
+  m_LocalPosition: {x: 7.2178254, y: 65, z: 92.11169}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -29259,7 +29259,7 @@ MonoBehaviour:
     activePolygonGroupId: 0
   backfaces_: 0
   materials:
-  - {fileID: 2100000, guid: d796195484135344b98a9ac2ebf04480, type: 2}
+  - {fileID: 0}
   originalMaterials: []
   editMode: 1
   recalculateTangents: 1
@@ -30795,7 +30795,7 @@ MonoBehaviour:
     activePolygonGroupId: 0
   backfaces_: 0
   materials:
-  - {fileID: 2100000, guid: d796195484135344b98a9ac2ebf04480, type: 2}
+  - {fileID: 0}
   originalMaterials: []
   editMode: 1
   recalculateTangents: 1
@@ -32882,7 +32882,7 @@ MonoBehaviour:
     activePolygonGroupId: 0
   backfaces_: 0
   materials:
-  - {fileID: 2100000, guid: d796195484135344b98a9ac2ebf04480, type: 2}
+  - {fileID: 0}
   originalMaterials: []
   editMode: 1
   recalculateTangents: 1
@@ -34088,7 +34088,7 @@ MonoBehaviour:
     activePolygonGroupId: 0
   backfaces_: 0
   materials:
-  - {fileID: 2100000, guid: d796195484135344b98a9ac2ebf04480, type: 2}
+  - {fileID: 0}
   originalMaterials: []
   editMode: 1
   recalculateTangents: 1
@@ -34691,7 +34691,7 @@ MonoBehaviour:
     activePolygonGroupId: 0
   backfaces_: 0
   materials:
-  - {fileID: 2100000, guid: d796195484135344b98a9ac2ebf04480, type: 2}
+  - {fileID: 0}
   originalMaterials: []
   editMode: 1
   recalculateTangents: 1
@@ -35624,7 +35624,7 @@ MonoBehaviour:
     activePolygonGroupId: 0
   backfaces_: 0
   materials:
-  - {fileID: 2100000, guid: d796195484135344b98a9ac2ebf04480, type: 2}
+  - {fileID: 0}
   originalMaterials: []
   editMode: 1
   recalculateTangents: 1
@@ -38779,7 +38779,7 @@ MonoBehaviour:
     activePolygonGroupId: 0
   backfaces_: 0
   materials:
-  - {fileID: 2100000, guid: d796195484135344b98a9ac2ebf04480, type: 2}
+  - {fileID: 0}
   originalMaterials: []
   editMode: 1
   recalculateTangents: 1
@@ -42761,7 +42761,7 @@ MonoBehaviour:
     activePolygonGroupId: 0
   backfaces_: 0
   materials:
-  - {fileID: 2100000, guid: d796195484135344b98a9ac2ebf04480, type: 2}
+  - {fileID: 0}
   originalMaterials: []
   editMode: 1
   recalculateTangents: 1
@@ -44535,7 +44535,7 @@ MonoBehaviour:
     activePolygonGroupId: 0
   backfaces_: 0
   materials:
-  - {fileID: 2100000, guid: d796195484135344b98a9ac2ebf04480, type: 2}
+  - {fileID: 0}
   originalMaterials: []
   editMode: 1
   recalculateTangents: 1
