@@ -84,12 +84,25 @@ namespace Wonderland.Management
 
         #endregion
 
+        private void UpdateInstance()
+        {
+            MainManager.Instance.UIManager.Root = Root;
+            MainManager.Instance.UIManager.defaultCanvas = defaultCanvas;
+            MainManager.Instance.UIManager.loadingScreen = loadingScreen;
+        }
+
         private void Awake()
         {
             Root = GameObject.FindWithTag("UIDocument").GetComponent<UIDocument>().rootVisualElement;
             defaultCanvas = GameObject.FindWithTag("UI");
             loadingScreen = defaultCanvas.transform.GetChild(0).gameObject;
             HideLoadingScreen();
+            MainManager.BeforeDestroyMainManager += UpdateInstance;
+        }
+
+        private void OnDisable()
+        {
+            MainManager.BeforeDestroyMainManager -= UpdateInstance;
         }
     }
 }

@@ -52,15 +52,15 @@ namespace Wonderland.Management
         public override void OnEnable()
         {
             base.OnEnable();
-            MainManager.Instance.inputManager.OnStartPrimaryTouchEvent += TouchStart;
-            MainManager.Instance.inputManager.OnEndPrimaryTouchEvent += TouchEnd;
+            MainManager.Instance.InputManager.OnStartPrimaryTouchEvent += TouchStart;
+            MainManager.Instance.InputManager.OnEndPrimaryTouchEvent += TouchEnd;
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
-            MainManager.Instance.inputManager.OnStartPrimaryTouchEvent -= TouchStart;
-            MainManager.Instance.inputManager.OnEndPrimaryTouchEvent -= TouchEnd;
+            MainManager.Instance.InputManager.OnStartPrimaryTouchEvent -= TouchStart;
+            MainManager.Instance.InputManager.OnEndPrimaryTouchEvent -= TouchEnd;
         }
     }
 }

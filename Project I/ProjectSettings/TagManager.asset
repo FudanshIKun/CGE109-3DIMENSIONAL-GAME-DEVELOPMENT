@@ -9,15 +9,17 @@ TagManager:
   - UIDocument
   - Manager
   - Object
+  - Environment
+  - Volumn
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Object
-  - Player
+  - 
   - Beat
   - PostProcess
   - 

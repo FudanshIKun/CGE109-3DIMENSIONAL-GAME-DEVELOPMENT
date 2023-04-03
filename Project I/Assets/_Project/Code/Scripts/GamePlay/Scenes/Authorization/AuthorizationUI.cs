@@ -26,17 +26,17 @@ namespace Wonderland.GamePlay.Authorization
         
         private void LoadSignUpTab()
         {
-            MainManager.Instance.uiManager.ChangeUxml(signUpUxml);
+            MainManager.Instance.UIManager.ChangeUxml(signUpUxml);
         }
         
         private void LoadSignInTab()
         {
-            MainManager.Instance.uiManager.ChangeUxml(signInUxml);
+            MainManager.Instance.UIManager.ChangeUxml(signInUxml);
         }
         private void OnUxmlChange()
         {
-            VisualElement currentUxml = MainManager.Instance.uiManager.CurrentUxml;
-            switch (MainManager.Instance.uiManager.GetCurrentUxmlName())
+            VisualElement currentUxml = MainManager.Instance.UIManager.CurrentUxml;
+            switch (MainManager.Instance.UIManager.GetCurrentUxmlName())
             {
                 case "SignUpPanel":
                     UserNameField = currentUxml.Q<TextField>("UserName-Field");

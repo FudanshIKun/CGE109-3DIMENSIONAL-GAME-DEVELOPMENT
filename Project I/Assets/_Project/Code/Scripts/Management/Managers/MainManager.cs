@@ -13,20 +13,20 @@ namespace Wonderland.Management
         #region Fields
         
         #region Managers
-
-        [Header("Managers")] 
-        public FirebaseManager firebaseManager;
-        public GameManager gameManager;
-        public InputManager inputManager;
-        public UIManager uiManager;
+        
+        public FirebaseManager FirebaseManager { get; private set; }
+        public GameManager GameManager{ get; private set; }
+        public InputManager InputManager{ get; private set; }
+        public UIManager UIManager{ get; private set; }
+        public SoundManager SoundManager{ get; private set; }
         
         #endregion
 
         #region Handlers
         
-        public static GamesceneHandler GameSceneHandler;
-        public static GameplayHandler GamePlayHandler;
         public static SceneHandler SceneHandler;
+        public static PlayerHandler PlayerHandler;
+        public static GameplayHandler GamePlayHandler;
         public static UIHandler UIHandler;
 
         #endregion
@@ -44,6 +44,7 @@ namespace Wonderland.Management
 
         public static MainManager Instance;
         private readonly List<IManager> _managers = new List<IManager>();
+        public static event Action BeforeDestroyMainManager;
         
         private void Singleton()
         {
@@ -54,20 +55,9 @@ namespace Wonderland.Management
             }
             else
             {
-                UpdateInstance();
+                BeforeDestroyMainManager?.Invoke();
                 Destroy(gameObject);
             }
-        }
-
-        private void UpdateInstance()
-        {
-            Logging.ManagerLogger.Log("Instance Updated");
-            GameManager.CurrentScene = gameManager.setSceneType;
-            Instance.inputManager.playerInput = inputManager.playerInput;
-            Instance.inputManager.mainCamera = inputManager.mainCamera;
-            Instance.uiManager.Root = uiManager.Root;
-            Instance.uiManager.defaultCanvas = uiManager.defaultCanvas;
-            Instance.uiManager.loadingScreen = uiManager.loadingScreen;
         }
 
         private void GetIManagers(Array array)
@@ -88,16 +78,24 @@ namespace Wonderland.Management
             {
                 switch (manager.GetComponent<IManager>().name)
                 {
+                    case"FirebaseManager":
+                        FirebaseManager = manager.GetComponent<FirebaseManager>();
+                        Logging.ManagerLogger.Log(manager.name + "Has Been Assigned");
+                        break;
                     case "GameManager":
-                        gameManager = manager.GetComponent<GameManager>();
+                        GameManager = manager.GetComponent<GameManager>();
                         Logging.ManagerLogger.Log(manager.name + "Has Been Assigned");
                         break;
                     case "InputManager":
-                        inputManager = manager.GetComponent<InputManager>();
+                        InputManager = manager.GetComponent<InputManager>();
                         Logging.ManagerLogger.Log(manager.name + "Has Been Assigned");
                         break;
                     case "UIManager":
-                        uiManager = manager.GetComponent<UIManager>();
+                        UIManager = manager.GetComponent<UIManager>();
+                        Logging.ManagerLogger.Log(manager.name + "Has Been Assigned");
+                        break;
+                    case "SoundManager":
+                        SoundManager = manager.GetComponent<SoundManager>();
                         Logging.ManagerLogger.Log(manager.name + "Has Been Assigned");
                         break;
                 }
@@ -105,26 +103,6 @@ namespace Wonderland.Management
         }
 
         #endregion
-
-        #region Methods
-
-        public IEnumerator WaitForTask(Task task)
-        {
-            yield return new WaitUntil(() => task.IsCompleted);
-        }
-
-        public async Task<Task> WaitForTaskAsync(Task task)
-        {
-            await Task.Run(async () =>
-            {
-                while (task.IsCompleted) await Task.Delay(100);
-            });
-            
-            return task;
-        }
-
-        #endregion
-        
         private void Awake()
         {
             Logging.LoadLogger();
@@ -135,7 +113,7 @@ namespace Wonderland.Management
         private void OnEnable()
         {
             Singleton();
-            Instance.inputManager.CompileControlsInScene();
+            Instance.InputManager.EnableInputDetectionInScene();
         }
     }
 }

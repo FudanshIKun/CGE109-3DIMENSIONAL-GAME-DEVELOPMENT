@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using Codice.CM.Common;
 using UnityEngine;
 using Wonderland.API;
 using Wonderland.Management;
@@ -8,30 +9,24 @@ namespace Wonderland.GamePlay.BeatRunner.Runner
 {
     public class Runner : Player
     {
-        #region Setting
+        #region Movement Settings
 
-        [Header("Physics Settings")]
-
-        #region Running Settings
-
-        [SerializeField] float moveSpeed;
-        [SerializeField] float maxSpeed;
-
-        #endregion
-
-        #region Jumping Settings
-
-        [SerializeField] float jumpHeight = 5;
-        [SerializeField] float gravityScale = 5;
-        [SerializeField] float fallGravityScale = 15;
-        public bool IsGrounded { get; private set; }
+        [Header("Movement Settings")]
+        public float moveSpeed = 5f;
+        public float maxSpeed = 10f;
+        public float turnSpeed = 5f;
+        public Vector3 MoveVector { get; set; } 
+        public int CurrentLane { get; set; }
+        
+        public float jumpHeight = 5;
+        public float gravityScale = 5;
+        public float fallGravityScale = 15;
+        public bool IsGrounded { get; set; }
         public LayerMask groundLayer;
 
         #endregion
-        
-        #endregion
-        
-        public Runner() : base(
+
+        public Runner(RunnerSetting setting) : base(
             FirebaseManager.GetCurrentUser().UserName, 
             FirebaseManager.GetCurrentUser().DisplayName)
         {
@@ -45,9 +40,26 @@ namespace Wonderland.GamePlay.BeatRunner.Runner
 
         #endregion
 
-        #region Behavior Fields
+        #region Behaviors
 
         private IRunnerBehavior CurrentBehavior { get; set; }
+
+        private void ChangeBehavior(IRunnerBehavior behavior)
+        {
+            if (CurrentBehavior != null)
+            {
+                SwipeDetection.UpSwipe -= CurrentBehavior.UpSwipe;
+                SwipeDetection.DownSwipe -= CurrentBehavior.DownSwipe;
+                SwipeDetection.LeftSwipe -= CurrentBehavior.LefSwipe;
+                SwipeDetection.RightSwipe -= CurrentBehavior.RightSwipe;
+            }
+            behavior.Runner = this;
+            CurrentBehavior = behavior;
+            SwipeDetection.UpSwipe += CurrentBehavior.UpSwipe;
+            SwipeDetection.DownSwipe += CurrentBehavior.DownSwipe;
+            SwipeDetection.LeftSwipe += CurrentBehavior.LefSwipe;
+            SwipeDetection.RightSwipe += CurrentBehavior.RightSwipe;
+        }
 
         #endregion
 
@@ -57,35 +69,33 @@ namespace Wonderland.GamePlay.BeatRunner.Runner
             animator = GetComponent<Animator>();
         }
 
-        private void OnEnable()
-        {
-            if (CurrentBehavior != null)
-            {
-                SwipeDetection.UpSwipe += CurrentBehavior.UpSwipe;
-                SwipeDetection.DownSwipe += CurrentBehavior.DownSwipe;
-                SwipeDetection.LeftSwipe += CurrentBehavior.LefSwipe;
-                SwipeDetection.RightSwipe += CurrentBehavior.RightSwipe;
-            }
-        }
-
         private void Start()
         {
-            
+            //ChangeBehavior(new RunningBehavior());
         }
 
         private void FixedUpdate()
         {
-            
+            if (CurrentBehavior != null)
+            {
+                CurrentBehavior.FixedUpdateBehavior();
+            }
         }
 
         private void Update()
         {
-            
+            if (CurrentBehavior != null)
+            {
+                CurrentBehavior.UpdateBehavior();
+            }
         }
 
         private void LateUpdate()
         {
-            
+            if (CurrentBehavior != null)
+            {
+                CurrentBehavior.LateUpdateBehavior();
+            }
         }
 
         private void OnDisable()

@@ -2,7 +2,10 @@ namespace Wonderland.GamePlay.BeatRunner.Runner
 {
     public interface IRunnerBehavior
     {
-        void Auto();
+        public Runner Runner { set; }
+        void FixedUpdateBehavior();
+        void UpdateBehavior();
+        void LateUpdateBehavior();
         void UpSwipe();
         void LefSwipe();
         void RightSwipe();

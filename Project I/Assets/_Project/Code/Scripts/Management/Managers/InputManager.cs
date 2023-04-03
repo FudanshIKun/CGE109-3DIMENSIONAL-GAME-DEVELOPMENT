@@ -13,8 +13,8 @@ namespace Wonderland.Management
 
         [HideInInspector] public PlayerInput playerInput;
         [HideInInspector] public Camera mainCamera;
-        private static HandheldInputAction _handheldInputAction;
-        private List<Controls> _controlsList;
+        private static HandheldInputAction HandheldInputAction { get; set; }
+        private List<Controls> ControlsList { get; set; }
 
         #endregion
         
@@ -49,53 +49,53 @@ namespace Wonderland.Management
         /// <summary>
         /// 
         /// </summary>
-        public void CompileControlsInScene()
+        public void EnableInputDetectionInScene()
         {
             //
-            if (_controlsList == null)
+            if (ControlsList == null)
             {
-                _controlsList = new List<Controls>();
+                ControlsList = new List<Controls>();
             }
 
             //
-            if (_handheldInputAction == null)
+            if (HandheldInputAction == null)
             {
-                _handheldInputAction = new HandheldInputAction();
+                HandheldInputAction = new HandheldInputAction();
             }
 
             if (MainManager.Setting != null)
             {
                 //
-                if (MainManager.Setting.inputSetting.touchable)
+                if (MainManager.Setting.inputSetting.Touchable)
                 {
                     if (GetComponent<TouchDetection>() == null)
                     {
                         TouchDetection touch = gameObject.AddComponent<TouchDetection>();
                         touch.enabled = true;
-                        _controlsList.Add(touch);
+                        ControlsList.Add(touch);
                     }
                     else
                     {
                         TouchDetection touch = gameObject.GetComponent<TouchDetection>();
                         touch.enabled = true;
-                        _controlsList.Add(touch);
+                        ControlsList.Add(touch);
                     }
                 }
 
                 //
-                if (MainManager.Setting.inputSetting.swipable)
+                if (MainManager.Setting.inputSetting.Swipable)
                 {
                     if (GetComponent<SwipeDetection>() == null)
                     {
                         SwipeDetection swipe = gameObject.AddComponent<SwipeDetection>();
                         swipe.enabled = true;
-                        _controlsList.Add(swipe);
+                        ControlsList.Add(swipe);
                     }
                     else
                     {
                         SwipeDetection swipe = gameObject.GetComponent<SwipeDetection>();
                         swipe.enabled = true;
-                        _controlsList.Add(swipe);
+                        ControlsList.Add(swipe);
                     } ;
                 }
             }
@@ -104,15 +104,15 @@ namespace Wonderland.Management
         /// <summary>
         /// 
         /// </summary>
-        private void DisCompileControlsInPreviousScene()
+        private void DisableInputDetectionFromPreviousScene()
         {
-            if (_controlsList == null)
+            if (ControlsList == null)
             {
-                _controlsList = new List<Controls>();
+                ControlsList = new List<Controls>();
             }
             else
             {
-                foreach (var control in _controlsList)
+                foreach (var control in ControlsList)
                 {
                     control.enabled = false;
                 }
@@ -121,40 +121,48 @@ namespace Wonderland.Management
         
         private void StartTouchPrimary(InputAction.CallbackContext context)
         {
-            if (OnStartPrimaryTouchEvent != null) OnStartPrimaryTouchEvent(Utils.ScreenToCamera(mainCamera, _handheldInputAction.Touch.PrimaryTouchValue.ReadValue<Vector2>()), Utils.ScreenToObject(mainCamera,_handheldInputAction.Touch.PrimaryTouchValue.ReadValue<Vector2>()), (float)context.time);
+            if (OnStartPrimaryTouchEvent != null) OnStartPrimaryTouchEvent(Utils.ScreenToCamera(mainCamera, HandheldInputAction.Touch.PrimaryTouchValue.ReadValue<Vector2>()), Utils.ScreenToObject(mainCamera,HandheldInputAction.Touch.PrimaryTouchValue.ReadValue<Vector2>()), (float)context.time);
         }
         
         private void EndTouchPrimary(InputAction.CallbackContext context)
         {
             if (OnEndPrimaryTouchEvent != null)
             {
-                OnEndPrimaryTouchEvent(Utils.ScreenToCamera(mainCamera, _handheldInputAction.Touch.PrimaryTouchValue.ReadValue<Vector2>()), Utils.ScreenToObject(mainCamera,_handheldInputAction.Touch.PrimaryTouchValue.ReadValue<Vector2>()), (float)context.time);
+                OnEndPrimaryTouchEvent(Utils.ScreenToCamera(mainCamera, HandheldInputAction.Touch.PrimaryTouchValue.ReadValue<Vector2>()), Utils.ScreenToObject(mainCamera,HandheldInputAction.Touch.PrimaryTouchValue.ReadValue<Vector2>()), (float)context.time);
             }
         }
 
         #endregion
+
+        private void UpdateInstance()
+        {
+            MainManager.Instance.InputManager.playerInput = playerInput;
+            MainManager.Instance.InputManager.mainCamera = mainCamera;
+        }
 
         private void Awake()
         {
             playerInput = GetComponent<PlayerInput>();
             playerInput.camera = Camera.main;
             mainCamera = playerInput.camera;
+            MainManager.BeforeDestroyMainManager += UpdateInstance;
         }
 
         private void Start()
         {
             //
-            GameManager.LoadNewScene += DisCompileControlsInPreviousScene;
+            GameManager.LoadNewScene += DisableInputDetectionFromPreviousScene;
             
             //
-            _handheldInputAction.Enable();
-            _handheldInputAction.Touch.PrimaryTouchContact.started += context => StartTouchPrimary(context);
-            _handheldInputAction.Touch.PrimaryTouchContact.canceled += context => EndTouchPrimary(context);
+            HandheldInputAction.Enable();
+            HandheldInputAction.Touch.PrimaryTouchContact.started += context => StartTouchPrimary(context);
+            HandheldInputAction.Touch.PrimaryTouchContact.canceled += context => EndTouchPrimary(context);
         }
 
         private void OnDisable()
         {
-            _handheldInputAction.Disable();
+            HandheldInputAction.Disable();
+            MainManager.BeforeDestroyMainManager -= UpdateInstance;
         }
     }
 }

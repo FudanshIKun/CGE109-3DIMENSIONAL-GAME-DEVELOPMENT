@@ -44,7 +44,6 @@ namespace Wonderland.Management
         
         private void SwipeStart(Vector2 screenPosition, GameObject swiped, float time)
         {
-            //TODO: Check If Swipe Start at UpperScreen Or BottomScreen
             _startPosition = screenPosition;
             _startTime = time;
         }
@@ -97,15 +96,15 @@ namespace Wonderland.Management
         public override void OnEnable()
         {
             base.OnEnable();
-            MainManager.Instance.inputManager.OnStartPrimaryTouchEvent += SwipeStart;
-            MainManager.Instance.inputManager.OnEndPrimaryTouchEvent += SwipeEnd;
+            MainManager.Instance.InputManager.OnStartPrimaryTouchEvent += SwipeStart;
+            MainManager.Instance.InputManager.OnEndPrimaryTouchEvent += SwipeEnd;
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
-            MainManager.Instance.inputManager.OnStartPrimaryTouchEvent -= SwipeStart;
-            MainManager.Instance.inputManager.OnEndPrimaryTouchEvent -= SwipeEnd;
+            MainManager.Instance.InputManager.OnStartPrimaryTouchEvent -= SwipeStart;
+            MainManager.Instance.InputManager.OnEndPrimaryTouchEvent -= SwipeEnd;
         }
     }
 }

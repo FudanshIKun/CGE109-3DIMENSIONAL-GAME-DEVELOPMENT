@@ -4,12 +4,18 @@ namespace Wonderland.Management
 {
     public class IManager : MonoBehaviour
     {
-        public enum SceneType
+        public enum Scene
         {
             None,
             Authentication,
-            Lobby,
             BeatRunner
+        }
+
+        public enum State
+        {
+            IdleState,
+            LoadState,
+            PlayState
         }
         
         

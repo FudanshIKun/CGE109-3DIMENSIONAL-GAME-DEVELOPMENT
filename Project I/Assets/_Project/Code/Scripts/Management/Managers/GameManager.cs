@@ -7,21 +7,53 @@ namespace Wonderland.Management
 {
     public class GameManager : IManager
     {
-
-        #region Scene Management
-
-        [Header("Setting")]
-        public SceneType setSceneType;
-        public static SceneType CurrentScene;
-
+        [Header("Scene Setting")]
+        public Scene scene;
+        private static GameState CurrentGameState { get; set; }
+        private static IdleState IdleState { get; set; }
+        private static LoadState LoadState { get; set; }
         public static event Action LoadNewScene;
 
-        #region Methods
+        #region GameState Methods
 
-        // ReSharper disable Unity.PerformanceAnalysis
-        public async void LoadSceneAsync(SceneType newScene)
+        public static void ChangeGameState(State state)
         {
-            if (newScene == SceneType.None){return;}
+            switch (state)
+            {
+                case State.IdleState :
+                    IdleState = new IdleState();
+                    break;
+                case State.LoadState :
+                    LoadState = new LoadState();
+                    break;
+            }
+
+            CurrentGameState = IdleState;
+            CurrentGameState.EnterState();
+        }
+
+        public static bool CheckGameState(State state)
+        {
+            switch (state)
+            {
+                case State.IdleState :
+                    if (CurrentGameState == IdleState) return true;
+                    break;
+                case State.LoadState :
+                    if (CurrentGameState == LoadState) return true;
+                    break;
+            }
+
+            return false;
+        }
+
+        #endregion
+
+        #region SceneManagement Methods
+        
+        public async void LoadSceneAsync(Scene newScene)
+        {
+            if (newScene == Scene.None){return;}
 
                 // Load newScene
             AsyncOperation load = SceneManager.LoadSceneAsync(newScene.ToString());
@@ -38,18 +70,17 @@ namespace Wonderland.Management
             load.allowSceneActivation = true;
             await Task.Delay(1500);
         }
-
-        // ReSharper disable Unity.PerformanceAnalysis
-        public async void LoadSceneWithLoaderAsync(SceneType newScene)
+        
+        public async void LoadSceneWithLoaderAsync(Scene newScene)
         {
-            if (newScene == SceneType.None){return;}
+            if (newScene == Scene.None){return;}
             
             // Load newScene
             AsyncOperation load = SceneManager.LoadSceneAsync(newScene.ToString());
             load.allowSceneActivation = false;
             
             // Show Loading UI
-            MainManager.Instance.uiManager.ShowLoadingScreen();
+            MainManager.Instance.UIManager.ShowLoadingScreen();
             LoadNewScene?.Invoke();
 
             do {
@@ -61,9 +92,23 @@ namespace Wonderland.Management
             load.allowSceneActivation = true;
             await Task.Delay(1500);
         }
-
         #endregion
 
-        #endregion
+        private void UpdateInstance()
+        {
+            Logging.ManagerLogger.Log("GameManager Instance Updated");
+            MainManager.Instance.GameManager.scene = scene;
+        }
+
+        private void Awake()
+        {
+            MainManager.BeforeDestroyMainManager += UpdateInstance;
+            ChangeGameState(State.IdleState);
+        }
+
+        private void OnDisable()
+        {
+            MainManager.BeforeDestroyMainManager -= UpdateInstance;
+        }
     }
 }

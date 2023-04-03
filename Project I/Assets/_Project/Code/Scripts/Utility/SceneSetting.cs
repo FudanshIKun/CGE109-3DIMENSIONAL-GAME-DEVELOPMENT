@@ -7,48 +7,32 @@ namespace Wonderland
     [Serializable]
     public class SceneSetting : ScriptableObject
     {
-        public Scene sceneSetting;
-        public Input inputSetting;
-        public Camera cameraSetting;
-        
+        public Setting sceneSetting;
+        public InputSetting inputSetting;
 
         [Serializable]
-        public struct Scene
+        public struct Setting
         {
-            public bool isGameScene;
-            
-            public enum WorldType
+            public enum Type
             {
-                TwoDimensional,
-                ThreeDimensional
+                NormalScene,
+                GameScene
             }
 
-            public WorldType worldType;
+            [Header("Scene Settings")] 
+            [SerializeField] Type sceneType;
+            public Type SceneType => sceneType;
         }
         
         [Serializable]
-        public struct Input
+        public struct InputSetting
         {
-            [Header("Handheld Inputs")]
-            public bool touchable;
-            public bool swipable;
-        }
-        
-        [Serializable]
-        public struct Camera
-        {
-            public bool setCameraToStartPosition;
-            public Vector3 cameraStartPosition;
+            [Header("Handheld Input Settings")] 
+            [SerializeField] bool touchable;
+            [SerializeField] public bool swipable;
             
-            public enum CameraType
-            {
-                Perspective,
-                Orthographic
-            }
-
-            public CameraType type;
+            public bool Touchable => touchable;
+            public bool Swipable => swipable;
         }
-        
-        
     }
 }

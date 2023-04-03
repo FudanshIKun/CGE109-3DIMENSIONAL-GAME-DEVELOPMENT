@@ -8,17 +8,17 @@ namespace Wonderland.GamePlay.BeatRunner.Runner
     public class RunnerHandler : MonoBehaviour
     {
         public static GameObject RunnerPrefab;
-        private Runner _runner;
+        public Runner Runner { get; private set; }
 
         #region Methods
-
-        public IEnumerator CreateRunnerCoroutine()
-        {
-            yield return null;
-        }
 
         //private static async Task<Runner> InitializeRunner(Transform spawnTransform) => await 
 
         #endregion
+
+        private void Awake()
+        {
+            
+        }
     }
 }

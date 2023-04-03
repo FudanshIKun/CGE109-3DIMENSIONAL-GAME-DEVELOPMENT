@@ -4,6 +4,7 @@ namespace Wonderland.Management
 {
     public class SceneHandler : MonoBehaviour
     {
+        protected bool SceneReady = false;
         public SceneSetting sceneSetting;
         private void OnEnable()
         {

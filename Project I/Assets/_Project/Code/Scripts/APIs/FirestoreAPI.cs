@@ -9,10 +9,10 @@ namespace Wonderland.API
         public static async Task PostToFirestore(DocumentReference docRef, Dictionary<string, object> dictionary) =>
             await docRef.SetAsync(dictionary);
 
-        public static async Task RepostToFirestore(DocumentReference docRef, Dictionary<string, object> dictionary) =>
+        public static async Task UpdateAllToFirestore(DocumentReference docRef, Dictionary<string, object> dictionary) =>
             await docRef.SetAsync(dictionary, SetOptions.MergeAll);
 
-        public static async Task UpdateToFireStore(DocumentReference docRef, string[] targetFields,
+        public static async Task UpdateTargetToFireStore(DocumentReference docRef, string[] targetFields,
             Dictionary<string, object> dictionary) =>
             await docRef.SetAsync(dictionary, SetOptions.MergeFields(targetFields));
 
