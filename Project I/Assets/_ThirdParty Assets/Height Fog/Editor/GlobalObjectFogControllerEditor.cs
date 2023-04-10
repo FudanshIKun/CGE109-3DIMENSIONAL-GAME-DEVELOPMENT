@@ -1,9 +1,12 @@
 ﻿// SKGames vertical fog editor GUI. Copyright (c) 2018 Sergey Klimenko. 18.05.2018
+
+using System;
 using UnityEditor;
 using System.Linq;
 using UnityEngine;
 
 [CustomEditor(typeof(GlobalObjectFogController))]
+[Obsolete("Obsolete")]
 public class GlobalObjectFogControllerEditor : Editor
 {
     private GUIStyle                  boxStyle;

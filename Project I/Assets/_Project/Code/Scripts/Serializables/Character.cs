@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Wonderland
 {
     [Serializable]
-    public class Character : MonoBehaviour
+    public class Character
     {
         
     }

@@ -1,21 +1,27 @@
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Wonderland.Management
 {
-    public class SceneHandler : MonoBehaviour
+    public abstract class SceneHandler : MonoBehaviour
     {
-        protected bool SceneReady = false;
+        [Header("Settings")]
         public SceneSetting sceneSetting;
-        private void OnEnable()
+
+        public abstract Task SetUpScene();
+        public abstract void LaunchingGame();
+
+        protected virtual void OnEnable()
         {
-            MainManager.SceneHandler = this;
-            MainManager.Setting = sceneSetting;
+            MainManager.Instance.SceneHandler = this;
+            MainManager.setting = sceneSetting;
         }
         
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
-            MainManager.SceneHandler = null;
-            MainManager.Setting = null;
+            MainManager.Instance.SceneHandler = null;
+            MainManager.setting = null;
         }
     }
 }

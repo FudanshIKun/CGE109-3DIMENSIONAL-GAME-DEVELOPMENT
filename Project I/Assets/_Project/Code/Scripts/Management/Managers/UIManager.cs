@@ -6,7 +6,7 @@ namespace Wonderland.Management
 {
     public class UIManager : IManager
     {
-        public VisualElement Root;
+        private VisualElement _root;
         public VisualElement CurrentUxml { get; private set; }
         public GameObject defaultCanvas;
         public GameObject loadingScreen;
@@ -43,7 +43,7 @@ namespace Wonderland.Management
             UxmlChanged?.Invoke();
 
             // Add currentUxml to the root of UIDocument in the scene
-            Root.Add(CurrentUxml);
+            _root.Add(CurrentUxml);
             Logging.UILogger.Log("ChangeUxml To " + newUxml.name);
         }
 
@@ -52,7 +52,7 @@ namespace Wonderland.Management
         /// </summary>
         public void ClearCurrentUxml()
         {
-            if (Root.Contains(CurrentUxml))
+            if (_root.Contains(CurrentUxml))
             {
                 // Remove the currentUxml from the parent templateContainer
                 CurrentUxml.RemoveFromHierarchy();
@@ -64,7 +64,7 @@ namespace Wonderland.Management
         /// </summary>
         public void ClearUI()
         {
-            Root.Clear();
+            _root.Clear();
         }
 
         #endregion
@@ -86,23 +86,23 @@ namespace Wonderland.Management
 
         private void UpdateInstance()
         {
-            MainManager.Instance.UIManager.Root = Root;
+            MainManager.Instance.UIManager._root = _root;
             MainManager.Instance.UIManager.defaultCanvas = defaultCanvas;
             MainManager.Instance.UIManager.loadingScreen = loadingScreen;
         }
 
         private void Awake()
         {
-            Root = GameObject.FindWithTag("UIDocument").GetComponent<UIDocument>().rootVisualElement;
+            _root = GameObject.FindWithTag("UIDocument").GetComponent<UIDocument>().rootVisualElement;
             defaultCanvas = GameObject.FindWithTag("UI");
             loadingScreen = defaultCanvas.transform.GetChild(0).gameObject;
             HideLoadingScreen();
-            MainManager.BeforeDestroyMainManager += UpdateInstance;
+            MainManager.OnDestroyMainManager += UpdateInstance;
         }
 
         private void OnDisable()
         {
-            MainManager.BeforeDestroyMainManager -= UpdateInstance;
+            MainManager.OnDestroyMainManager -= UpdateInstance;
         }
     }
 }

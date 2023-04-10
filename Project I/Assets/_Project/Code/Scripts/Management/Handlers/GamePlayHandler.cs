@@ -1,17 +1,21 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Wonderland.Management
 {
-    public class GameplayHandler : MonoBehaviour
+    public abstract class GameplayHandler : MonoBehaviour
     {
-        private void OnEnable()
+        public bool GameplayReady { get; protected set; }
+        
+        public abstract Task SetUpGameplay();
+        protected virtual void OnEnable()
         {
-            MainManager.GamePlayHandler = this;
+            MainManager.Instance.GamePlayHandler = this;
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
-            MainManager.GamePlayHandler = null;
+            MainManager.Instance.GamePlayHandler = null;
         }
     }
 }

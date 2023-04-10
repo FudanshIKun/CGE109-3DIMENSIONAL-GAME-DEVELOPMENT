@@ -102,13 +102,13 @@ namespace Wonderland.Management
 
         private void Awake()
         {
-            MainManager.BeforeDestroyMainManager += UpdateInstance;
+            MainManager.OnDestroyMainManager += UpdateInstance;
             ChangeGameState(State.IdleState);
         }
 
         private void OnDisable()
         {
-            MainManager.BeforeDestroyMainManager -= UpdateInstance;
+            MainManager.OnDestroyMainManager -= UpdateInstance;
         }
     }
 }

@@ -1,0 +1,16 @@
+{
+    "name": "Serializables",
+    "rootNamespace": "Wonderland.Serializables",
+    "references": [
+        "GUID:b3517036fb008d14facb3f0506c68a17"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -19,6 +19,7 @@ namespace Wonderland
         public static readonly Logger UILogger = new Logger(Debug.unityLogger.logHandler);
         
         // GamePlay System
+        public static readonly Logger ObjectLogger = new Logger(Debug.unityLogger.logHandler);
         public static readonly Logger GamePlayLogger = new Logger(Debug.unityLogger.logHandler);
 
         public static void LoadLogger()
@@ -35,6 +36,7 @@ namespace Wonderland
             DetectionLogger.logEnabled = false;
             
             // GamePlay System
+            ObjectLogger.logEnabled = true;
             GamePlayLogger.logEnabled = true;
             
             // UserInterface

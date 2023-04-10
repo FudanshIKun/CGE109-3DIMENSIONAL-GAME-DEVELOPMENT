@@ -1,0 +1,21 @@
+{
+    "name": "BeatRunner",
+    "rootNamespace": "Wonderland.GamePlay.BeatRunner",
+    "references": [
+        "GUID:cbf3c212b1e49ef488dc3b7fe2795f5a",
+        "GUID:ba54df8fc75f6e44682110606a0a5c24",
+        "GUID:812e5458717014b448cb01ef524a6a96",
+        "GUID:1c345f0e1c0d3a549b902a62c47b9837",
+        "GUID:b3517036fb008d14facb3f0506c68a17",
+        "GUID:b9e759b2a788e0f4a8222d50d5e90578"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

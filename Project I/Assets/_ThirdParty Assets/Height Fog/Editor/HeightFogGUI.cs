@@ -1,5 +1,6 @@
 ﻿// SKGames vertical fog editor GUI. Copyright (c) 2018 Sergey Klimenko. 13.05.2018
 
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -85,6 +86,7 @@ public class HeightFogGUI : ShaderGUI
     private bool m_FirstTimeApply = true;
     private bool m_BakeEmission = false;
 
+    [Obsolete("Obsolete")]
     public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] props)
     {
         GetProperties(props);
@@ -96,7 +98,7 @@ public class HeightFogGUI : ShaderGUI
             MaterialChanged(material);
             m_FirstTimeApply = false;
         }
-
+        
         ShaderPropertiesGUI(material);
     }
 
@@ -134,6 +136,7 @@ public class HeightFogGUI : ShaderGUI
         zFreq = FindProperty("_FogWaveFreqZ", props);
     }
 
+    [Obsolete("Obsolete")]
     public void ShaderPropertiesGUI(Material material)
     {
         EditorGUIUtility.labelWidth = 0f;

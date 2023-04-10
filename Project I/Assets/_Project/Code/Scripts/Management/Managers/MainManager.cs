@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Wonderland.API;
 
 namespace Wonderland.Management
 {
@@ -24,17 +21,17 @@ namespace Wonderland.Management
 
         #region Handlers
         
-        public static SceneHandler SceneHandler;
-        public static PlayerHandler PlayerHandler;
-        public static GameplayHandler GamePlayHandler;
-        public static UIHandler UIHandler;
+        public SceneHandler SceneHandler { get; set; }
+        public PlayerHandler PlayerHandler { get; set; }
+        public GameplayHandler GamePlayHandler { get; set; }
+        public UIHandler UIHandler { get; set; }
 
         #endregion
         
         #region Settings
 
         [Header("Setting")] 
-        public static SceneSetting Setting;
+        public static SceneSetting setting;
 
         #endregion
 
@@ -42,9 +39,9 @@ namespace Wonderland.Management
         
         #region Singleton
 
-        public static MainManager Instance;
+        public static MainManager Instance { get; private set; }
         private readonly List<IManager> _managers = new List<IManager>();
-        public static event Action BeforeDestroyMainManager;
+        public static event Action OnDestroyMainManager;
         
         private void Singleton()
         {
@@ -55,7 +52,7 @@ namespace Wonderland.Management
             }
             else
             {
-                BeforeDestroyMainManager?.Invoke();
+                OnDestroyMainManager?.Invoke();
                 Destroy(gameObject);
             }
         }

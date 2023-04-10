@@ -6,6 +6,9 @@ namespace Wonderland.Management
     public class PlayerHandler : MonoBehaviour
     {
         public GameObject playerPrefab;
-        //public async Task<Player> CreatePlayerAsync() => await 
+        
+        //public void CreatePlayerSpawn(){}
+        //public async Task<Player> CreatePlayerAsync(){}
+        
     }
 }

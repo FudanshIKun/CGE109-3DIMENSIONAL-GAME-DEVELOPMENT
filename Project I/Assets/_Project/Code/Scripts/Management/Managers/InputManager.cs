@@ -63,10 +63,10 @@ namespace Wonderland.Management
                 HandheldInputAction = new HandheldInputAction();
             }
 
-            if (MainManager.Setting != null)
+            if (MainManager.setting != null)
             {
                 //
-                if (MainManager.Setting.inputSetting.Touchable)
+                if (MainManager.setting.inputSetting.Touchable)
                 {
                     if (GetComponent<TouchDetection>() == null)
                     {
@@ -83,20 +83,20 @@ namespace Wonderland.Management
                 }
 
                 //
-                if (MainManager.Setting.inputSetting.Swipable)
+                if (MainManager.setting.inputSetting.Swipable)
                 {
                     if (GetComponent<SwipeDetection>() == null)
                     {
-                        SwipeDetection swipe = gameObject.AddComponent<SwipeDetection>();
+                        var swipe = gameObject.AddComponent<SwipeDetection>();
                         swipe.enabled = true;
                         ControlsList.Add(swipe);
                     }
                     else
                     {
-                        SwipeDetection swipe = gameObject.GetComponent<SwipeDetection>();
+                        var swipe = gameObject.GetComponent<SwipeDetection>();
                         swipe.enabled = true;
                         ControlsList.Add(swipe);
-                    } ;
+                    }
                 }
             }
         }
@@ -145,7 +145,7 @@ namespace Wonderland.Management
             playerInput = GetComponent<PlayerInput>();
             playerInput.camera = Camera.main;
             mainCamera = playerInput.camera;
-            MainManager.BeforeDestroyMainManager += UpdateInstance;
+            MainManager.OnDestroyMainManager += UpdateInstance;
         }
 
         private void Start()
@@ -162,7 +162,7 @@ namespace Wonderland.Management
         private void OnDisable()
         {
             HandheldInputAction.Disable();
-            MainManager.BeforeDestroyMainManager -= UpdateInstance;
+            MainManager.OnDestroyMainManager -= UpdateInstance;
         }
     }
 }

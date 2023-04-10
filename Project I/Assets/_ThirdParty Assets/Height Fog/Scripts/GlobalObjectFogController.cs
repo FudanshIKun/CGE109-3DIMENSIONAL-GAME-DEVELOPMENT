@@ -1,4 +1,6 @@
 ﻿// SKGames vertical fog global object controller. Copyright (c) 2018 Sergey Klimenko. 18.05.2018
+
+using System;
 using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,6 +11,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 [ExecuteInEditMode]
 [RequireComponent(typeof(MeshRenderer))]
+[Obsolete("Obsolete")]
 public class GlobalObjectFogController: MonoBehaviour
 {
     public enum FogSpace

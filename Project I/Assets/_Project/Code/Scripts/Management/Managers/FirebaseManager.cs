@@ -15,7 +15,6 @@ namespace Wonderland.Management
         private static User CurrentUser { get; set; }
         
         private static FirebaseFirestore Firestore { get; set; }
-
         private static DocumentReference UserInfoDocumentReference{ get; set; }
 
         #endregion
@@ -84,7 +83,7 @@ namespace Wonderland.Management
 
         public static async void SignInAsync(string email, string password, Label errorText)
         {
-            if(string.IsNullOrEmpty(email))
+            if (string.IsNullOrEmpty(email))
             {
                 errorText.text = "Please Enter your Email";
             }
@@ -114,7 +113,7 @@ namespace Wonderland.Management
                 }
                 catch (FirebaseException firebaseException)
                 {
-                    FirebaseException exception = (FirebaseException)firebaseException.GetBaseException();
+                    var exception = (FirebaseException)firebaseException.GetBaseException();
                     if (Enum.IsDefined(typeof(AuthError), exception.ErrorCode))
                     {
                         AuthError authError = (AuthError)exception.ErrorCode;
@@ -176,7 +175,7 @@ namespace Wonderland.Management
 
         private static string FirestoreErrorHandling(FirestoreError error)
         {
-            string output = "Unknown Error, Please Try Again";
+            var output = "Unknown Error, Please Try Again";
             switch (error)
             {
                 case FirestoreError.PermissionDenied:

@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using Wonderland.Objects;
 
@@ -9,7 +8,7 @@ namespace Wonderland.Management
     {
         #region Fields
 
-        [HideInInspector] public bool isTouching;
+        public static bool IsTouching;
         [HideInInspector] public GameObject currentTouched;
 
         #endregion
@@ -18,14 +17,14 @@ namespace Wonderland.Management
         
         private void TouchStart(Vector2 screenPosition, GameObject touched, float time)
         {
-            isTouching = true;
+            IsTouching = true;
             currentTouched = touched;
             DetectTouch(currentTouched);
         }
 
         private void TouchEnd(Vector2 position, GameObject touched, float time)
         {
-            isTouching = false;
+            IsTouching = false;
             UnDetectTouch(currentTouched);
         }
         

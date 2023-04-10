@@ -7,6 +7,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 [ExecuteInEditMode]
 [RequireComponent(typeof(MeshRenderer))]
+[Obsolete("Obsolete")]
 public class ObjectFogController : MonoBehaviour
 {
     public enum FogSpace
@@ -15,12 +16,12 @@ public class ObjectFogController : MonoBehaviour
         World = 1
     }
 
-    public                                    Color    mainColor;
+    public Color    mainColor;
     [Header("Main fog configuration")] public FogSpace fogSimulationSpace;
-    public                                    Color    fogColor;
-    public                                    float    fogMinimalHeight;
-    public                                    float    fogMaximalHeight;
-    [Range(0.01f, 20.0f)] public              float    fogFalloff;
+    public Color    fogColor;
+    public float    fogMinimalHeight;
+    public float    fogMaximalHeight;
+    [Range(0.01f, 20.0f)] public float fogFalloff;
 
     [Space(), Header("Emission fog configuration")]
     public Color fogEmissionColor;
@@ -42,7 +43,7 @@ public class ObjectFogController : MonoBehaviour
     public float fogWaveFreqX;
     public float fogWaveFreqZ;
 
-    [HideInInspector] public MeshRenderer          renderer;
+    [HideInInspector] public new MeshRenderer renderer;
     [HideInInspector] public MaterialPropertyBlock mpb;
 
     [Space()] [HideInInspector] public bool overridedFromGlobalController = false;

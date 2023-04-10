@@ -2,16 +2,20 @@ using UnityEngine;
 
 namespace Wonderland.Management
 {
-    public class UIHandler : MonoBehaviour
+    public abstract class UIHandler : MonoBehaviour
     {
-        private void OnEnable()
+        protected abstract void OnUxmlChange();
+        
+        protected virtual void OnEnable()
         {
-            MainManager.UIHandler = this;
+            MainManager.Instance.UIHandler = this;
+            UIManager.UxmlChanged += OnUxmlChange;
         }
         
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
-            MainManager.UIHandler = null;
+            MainManager.Instance.UIHandler = null;
+            UIManager.UxmlChanged -= OnUxmlChange;
         }
     }
 }
