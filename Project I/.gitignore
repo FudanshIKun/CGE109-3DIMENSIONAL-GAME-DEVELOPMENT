@@ -61,23 +61,41 @@ sysinfo.txt
 *.unitypackage
 *.app
 
-# Crashlytics generated file
+# Crashlytics Generated Files
 crashlytics-build.properties
 
-# Firebase packages file
-/[Aa]ssets/Editor Default Resources/
-/[Aa]ssets/ExternalDependencyManager/
+#General Files
+*.pdf
+
+#Unity Package Files
+/[Aa]ssets/Unity.VisualScripting.Generated
+/[Aa]ssets/Unity.VisualScripting.Generated.meta
+
+# Firebase Packages Files
+/[Aa]ssets/Editor Default Resources
+/[Aa]ssets/Editor Default Resources.meta
+
+/[Aa]ssets/ExternalDependencyManager
+/[Aa]ssets/ExternalDependencyManager.meta
+
 /[Aa]ssets/Firebase/
-/[Aa]ssets/Parse/
-/[Aa]ssets/Plugins/
+/[Aa]ssets/Firebase.meta
+
+/[Aa]ssets/Parse
+
+/[Aa]ssets/Plugins
+/[Aa]ssets/Plugins.meta
+
 # Firebase PlugIns
 
-[Aa]ssets/[Ss]treamingAssets/aa.meta
-[Aa]ssets/[Ss]treamingAssets/aa/* 
+[Aa]ssets/[Ss]treamingAssets
+[Aa]ssets/[Ss]treamingAssets.meta
 # Temporary auto-generated Android Assets
 
 #ThirdParty Assets
-*.pdf
+/[Aa]ssets/_ThirdParty Assets/
+[Aa]ssets/_ThirdParty Assets.meta
+
 /[Aa]ssets/_ThirdParty Assets/[Tt]ripolygon
 /[Aa]ssets/_ThirdParty Assets/[Tt]ripolygon.meta
 #Umodeler
@@ -89,6 +107,3 @@ crashlytics-build.properties
 /[Aa]ssets/_ThirdParty Assets/[Cc]hatGPT Script Generator
 /[Aa]ssets/_ThirdParty Assets/[Cc]hatGPT Script Generator.meta
 #ChatGPT Script Generator
-
-#/[Aa]ssets/_ThirdParty Assets/
-#[Aa]ssets/_ThirdParty Assets/
