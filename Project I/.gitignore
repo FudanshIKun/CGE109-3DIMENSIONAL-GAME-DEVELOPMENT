@@ -65,6 +65,7 @@ sysinfo.txt
 crashlytics-build.properties
 
 #General Files
+*.vsconfig
 *.pdf
 
 #Unity Package Files
