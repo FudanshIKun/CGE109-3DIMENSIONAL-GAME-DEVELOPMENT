@@ -1,46 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Wonderland.Management
 {
     public class MainManager : MonoBehaviour
     {
-        #region Fields
-        
-        #region Managers
-        
-        public FirebaseManager FirebaseManager { get; private set; }
-        public GameManager GameManager{ get; private set; }
-        public InputManager InputManager{ get; private set; }
-        public UIManager UIManager{ get; private set; }
-        public SoundManager SoundManager{ get; private set; }
-        
-        #endregion
-
-        #region Handlers
-        
-        public SceneHandler SceneHandler { get; set; }
-        public PlayerHandler PlayerHandler { get; set; }
-        public GameplayHandler GamePlayHandler { get; set; }
-        public UIHandler UIHandler { get; set; }
-
-        #endregion
-        
-        #region Settings
-
-        [Header("Setting")] 
-        public static SceneSetting setting;
-
-        #endregion
-
-        #endregion
-        
         #region Singleton
 
         public static MainManager Instance { get; private set; }
-        private readonly List<IManager> _managers = new List<IManager>();
+        private readonly List<IManager> _managers = new();
         public static event Action OnDestroyMainManager;
         
         private void Singleton()
@@ -52,6 +21,7 @@ namespace Wonderland.Management
             }
             else
             {
+                Instance.sceneHandler = sceneHandler;
                 OnDestroyMainManager?.Invoke();
                 Destroy(gameObject);
             }
@@ -61,11 +31,8 @@ namespace Wonderland.Management
         {
             foreach (IManager manager in array)
             {
-                if (manager.GetComponent<IManager>() != null)
-                {
-                    _managers.Add(manager);
-                    Logging.ManagerLogger.Log(manager.name + "Has Been Added To List");
-                }
+                if (manager.GetComponent<IManager>() == null) return;
+                _managers.Add(manager);
             }
         }
 
@@ -100,6 +67,15 @@ namespace Wonderland.Management
         }
 
         #endregion
+        [Header("Setting")] 
+        public SceneHandler sceneHandler;
+        
+        public FirebaseManager FirebaseManager { get; private set; }
+        public GameManager GameManager{ get; private set; }
+        public InputManager InputManager{ get; private set; }
+        public UIManager UIManager{ get; private set; }
+        public SoundManager SoundManager{ get; private set; }
+        
         private void Awake()
         {
             Logging.LoadLogger();
@@ -110,7 +86,7 @@ namespace Wonderland.Management
         private void OnEnable()
         {
             Singleton();
-            Instance.InputManager.EnableInputDetectionInScene();
+            Instance.InputManager.EnableInputDetections();
         }
     }
 }

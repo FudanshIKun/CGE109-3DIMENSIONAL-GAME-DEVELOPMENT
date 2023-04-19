@@ -1,5 +1,5 @@
 {
-    "name": "MobileInputActions",
+    "name": "HandheldInputAction",
     "maps": [
         {
             "name": "Touch",

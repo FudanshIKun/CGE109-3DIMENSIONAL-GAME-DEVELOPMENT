@@ -6,10 +6,8 @@ TagManager:
   tags:
   - System
   - UI
-  - UIDocument
   - Object
-  - Environment
-  - Volumn
+  - Audio
   layers:
   - Default
   - TransparentFX
@@ -18,10 +16,10 @@ TagManager:
   - Water
   - UI
   - Object
-  - FixedObject
-  - Beat
+  - Ground
+  - Shot
+  - Target
   - PostProcess
-  - 
   - 
   - 
   - 

@@ -9,103 +9,42 @@ namespace Wonderland.Management
     [RequireComponent(typeof(PlayerInput))]
     public class InputManager : IManager
     {
-        #region Fields
-
         [HideInInspector] public PlayerInput playerInput;
         [HideInInspector] public Camera mainCamera;
         private static HandheldInputAction HandheldInputAction { get; set; }
         private List<Controls> ControlsList { get; set; }
-
-        #endregion
         
-        #region Input Events
-
-        // Start Primary Touch Event
-        public delegate void StartPrimaryTouch(Vector2 position, GameObject interacted, float time);
-        public event StartPrimaryTouch OnStartPrimaryTouchEvent;
+        private void UpdateInstance()
+        {
+            MainManager.Instance.InputManager.playerInput = playerInput;
+            MainManager.Instance.InputManager.mainCamera = mainCamera;
+        }
         
-        // End Primary Touch Event
-        public delegate void EndPrimaryTouch(Vector2 position, GameObject interacted, float time);
-        public event EndPrimaryTouch OnEndPrimaryTouchEvent;
+        private void Awake()
+        {
+            playerInput = GetComponent<PlayerInput>();
+            playerInput.camera = Camera.main;
+            mainCamera = playerInput.camera;
+            MainManager.OnDestroyMainManager += UpdateInstance;
+        }
 
-        #endregion
+        private void Start()
+        {
+            GameManager.LoadNewScene += DisableInputDetections;
+            HandheldInputAction.Enable();
+        }
+
+        private void OnDisable()
+        {
+            HandheldInputAction.Disable();
+            MainManager.OnDestroyMainManager -= UpdateInstance;
+        }
 
         #region Methods
         
-        public void CheckDeviceType()
+        private void DisableInputDetections()
         {
-            // Check Device Type That Running The Application
-            switch (SystemInfo.deviceType)
-            {
-                case DeviceType.Desktop:
-                    //TODO: Set Desktop Input Setting Environment
-                    break;
-                case DeviceType.Handheld:
-                    //TODO: Set Handheld Input Setting Environment
-                    break;
-            }
-        }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        public void EnableInputDetectionInScene()
-        {
-            //
-            if (ControlsList == null)
-            {
-                ControlsList = new List<Controls>();
-            }
-
-            //
-            if (HandheldInputAction == null)
-            {
-                HandheldInputAction = new HandheldInputAction();
-            }
-
-            if (MainManager.setting != null)
-            {
-                //
-                if (MainManager.setting.inputSetting.Touchable)
-                {
-                    if (GetComponent<TouchDetection>() == null)
-                    {
-                        TouchDetection touch = gameObject.AddComponent<TouchDetection>();
-                        touch.enabled = true;
-                        ControlsList.Add(touch);
-                    }
-                    else
-                    {
-                        TouchDetection touch = gameObject.GetComponent<TouchDetection>();
-                        touch.enabled = true;
-                        ControlsList.Add(touch);
-                    }
-                }
-
-                //
-                if (MainManager.setting.inputSetting.Swipable)
-                {
-                    if (GetComponent<SwipeDetection>() == null)
-                    {
-                        var swipe = gameObject.AddComponent<SwipeDetection>();
-                        swipe.enabled = true;
-                        ControlsList.Add(swipe);
-                    }
-                    else
-                    {
-                        var swipe = gameObject.GetComponent<SwipeDetection>();
-                        swipe.enabled = true;
-                        ControlsList.Add(swipe);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void DisableInputDetectionFromPreviousScene()
-        {
+            Logging.ManagerLogger.Log("DisableInputDetections"); 
             if (ControlsList == null)
             {
                 ControlsList = new List<Controls>();
@@ -118,51 +57,49 @@ namespace Wonderland.Management
                 }
             }
         }
-        
-        private void StartTouchPrimary(InputAction.CallbackContext context)
+
+        public void EnableInputDetections()
         {
-            if (OnStartPrimaryTouchEvent != null) OnStartPrimaryTouchEvent(Utils.ScreenToCamera(mainCamera, HandheldInputAction.Touch.PrimaryTouchValue.ReadValue<Vector2>()), Utils.ScreenToObject(mainCamera,HandheldInputAction.Touch.PrimaryTouchValue.ReadValue<Vector2>()), (float)context.time);
-        }
-        
-        private void EndTouchPrimary(InputAction.CallbackContext context)
-        {
-            if (OnEndPrimaryTouchEvent != null)
+            Logging.ManagerLogger.Log("EnableInputDetections"); 
+            ControlsList ??= new List<Controls>();
+            HandheldInputAction ??= new HandheldInputAction();
+
+            if (MainManager.Instance.sceneHandler.setting == null) return;
+            var setting = MainManager.Instance.sceneHandler.setting;
+
+            if (setting.sceneSetting.SceneType == SceneSetting.Setting.Type.GameScene && setting.inputSetting.EnableJoyStick)
             {
-                OnEndPrimaryTouchEvent(Utils.ScreenToCamera(mainCamera, HandheldInputAction.Touch.PrimaryTouchValue.ReadValue<Vector2>()), Utils.ScreenToObject(mainCamera,HandheldInputAction.Touch.PrimaryTouchValue.ReadValue<Vector2>()), (float)context.time);
+                var joystickController = FindController(setting.inputSetting.joystickSetting.joystickPrefab);
+                if (gameObject.GetComponent<JoyStickDetection>() != null)
+                {
+                    var joyStickDetection = gameObject.GetComponent<JoyStickDetection>();
+                    JoyStickDetection.Controller = joystickController;
+                    joyStickDetection.enabled = true;
+                    ControlsList.Add(joyStickDetection);
+                }
+                else
+                {
+                    var joyStickDetection = gameObject.AddComponent<JoyStickDetection>();
+                    JoyStickDetection.Controller = joystickController;
+                    joyStickDetection.enabled = true;
+                    ControlsList.Add(joyStickDetection);
+                }
             }
         }
 
-        #endregion
-
-        private void UpdateInstance()
+        private JoystickController FindController(GameObject controllerPrefab)
         {
-            MainManager.Instance.InputManager.playerInput = playerInput;
-            MainManager.Instance.InputManager.mainCamera = mainCamera;
-        }
-
-        private void Awake()
-        {
-            playerInput = GetComponent<PlayerInput>();
-            playerInput.camera = Camera.main;
-            mainCamera = playerInput.camera;
-            MainManager.OnDestroyMainManager += UpdateInstance;
-        }
-
-        private void Start()
-        {
-            //
-            GameManager.LoadNewScene += DisableInputDetectionFromPreviousScene;
+            JoystickController joystickController;
+            if (MainManager.Instance.UIManager.joystickController != null)
+            {
+                joystickController = MainManager.Instance.UIManager.joystickController;
+                return joystickController;
+            }
             
-            //
-            HandheldInputAction.Enable();
-            HandheldInputAction.Touch.PrimaryTouchContact.started += context => StartTouchPrimary(context);
-            HandheldInputAction.Touch.PrimaryTouchContact.canceled += context => EndTouchPrimary(context);
+            joystickController = Instantiate(controllerPrefab, transform.position, Quaternion.identity, MainManager.Instance.UIManager.UICanvas.transform).GetComponent<JoystickController>();
+            return joystickController;
         }
 
-        private void OnDisable()
-        {
-            HandheldInputAction.Disable();
-            MainManager.OnDestroyMainManager -= UpdateInstance;
-        }
+        #endregion
     }
 }

@@ -25,6 +25,7 @@
 
 # Visual Studio cache directory
 .vs/
+.vsconfig
 
 # Gradle cache directory
 .gradle/
@@ -65,8 +66,8 @@ sysinfo.txt
 crashlytics-build.properties
 
 #General Files
-*.vsconfig
 *.pdf
+*.idea
 
 #Unity Package Files
 /[Aa]ssets/Unity.VisualScripting.Generated
@@ -93,18 +94,22 @@ crashlytics-build.properties
 [Aa]ssets/[Ss]treamingAssets.meta
 # Temporary auto-generated Android Assets
 
-#ThirdParty Assets
-/[Aa]ssets/_ThirdParty Assets/
-[Aa]ssets/_ThirdParty Assets.meta
+# Photon Packages Files
+/[Aa]ssets/Photon
+/[Aa]ssets/Photon.meta
 
-/[Aa]ssets/_ThirdParty Assets/[Tt]ripolygon
-/[Aa]ssets/_ThirdParty Assets/[Tt]ripolygon.meta
+#Custom Package Assets
+/[Aa]ssets/[Cc]ustom [Pp]ackages/
+[Aa]ssets/[Cc]ustom [Pp]ackages.meta
+
+#Amplify Shader Editor
+/[Aa]ssets/[Cc]ustom [Pp]ackages/[Aa]plify[Ss]hader[Ee]ditor
+/[Aa]ssets/[Cc]ustom [Pp]ackages/[Aa]plify[Ss]hader[Ee]ditor.meta
+
+/[Aa]ssets/[Cc]ustom [Pp]ackages/[Tt]ripolygon
+/[Aa]ssets/[Cc]ustom [Pp]ackages/[Tt]ripolygon.meta
 #Umodeler
 
-/[Aa]ssets/_ThirdParty Assets/[Gg]iantParticleGames
-/[Aa]ssets/_ThirdParty Assets/[Gg]iantParticleGames.meta
-#Inspector Graph
-
-/[Aa]ssets/_ThirdParty Assets/[Cc]hatGPT Script Generator
-/[Aa]ssets/_ThirdParty Assets/[Cc]hatGPT Script Generator.meta
+/[Aa]ssets/[Cc]ustom [Pp]ackages/[Cc]hatGPT Script Generator
+/[Aa]ssets/[Cc]ustom [Pp]ackages/[Cc]hatGPT Script Generator.meta
 #ChatGPT Script Generator

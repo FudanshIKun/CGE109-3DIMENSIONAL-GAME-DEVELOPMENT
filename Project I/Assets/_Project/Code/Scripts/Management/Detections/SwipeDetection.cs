@@ -6,39 +6,33 @@ namespace Wonderland.Management
     [RequireComponent(typeof(InputManager))]
     public class SwipeDetection : Controls
     {
-        #region Setting
-        
-        private readonly float _minimumDistance = .1f;
-        private readonly float _maximumTime = .5f;
-        private readonly float _directionThreshold = .9f;
-        
-        #endregion
+        private const float MinimumDistance = .1f;
+        private const float MaximumTime = .5f;
+        private const float DirectionThreshold = .9f;
 
-        #region Fields
-
-        //
         private Vector2 _startPosition;
-        //
         private float _startTime;
-        //
         private Vector2 _endPosition;
-        //
         private float _endTime;
 
-        #endregion
-
-        #region Swipe Events
-
-        //
         public static event Action LeftSwipe;
-        //
         public static event Action RightSwipe;
-        //
         public static event Action UpSwipe;
-        //
         public static event Action DownSwipe;
+        
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            /*MainManager.Instance.InputManager.OnStartPrimaryTouchEvent += SwipeStart;
+            MainManager.Instance.InputManager.OnEndPrimaryTouchEvent += SwipeEnd;*/
+        }
 
-        #endregion
+        public override void OnDisable()
+        {
+            base.OnDisable();
+            /*MainManager.Instance.InputManager.OnStartPrimaryTouchEvent -= SwipeStart;
+            MainManager.Instance.InputManager.OnEndPrimaryTouchEvent -= SwipeEnd;*/
+        }
         
         #region Methods
         
@@ -57,7 +51,7 @@ namespace Wonderland.Management
         
         private void DetectSwipe()
         {
-            if (Vector3.Distance(_startPosition, _endPosition) >= _minimumDistance && (_endTime - _startTime) <= _maximumTime)
+            if (Vector3.Distance(_startPosition, _endPosition) >= MinimumDistance && (_endTime - _startTime) <= MaximumTime)
             {
                 Logging.DetectionLogger.Log("Swipe Detected");
                 Vector3 direction = _endPosition - _startPosition;
@@ -68,22 +62,22 @@ namespace Wonderland.Management
         
         private void SwipeDirection(Vector2 direction)
         {
-            if (Vector2.Dot(Vector2.up, direction) > _directionThreshold)
+            if (Vector2.Dot(Vector2.up, direction) > DirectionThreshold)
             {
                 UpSwipe?.Invoke();
                 Logging.DetectionLogger.Log("SwipeUp");
             } 
-            else if (Vector2.Dot(Vector2.down, direction) > _directionThreshold)
+            else if (Vector2.Dot(Vector2.down, direction) > DirectionThreshold)
             {
                 DownSwipe?.Invoke();
                 Logging.DetectionLogger.Log("SwipeDown");
             } 
-            else if (Vector2.Dot(Vector2.left, direction) > _directionThreshold)
+            else if (Vector2.Dot(Vector2.left, direction) > DirectionThreshold)
             {
                 LeftSwipe?.Invoke();
                 Logging.DetectionLogger.Log("SwipeLeft");
             } 
-            else if (Vector2.Dot(Vector2.right, direction) > _directionThreshold)
+            else if (Vector2.Dot(Vector2.right, direction) > DirectionThreshold)
             {
                 RightSwipe?.Invoke();
                 Logging.DetectionLogger.Log("SwipeRight");
@@ -91,20 +85,5 @@ namespace Wonderland.Management
         }
 
         #endregion
-        
-
-        public override void OnEnable()
-        {
-            base.OnEnable();
-            MainManager.Instance.InputManager.OnStartPrimaryTouchEvent += SwipeStart;
-            MainManager.Instance.InputManager.OnEndPrimaryTouchEvent += SwipeEnd;
-        }
-
-        public override void OnDisable()
-        {
-            base.OnDisable();
-            MainManager.Instance.InputManager.OnStartPrimaryTouchEvent -= SwipeStart;
-            MainManager.Instance.InputManager.OnEndPrimaryTouchEvent -= SwipeEnd;
-        }
     }
 }

@@ -8,13 +8,11 @@ namespace Wonderland.Management
         
         protected virtual void OnEnable()
         {
-            MainManager.Instance.UIHandler = this;
             UIManager.UxmlChanged += OnUxmlChange;
         }
         
         protected virtual void OnDisable()
         {
-            MainManager.Instance.UIHandler = null;
             UIManager.UxmlChanged -= OnUxmlChange;
         }
     }

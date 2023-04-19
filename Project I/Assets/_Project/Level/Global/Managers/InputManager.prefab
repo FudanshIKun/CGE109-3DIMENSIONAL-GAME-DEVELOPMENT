@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2198673228659626625}
-  - component: {fileID: 2198673228659626624}
   - component: {fileID: 7372763553805199613}
+  - component: {fileID: 2198673228659626624}
   m_Layer: 2
   m_Name: InputManager
   m_TagString: System
@@ -33,6 +33,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7372763553805199613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2198673228659626654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28b4f3525cc084f4c9c9932bb404f59e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 0}
+  mainCamera: {fileID: 0}
 --- !u!114 &2198673228659626624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,17 +90,3 @@ MonoBehaviour:
   m_DefaultActionMap: Touch
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &7372763553805199613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2198673228659626654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28b4f3525cc084f4c9c9932bb404f59e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
-  mainCamera: {fileID: 0}

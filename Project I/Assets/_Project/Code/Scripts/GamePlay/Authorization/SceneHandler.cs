@@ -1,6 +1,5 @@
 using System;
-using System.Threading.Tasks;
-using UnityEngine;
+
 
 namespace Wonderland.GamePlay.Authorization
 {
@@ -8,38 +7,30 @@ namespace Wonderland.GamePlay.Authorization
     {
         #region Methods
 
-        public override Task SetUpScene()
+        public override void SetUpScene()
         {
-            void Action()                    
-            {                                
-                                 
-            }                                
-                                 
-            var setUpTask = new Task(Action);
-            return setUpTask;                
+            try
+            {
+                Logging.HandlerLogger.Log("SetUpScene");
+            }
+            catch (Exception e)
+            {
+                Logging.HandlerLogger.Log("SetUpScene Has Been Canceled : " + e);
+                throw;
+            }              
         }
 
         #endregion
         
-        public override async void LaunchingGame()
+        public override void LaunchGame()
         {
-            await SetUpScene();
             
-        }
-
-        protected override void OnEnable()
-        {
             
         }
 
         private void Start()
         {
-            LaunchingGame();
-        }
-
-        protected override void OnDisable()
-        {
-            
+            SetUpScene();
         }
     }
 }

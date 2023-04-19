@@ -6,96 +6,30 @@ namespace Wonderland.Management
 {
     public class UIManager : IManager
     {
-        private VisualElement _root;
+        [Header("Settings")]
+        [SerializeField] private Canvas defaultCanvas;
+        [SerializeField] private UIDocument uiDocument;
+        public JoystickController joystickController;
+        
+        public GameObject UICanvas { get; private set; }
+        private VisualElement Root { get; set; }
         public VisualElement CurrentUxml { get; private set; }
-        public GameObject defaultCanvas;
-        public GameObject loadingScreen;
-
-        #region UXML Managing Methods
-
-        public static event Action UxmlChanged;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public string GetCurrentUxmlName()
-        {
-            string currentMainPanel = CurrentUxml.Q<GroupBox>().name;
-            return currentMainPanel;
-        }
-        
-        /// <summary>
-        /// This method is used to change UXML file of the UIDocument in the scene
-        /// Mainly use for SignUp and SignIn interface
-        /// </summary>
-        /// <param name="newUxml"></param>
-        public void ChangeUxml(VisualTreeAsset newUxml)
-        {
-            ClearCurrentUxml();
-
-            // Build a tree of VisualElement from new VisualTreeAsset and assigned to currentUxml ( VisualElement )
-            CurrentUxml = newUxml.CloneTree();
-            CurrentUxml.style.position = Position.Relative;
-            CurrentUxml.style.height = Screen.safeArea.height;
-
-            // Invoke Any Function that attach to UxmlChanged Event In That Scene
-            UxmlChanged?.Invoke();
-
-            // Add currentUxml to the root of UIDocument in the scene
-            _root.Add(CurrentUxml);
-            Logging.UILogger.Log("ChangeUxml To " + newUxml.name);
-        }
-
-        /// <summary>
-        /// This method is used to clear the current Uxml in the hierarchy right now
-        /// </summary>
-        public void ClearCurrentUxml()
-        {
-            if (_root.Contains(CurrentUxml))
-            {
-                // Remove the currentUxml from the parent templateContainer
-                CurrentUxml.RemoveFromHierarchy();
-            }
-        }
-        
-        /// <summary>
-        /// Delete Every Uxml Template out of UIDocument's Root
-        /// </summary>
-        public void ClearUI()
-        {
-            _root.Clear();
-        }
-
-        #endregion
-
-        #region Loading Screen Management
-        
-        public void HideLoadingScreen()
-        {
-            loadingScreen.SetActive(false);
-        }
-        
-        public void ShowLoadingScreen()
-        {
-            ClearUI();
-            loadingScreen.SetActive(true);
-        }
-
-        #endregion
+        private GameObject LoadingScreen { get; set; }
 
         private void UpdateInstance()
         {
-            MainManager.Instance.UIManager._root = _root;
+            MainManager.Instance.UIManager.UICanvas = UICanvas;
+            MainManager.Instance.UIManager.Root = Root;
             MainManager.Instance.UIManager.defaultCanvas = defaultCanvas;
-            MainManager.Instance.UIManager.loadingScreen = loadingScreen;
+            MainManager.Instance.UIManager.LoadingScreen = LoadingScreen;
         }
 
         private void Awake()
         {
-            _root = GameObject.FindWithTag("UIDocument").GetComponent<UIDocument>().rootVisualElement;
-            defaultCanvas = GameObject.FindWithTag("UI");
-            loadingScreen = defaultCanvas.transform.GetChild(0).gameObject;
+            UICanvas = GameObject.FindWithTag("UI");
+            Root = uiDocument.rootVisualElement;
+            LoadingScreen = defaultCanvas.transform.GetChild(0).gameObject;
+            joystickController.gameObject.SetActive(false);
             HideLoadingScreen();
             MainManager.OnDestroyMainManager += UpdateInstance;
         }
@@ -104,5 +38,51 @@ namespace Wonderland.Management
         {
             MainManager.OnDestroyMainManager -= UpdateInstance;
         }
+        
+        #region Methods
+
+        public static event Action UxmlChanged;
+        
+        public string GetCurrentUxmlName()
+        {
+            var currentUxmlName = CurrentUxml.Q<GroupBox>().name;
+            return currentUxmlName;
+        }
+        
+        public void ChangeUxml(VisualTreeAsset newUxml)
+        {
+            ClearCurrentUxml();
+            
+            CurrentUxml = newUxml.CloneTree();
+            CurrentUxml.style.position = Position.Relative;
+            CurrentUxml.style.height = Screen.safeArea.height;
+            
+            UxmlChanged?.Invoke();
+            
+            Root.Add(CurrentUxml);
+            Logging.UILogger.Log("ChangeUxml To " + newUxml.name);
+        }
+        
+        public void ClearCurrentUxml()
+        {
+            if (Root.Contains(CurrentUxml))
+            {
+                // Remove the currentUxml from the parent templateContainer
+                CurrentUxml.RemoveFromHierarchy();
+            }
+        }
+
+        public void HideLoadingScreen()
+        {
+            LoadingScreen.SetActive(false);
+        }
+        
+        public void ShowLoadingScreen()
+        {
+            Root.Clear();
+            LoadingScreen.SetActive(true);
+        }
+
+        #endregion
     }
 }

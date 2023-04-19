@@ -6,6 +6,8 @@ namespace Wonderland.GamePlay.BeatRunner
 {
     public class UIHandler : Management.UIHandler
     {
+        [Header("Status")]
+        [Header("Settings")]
         [Header("UI Assets")]
         [SerializeField] private VisualTreeAsset mainMenuUxml;
 

@@ -56,7 +56,7 @@ namespace Wonderland.Management
                     
                     await FirestoreAPI.PostToFirestore(UserInfoDocumentReference, CurrentUser.UserInfo);
                     
-                    MainManager.Instance.GameManager.LoadSceneWithLoaderAsync
+                    GameManager.LoadSceneWithLoaderAsync
                         (Scene.BeatRunner);
                 }
                 catch (FirebaseException firebaseException)
@@ -108,7 +108,7 @@ namespace Wonderland.Management
                         CurrentUser.UserInfo = loadUserInfoTask.Result;
                     });
                     
-                    MainManager.Instance.GameManager.LoadSceneWithLoaderAsync
+                    GameManager.LoadSceneWithLoaderAsync
                         (Scene.BeatRunner);
                 }
                 catch (FirebaseException firebaseException)
@@ -146,8 +146,16 @@ namespace Wonderland.Management
 
         private void InitializeFirebase()
         {
-            Auth = FirebaseAuth.DefaultInstance;
-            Firestore = FirebaseFirestore.DefaultInstance;
+            try
+            {
+                Auth = FirebaseAuth.DefaultInstance;
+                Firestore = FirebaseFirestore.DefaultInstance;
+            }
+            catch (InitializationException e)
+            {
+                Logging.AuthLogger.Log(e);
+                throw;
+            }
         }
 
         #endregion

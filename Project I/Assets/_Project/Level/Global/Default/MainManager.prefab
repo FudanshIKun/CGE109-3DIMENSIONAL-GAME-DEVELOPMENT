@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6051211c155d9e74eb3d1fdfdebf456d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneHandler: {fileID: 0}
 --- !u!1001 &5436895965864487127
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -126,7 +127,7 @@ PrefabInstance:
     - target: {fileID: 2198673228659626654, guid: e6a08e87320b39e418c75a9ad6f299a5,
         type: 3}
       propertyPath: m_TagString
-      value: System
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -149,6 +150,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5982241688641567992, guid: 8b805069b929a4a4e9cbbf47ad218183,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5982241688641567998, guid: 8b805069b929a4a4e9cbbf47ad218183,
         type: 3}
@@ -237,6 +243,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UIManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2942261053828051296, guid: 0755490c39ba4824d97f805feef4bb3a,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2942261053828051298, guid: 0755490c39ba4824d97f805feef4bb3a,
         type: 3}
@@ -370,6 +381,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6396071480394416641, guid: 79f6f092a8d4f804484df146430f23f0,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 79f6f092a8d4f804484df146430f23f0, type: 3}
@@ -391,6 +407,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FirebaseManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076522216857892411, guid: 5b2f6a77d788b974b9ca9c2faa607c8f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5076522216857892412, guid: 5b2f6a77d788b974b9ca9c2faa607c8f,
         type: 3}

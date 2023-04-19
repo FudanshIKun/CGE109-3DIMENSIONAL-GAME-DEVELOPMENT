@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Wonderland.Serializables
 {
     [Serializable]
-    public class Player : Types.Objects
+    public class Player
     {
         [Header("Player Information")]
         public string userName;

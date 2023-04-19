@@ -27,12 +27,19 @@ namespace Wonderland
         [Serializable]
         public struct InputSetting
         {
-            [Header("Handheld Input Settings")] 
-            [SerializeField] bool touchable;
-            [SerializeField] public bool swipable;
+            [Header("Handheld Input Settings")]
+            //[SerializeField] private bool swipable;
+            [SerializeField] private bool enableJoyStick;
+            public JoystickSetting joystickSetting;
             
-            public bool Touchable => touchable;
-            public bool Swipable => swipable;
+            //public bool Swipable => swipable;
+            public bool EnableJoyStick => enableJoyStick;
+        }
+        
+        [Serializable]
+        public struct JoystickSetting
+        {
+            public GameObject joystickPrefab;
         }
     }
 }
