@@ -1,6 +1,3 @@
-using UnityEngine;
-using Wonderland.Management;
-
 namespace Wonderland.GamePlay.BeatRunner
 {
     public class EvaderBehavior : IPlayerBehavior
@@ -9,7 +6,6 @@ namespace Wonderland.GamePlay.BeatRunner
 
         private MovementSystem MovementSystem { get;}
         private AimSystem AimSystem { get;}
-        private WeaponSystem WeaponSystem { get; }
 
         #endregion
 
@@ -17,18 +13,24 @@ namespace Wonderland.GamePlay.BeatRunner
         {
             MovementSystem = movementSystem;
             AimSystem = aimSystem;
-            WeaponSystem = weaponSystem;
+            aimSystem.weaponSystem = weaponSystem;
         }
         
         public void EnterBehavior()
         {
             Logging.GamePlaySystemLogger.Log("Player Enter Behavior: " + this);
-        }
+        } 
 
         public void UpdateBehavior()
         {
             MovementSystem.MoveAndTurn();
             AimSystem.Aim();
+
+        }
+
+        public void LateUpdateBehavior()
+        {
+            
         }
     }
 }

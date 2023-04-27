@@ -8,14 +8,9 @@ namespace Wonderland.GamePlay.BeatRunner
     {
         [Header("Status")]
         [Header("Settings")]
-        [Header("UI Assets")]
+        [Header("Uxml Assets")]
         [SerializeField] private VisualTreeAsset mainMenuUxml;
-
-        #region Components
-
         
-
-        #endregion
 
         #region Methods
 

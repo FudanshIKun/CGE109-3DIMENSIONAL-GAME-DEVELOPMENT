@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Wonderland.Management
 {
-    public class SoundManager : IManager
+    public class SoundManager : Manager
     {
         public AudioSource mainSpeaker;
     }

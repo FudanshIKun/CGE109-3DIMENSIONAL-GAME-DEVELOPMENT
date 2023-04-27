@@ -53,7 +53,7 @@ namespace Wonderland.GamePlay.BeatRunner
                 var ready = GameplayHandler.Instance.SetUpGameplay();
                 if (ready)
                 {
-                    GameManager.ChangeGameState(IManager.State.PlayState);
+                    GameManager.ChangeGameState(Manager.State.PlayState);
                 }
             }
             catch (Exception e)

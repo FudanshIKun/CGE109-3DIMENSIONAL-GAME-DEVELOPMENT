@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Wonderland.Management
 {
-    public class ObjectPoolHandler : MonoBehaviour
+    public abstract class ObjectPoolHandler : MonoBehaviour
     {
         
     }

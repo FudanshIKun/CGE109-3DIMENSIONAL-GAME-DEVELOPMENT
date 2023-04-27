@@ -1,8 +1,12 @@
+using Unity.Collections;
+using Unity.Jobs;
+
 namespace Wonderland.GamePlay.BeatRunner
 {
     public interface IPlayerBehavior
     {
-        public abstract void EnterBehavior();
-        public abstract void UpdateBehavior();
+        public void EnterBehavior();
+        public void UpdateBehavior();
+        public void LateUpdateBehavior();
     }
 }

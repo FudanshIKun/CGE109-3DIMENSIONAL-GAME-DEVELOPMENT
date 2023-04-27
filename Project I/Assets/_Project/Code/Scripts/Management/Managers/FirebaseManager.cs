@@ -7,7 +7,7 @@ using Wonderland.API;
 
 namespace Wonderland.Management
 {
-    public class FirebaseManager : IManager
+    public class FirebaseManager : Manager
     {
         #region Fields
 

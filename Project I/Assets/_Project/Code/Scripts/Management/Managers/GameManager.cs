@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace Wonderland.Management
 {
-    public class GameManager : IManager
+    public class GameManager : Manager
     {
         private static GameState CurrentGameState { get; set; }
         private static IdleState IdleState { get; set; }

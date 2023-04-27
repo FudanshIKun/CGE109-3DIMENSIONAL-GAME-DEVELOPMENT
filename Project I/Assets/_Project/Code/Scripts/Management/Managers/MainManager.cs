@@ -9,7 +9,7 @@ namespace Wonderland.Management
         #region Singleton
 
         public static MainManager Instance { get; private set; }
-        private readonly List<IManager> _managers = new();
+        private readonly List<Manager> _managers = new();
         public static event Action OnDestroyMainManager;
         
         private void Singleton()
@@ -29,18 +29,18 @@ namespace Wonderland.Management
 
         private void GetIManagers(Array array)
         {
-            foreach (IManager manager in array)
+            foreach (Manager manager in array)
             {
-                if (manager.GetComponent<IManager>() == null) return;
+                if (manager.GetComponent<Manager>() == null) return;
                 _managers.Add(manager);
             }
         }
 
-        private void SetIManagers(List<IManager> managers)
+        private void SetIManagers(List<Manager> managers)
         {
-            foreach (IManager manager in managers)
+            foreach (Manager manager in managers)
             {
-                switch (manager.GetComponent<IManager>().name)
+                switch (manager.GetComponent<Manager>().name)
                 {
                     case"FirebaseManager":
                         FirebaseManager = manager.GetComponent<FirebaseManager>();
@@ -79,7 +79,7 @@ namespace Wonderland.Management
         private void Awake()
         {
             Logging.LoadLogger();
-            GetIManagers(gameObject.GetComponentsInChildren<IManager>());
+            GetIManagers(gameObject.GetComponentsInChildren<Manager>());
             SetIManagers(_managers);
         }
 

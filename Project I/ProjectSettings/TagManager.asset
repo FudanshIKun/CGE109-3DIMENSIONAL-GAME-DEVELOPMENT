@@ -8,6 +8,8 @@ TagManager:
   - UI
   - Object
   - Audio
+  - Targetable
+  - Interactable
   layers:
   - Default
   - TransparentFX
@@ -19,8 +21,8 @@ TagManager:
   - Ground
   - Shot
   - Target
+  - Interact
   - PostProcess
-  - 
   - 
   - 
   - 

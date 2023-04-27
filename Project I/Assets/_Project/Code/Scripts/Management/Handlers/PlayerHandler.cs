@@ -2,8 +2,9 @@ using UnityEngine;
 
 namespace Wonderland.Management
 {
-    public class PlayerHandler : MonoBehaviour
+    public abstract class PlayerHandler : MonoBehaviour
     {
+        [Header("Settings")]
         public GameObject playerPrefab;
         
     }

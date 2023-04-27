@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 namespace Wonderland.Management
 {
-    public class UIManager : IManager
+    public class UIManager : Manager
     {
         [Header("Settings")]
         [SerializeField] private Canvas defaultCanvas;

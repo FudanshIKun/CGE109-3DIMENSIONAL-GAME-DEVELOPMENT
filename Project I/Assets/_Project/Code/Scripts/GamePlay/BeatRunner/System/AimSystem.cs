@@ -1,57 +1,37 @@
-using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 using Wonderland.Management;
 
 namespace Wonderland.GamePlay.BeatRunner
 {
     public class AimSystem : MonoBehaviour
     {
-        [SerializeField] private PlayerSetting setting;
         [Header("Status")] 
         public bool isAiming;
         public bool isTracking;
-        public List<Target> targets;
         public List<Target> reachableTargets;
         public Target currentTarget;
         public Target storedTarget;
-        [Header("Settings")]
-        [SerializeField] private float aimMaxDistance;
-        [SerializeField] private LayerMask targetLayer;
         [Header("Required Components")]
         [SerializeField] private Camera cam;
         [SerializeField] private Player player;
-        [SerializeField] private WeaponSystem weaponSystem;
+        public WeaponSystem weaponSystem;
         [Header("UI")]
         [SerializeField] private RectTransform aimIndicator;
         [SerializeField] private RectTransform precisionRect;
-        [SerializeField] private float reactSizeMultiplier = 2;
         [SerializeField] private RectTransform focusPointRect;
-        [SerializeField] private float focusPointDeltaSpeed = 200;
-
         [HideInInspector] public Vector3 aimDirection;
-        [HideInInspector] public UnityEvent<Transform> onTargetChange;
+        [HideInInspector] public UnityEvent onTargetChange;
+        [HideInInspector] public UnityEvent onTargetLost;
+        private PlayerSetting _setting;
 
         private void OnEnable()
         {
             cam = Camera.main;
             player = GetComponent<Player>();
-            setting = player.setting;
-            weaponSystem = GetComponentInChildren<WeaponSystem>();
-        }
-
-        private void Start()
-        {
-            SetAimCanvas();
-        }
-
-        private void Update()
-        {
-            Debug.DrawRay(transform.position, aimDirection);
+            _setting = player.setting;
         }
 
         public void Aim()
@@ -61,46 +41,52 @@ namespace Wonderland.GamePlay.BeatRunner
                 if ( !weaponSystem.active) return;
                 if (JoyStickDetection.IsAiming)
                 {
-                    var aimDir = Vector3.forward *JoyStickDetection.AimAmount.y + Vector3.right * JoyStickDetection.AimAmount.x;
-                    aimIndicator.position = new Vector3(player.transform.position.x, 0.1f, player.transform.position.z);
-                    aimIndicator.gameObject.SetActive(true);
+                    var playerPos = player.transform.position;
+                    var aimDir = new Vector3(JoyStickDetection.AimAmount.x, 0, JoyStickDetection.AimAmount.y);
+                    aimIndicator.position = new Vector3(playerPos.x, 0.1f, playerPos.z);
                     aimIndicator.rotation = Quaternion.LookRotation(Vector3.down, aimDir);
+                    aimIndicator.gameObject.SetActive(true);
                     aimDirection = aimDir;
                     
-                    if (weaponSystem.style == WeaponSystem.Style.Tracking && Physics.Raycast(transform.position, aimDirection, out var hit, aimMaxDistance,
-                            targetLayer))
+                    
+                    if (weaponSystem.style != WeaponSystem.Style.Tracking) return;
+                    if (Physics.Raycast(transform.position, aimDirection, out var hit, _setting.aiming.aimMaxDistance, _setting.aiming.targetLayer))
                     {
                         var target = hit.collider.GetComponent<Target>();
-                        if (!target.isReachable) return;
+                        if (target == null) return;
+                        if (!target.isAvailable || !target.isReachable) return;
+                        
                         currentTarget = target;
                     }
 
-                    if (SetFocusPoint())
+                    if (currentTarget == null) return;
+                    if (weaponSystem.onCooldown) return;
+                    var targetDir = (currentTarget.transform.position - playerPos).normalized;
+                    if (Vector3.Dot(targetDir, transform.forward) < 0)
                     {
-                        SetTargetIndicator();
+                        currentTarget = null;
+                        ClearStoredTarget();
+                        precisionRect.gameObject.SetActive(false);
+                        precisionRect.sizeDelta = Vector2.one;
+                        onTargetLost?.Invoke();
+                        return;
                     }
                     
+                    SetFocusPoint();
                     CheckTargetChange();
-                    SetTargetIndicator();
+                    SetPrecisionIndicator();
                 }
                 else
                 {
-                    focusPointRect.gameObject.SetActive(false);
-                    aimIndicator.gameObject.SetActive(false);
-                    precisionRect.gameObject.SetActive(false);
+                    ResetIndicators();
+                    onTargetLost.Invoke();
                 }
             }
         }
 
         #region Methods
 
-        private void SetAimCanvas()
-        {
-            aimIndicator.gameObject.SetActive(false);
-            aimIndicator.position = new Vector3(player.transform.position.x, 0.1f, player.transform.position.z);
-        }
-
-        private bool SetFocusPoint()
+        private void SetFocusPoint()
         {
             Vector3 targetPosition;
             var position = focusPointRect.position;
@@ -109,15 +95,13 @@ namespace Wonderland.GamePlay.BeatRunner
             {
                 targetPosition = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
                 focusPointRect.position = targetPosition;
-                return false;
+                return;
             }
             
             var screenPos = TargetToScreenPosition(currentTarget.transform.position);
             targetPosition = new Vector3(screenPos.x, screenPos.y, 0);
-            position = Vector3.MoveTowards(position, targetPosition, focusPointDeltaSpeed * Time.deltaTime); 
+            position = Vector3.MoveTowards(position, targetPosition, _setting.aiming.focusPointDeltaSpeed * Time.deltaTime);
             focusPointRect.position = position;
-
-            return position == targetPosition;
         }
 
         /// <summary>
@@ -139,20 +123,31 @@ namespace Wonderland.GamePlay.BeatRunner
             storedTarget = currentTarget;
             precisionRect.DOComplete();
             precisionRect.DOScale(4, 2f).From();
+            onTargetChange?.Invoke();
         }
 
-        private void SetTargetIndicator()
+        private void SetPrecisionIndicator()
         {
-            var targetDir = (currentTarget.transform.position - transform.position).normalized;
-            if (Vector3.Dot(targetDir, transform.forward) < 0)
-            {
-                precisionRect.gameObject.SetActive(false);
-                return;
-            }
+            if (currentTarget == null) return;
+            var playerPos = player.transform.position;
+            var targetPos = currentTarget.transform.position;
+            var distanceFromTarget = Vector3.Distance(targetPos, playerPos);
             precisionRect.gameObject.SetActive(true);
-            precisionRect.transform.position = TargetToScreenPosition(currentTarget.transform.position);
-            var distanceFromTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
-            precisionRect.sizeDelta = new Vector2(Mathf.Clamp(115 - (distanceFromTarget - reactSizeMultiplier), 25, 80), Mathf.Clamp(115 - (distanceFromTarget - reactSizeMultiplier), 25, 80));
+            precisionRect.transform.position = TargetToScreenPosition(targetPos);
+            precisionRect.sizeDelta = new Vector2(Mathf.Clamp(100 - (distanceFromTarget - _setting.aiming.reactSizeMultiplier), 25, 80), Mathf.Clamp(100 - (distanceFromTarget - _setting.aiming.reactSizeMultiplier), 25, 80));
+        }
+
+        private void ResetIndicators()
+        {
+            focusPointRect.gameObject.SetActive(false);
+            aimIndicator.gameObject.SetActive(false);
+            precisionRect.gameObject.SetActive(false);
+            precisionRect.sizeDelta = Vector2.one;
+        }
+
+        public void ClearStoredTarget()
+        {
+            storedTarget = null;
         }
 
         public void StopFocus()

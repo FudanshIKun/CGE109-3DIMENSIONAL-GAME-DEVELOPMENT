@@ -6,49 +6,44 @@ namespace Wonderland.GamePlay.BeatRunner
 {
     public class MovementSystem : MonoBehaviour
     {
-        [Header("Status")]
-        public float currentAcceleration = 1;
-        [Header("Settings")]
-        [Header("Required Components")] 
+        [Header("Required Components")]
         [SerializeField] private Player player;
-
-        private void Start()
-        {
-            player = GetComponent<Player>();
-        }
 
         #region Methods
 
         public void MoveAndTurn()
         {
-            var playerTransform = player.transform;
+            var setting = player.setting.movement;
+            var controller = player.controller;
+            
+            var moveDir = new Vector3(JoyStickDetection.MovementAmount.x, 0, JoyStickDetection.MovementAmount.y);
+            var lookDir = new Vector3(JoyStickDetection.AimAmount.x, 0, JoyStickDetection.AimAmount.y);
+            Quaternion turning;
+            
             if (JoyStickDetection.IsMoving)
             {
-                var movement = new Vector3(JoyStickDetection.MovementAmount.x, 0,
-                    JoyStickDetection.MovementAmount.y);
-                player.controller.Move(movement * (player.setting.movement.movementSpeed * currentAcceleration * Time.deltaTime));
+                var movement = moveDir * (setting.movementSpeed * player.currentAcceleration * Time.deltaTime);
+                CheckNegativeEffects(movement);
+                controller.Move(movement);
                 player.isRunning = true;
 
                 if (JoyStickDetection.IsAiming)
                 {
-                    var aimDir = Vector3.right * JoyStickDetection.AimAmount.x +
-                                 Vector3.forward * JoyStickDetection.AimAmount.y;
-                    transform.rotation = Quaternion.Slerp(transform.rotation,
-                        Quaternion.LookRotation(aimDir,Vector3.up), player.setting.movement.rotationSpeed * Time.deltaTime);
+                    turning = Quaternion.Slerp(player.transform.rotation, Quaternion.LookRotation(lookDir, Vector3.up), setting.rotationSpeed * Time.deltaTime);
+                    player.transform.rotation = turning;
                     player.isAiming = true;
                     return;
                 }
 
-                transform.rotation = Quaternion.Slerp(transform.rotation,
-                    Quaternion.LookRotation(movement), player.setting.movement.movementSpeed * Time.deltaTime);
+                turning = Quaternion.Slerp(player.transform.rotation, Quaternion.LookRotation(movement), setting.movementSpeed * Time.deltaTime);
+                player.transform.rotation = turning;
+                return;
             }
 
             if (JoyStickDetection.IsAiming)
             {
-                var aimDir = Vector3.right * JoyStickDetection.AimAmount.x +
-                             Vector3.forward * JoyStickDetection.AimAmount.y;
-                transform.rotation = Quaternion.Slerp(transform.rotation,
-                    Quaternion.LookRotation(aimDir,Vector3.up), player.setting.movement.rotationSpeed * Time.deltaTime);
+                turning = Quaternion.Slerp(player.transform.rotation, Quaternion.LookRotation(lookDir, Vector3.up), setting.rotationSpeed * Time.deltaTime);
+                player.transform.rotation = turning;
                 player.isAiming = true;
                 return;
             }
@@ -59,12 +54,74 @@ namespace Wonderland.GamePlay.BeatRunner
         
         private void CheckGround(Transform playerTransform)
         {
-            player.isGrounded = Physics.Raycast(playerTransform.position + (transform.up * .05f), Vector3.down, .2f,
-                player.setting.movement.groundLayerMask);
-            player.animator.SetBool(player.IsGrounded, player.isGrounded);
-            player.animator.SetFloat(player.GroundValue, player.isGrounded ? 0:1,.1f, Time.deltaTime);
+            player.isGrounded = Physics.Raycast(playerTransform.position + (player.transform.rotation * Vector2.up * .05f), Vector3.down, .2f, player.setting.movement.groundLayerMask);
+            player.animator.SetBool(Player.IsGroundedHash, player.isGrounded);
+            player.animator.SetFloat(Player.GroundValueHash, player.isGrounded ? 0:1,.1f, Time.deltaTime);
+            if (player.isGrounded)
+            {
+                
+            }
+        }
+
+        private void CheckNegativeEffects(Vector3 movement)
+        {
+            
         }
 
         #endregion
+        
+        /*public struct MovementJob : IJob
+        {
+
+            public MovementJob()
+            {
+
+            }
+
+            private void MoveAndTurn()
+            {
+                var setting = _player.setting.movement;
+                var controller = _player.controller;
+            
+                var moveDir = new Vector3(JoyStickDetection.MovementAmount.x, 0, JoyStickDetection.MovementAmount.y);
+                var lookDir = new Vector3(JoyStickDetection.AimAmount.x, 0, JoyStickDetection.AimAmount.y);
+                Quaternion turning;
+            
+                if (JoyStickDetection.IsMoving)
+                {
+                    var movement = moveDir * (setting.movementSpeed * _player.currentAcceleration * Time.deltaTime);
+                    controller.Move(movement);
+                    _player.isRunning = true;
+
+                    if (JoyStickDetection.IsAiming)
+                    {
+                        turning = Quaternion.Slerp(_player.transform.rotation, Quaternion.LookRotation(lookDir, Vector3.up), setting.rotationSpeed * Time.deltaTime);
+                        _player.transform.rotation = turning;
+                        _player.isAiming = true;
+                        return;
+                    }
+
+                    turning = Quaternion.Slerp(_player.transform.rotation, Quaternion.LookRotation(movement), setting.movementSpeed * Time.deltaTime);
+                    _player.transform.rotation = turning;
+                    return;
+                }
+
+                if (JoyStickDetection.IsAiming)
+                {
+                    turning = Quaternion.Slerp(_player.transform.rotation, Quaternion.LookRotation(lookDir, Vector3.up), setting.rotationSpeed * Time.deltaTime);
+                    _player.transform.rotation = turning;
+                    _player.isAiming = true;
+                    return;
+                }
+
+                _player.isRunning = false;
+                _player.isAiming = false;
+            }
+            
+            public void Execute()
+            {
+                MoveAndTurn();
+            }
+        }*/
     }
 }

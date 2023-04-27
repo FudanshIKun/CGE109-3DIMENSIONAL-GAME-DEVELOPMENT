@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace Wonderland.GamePlay.BeatRunner
@@ -6,53 +7,20 @@ namespace Wonderland.GamePlay.BeatRunner
     {
         [Header("Status")] 
         public bool isAvailable = true;
-        public bool isReachable = false;
-        [Header("Settings")] 
-        [SerializeField] private GameObject mesh;
-        [Header("Required")] 
+        public bool isReachable;
+        [Header("Required")]
         [SerializeField] private Player player;
+        [SerializeField] private Renderer visualRenderer;
         [Header("Particle")]
         [SerializeField] private ParticleSystem hitParticle;
         [SerializeField] private Collider detector;
 
-        private void OnEnable()
+        public void DisableTarget()
         {
-            player = GameplayHandler.Instance.Player;
+            isAvailable = false;
+            detector.enabled = false;
+            visualRenderer.material.color = Color.black;
+            hitParticle.Play();
         }
-
-        private void Update()
-        {
-            /*var playerToTarget = transform.position - player.transform.position;
-            var isBehindPlayer = (Vector3.Dot(player.transform.forward, playerToTarget) < 0) && player.isRunning;*/
-        }
-
-        #region Methods
-
-        private void OnBecomeVisible()
-        {
-            /*var targetSystem = GameplayHandler.Instance.AimSystem;
-            if (targetSystem.targets.Contains(this) || !isAvailable) return;
-            targetSystem.targets.Add(this);
-            if(isReachable) targetSystem.reachableTargets.Add(this);*/
-        }
-
-        private void OnBecomeInvisible()
-        {
-            /*var targetSystem = GameplayHandler.Instance.AimSystem;
-            if (targetSystem.targets.Contains(this))
-            {
-                targetSystem.targets.Remove(this);
-                if (targetSystem.reachableTargets.Contains(this)) targetSystem.reachableTargets.Remove(this);
-            }
-            
-            if (targetSystem.currentTarget == this) targetSystem.StopFocus();*/
-        }
-
-        public void DisableTarget(Vector3 dir)
-        {
-            
-        }
-
-        #endregion
     }
 }

@@ -35,7 +35,7 @@ namespace Wonderland
             HandlerLogger.logEnabled = true;
             
             // Input System
-            InputSystemLogger.logEnabled = true;
+            InputSystemLogger.logEnabled = false;
             DetectionLogger.logEnabled = false;
             
             // GamePlay System

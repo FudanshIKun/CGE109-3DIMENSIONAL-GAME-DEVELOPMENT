@@ -7,7 +7,7 @@ using Wonderland.InputActions;
 namespace Wonderland.Management
 {
     [RequireComponent(typeof(PlayerInput))]
-    public class InputManager : IManager
+    public class InputManager : Manager
     {
         [HideInInspector] public PlayerInput playerInput;
         [HideInInspector] public Camera mainCamera;

@@ -27,8 +27,9 @@ namespace Wonderland.GamePlay.BeatRunner
         public float decelerateLerp;
         public float runRotationSpeed;
         public float chargeStrafeSpeed;
-        
-        [Header("Dash Settings")]
+
+        [Header("Dash Settings")] 
+        public float dashDistance;
 
         [Header("Collision Settings")] 
         public LayerMask groundLayerMask;
@@ -38,11 +39,17 @@ namespace Wonderland.GamePlay.BeatRunner
     public struct AimingSetting
     {
         [Header("Aiming Settings")] 
+        public float interactMaxDistance;
         public float aimMaxDistance;
         public LayerMask targetLayer;
+        
         [Header("UI settings")] 
         public float focusPointDeltaSpeed;
         public float reactSizeMultiplier;
+
+        [Header("Collision Setting")] 
+        public LayerMask interactableLayerMask;
+        public LayerMask targetLayerMask;
     }
 
     [Serializable]
