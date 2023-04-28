@@ -21,15 +21,15 @@ namespace Wonderland.Management
             IsAiming = AimAmount != Vector2.zero;
 
             #region Logging
+            
+            Logging.DetectionLogger.Log("IsAiming: " + IsAiming);
 
             Logging.InputSystemLogger.Log(MovementAmount != Vector2.zero
                 ? "MovementFinger Is Active" : "MovementFinger Is Null");
 
             Logging.InputSystemLogger.Log(AimAmount != Vector2.zero
                 ? "AimFinger Is Active" : "AimFinger Is Null");
-            
-            Logging.InputSystemLogger.Log("IsAiming: " + IsAiming);
-            
+
             #endregion
         }
     }

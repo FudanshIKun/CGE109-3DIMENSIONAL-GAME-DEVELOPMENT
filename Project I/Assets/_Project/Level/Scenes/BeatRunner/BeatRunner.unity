@@ -1143,7 +1143,11 @@ PrefabInstance:
       value: 20.876703
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: b15e4d89f8281e541b5d136bcf353268,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2034358834}
   m_SourcePrefab: {fileID: 100100000, guid: b15e4d89f8281e541b5d136bcf353268, type: 3}
 --- !u!1 &337422902
 GameObject:
@@ -23496,7 +23500,6 @@ GameObject:
   - component: {fileID: 1744183607}
   - component: {fileID: 1744183605}
   - component: {fileID: 1744183603}
-  - component: {fileID: 1744183600}
   m_Layer: 3
   m_Name: Evader
   m_TagString: Player
@@ -23522,19 +23525,6 @@ Transform:
   m_Father: {fileID: 1665719703}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1744183600
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1744183598}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!143 &1744183603
 CharacterController:
   m_ObjectHideFlags: 0
@@ -23546,13 +23536,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1
-  m_Radius: 0.5
+  m_Height: 7.2
+  m_Radius: 2
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 3.6, z: 0}
 --- !u!114 &1744183605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23606,7 +23596,7 @@ MonoBehaviour:
   aimSystem: {fileID: 1744183605}
   weaponSystem: {fileID: 1689828166}
   controller: {fileID: 1744183603}
-  animator: {fileID: 0}
+  animator: {fileID: 2081245472}
 --- !u!114 &1744183607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24401,6 +24391,37 @@ Canvas:
     type: 3}
   m_PrefabInstance: {fileID: 2012083351}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2034358833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2034358834}
+  m_Layer: 0
+  m_Name: ProceduralRigs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2034358834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034358833}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2081245471}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2081245470 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b15e4d89f8281e541b5d136bcf353268,
@@ -31781,7 +31802,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 2}
+  m_Size: {x: 2, y: 6, z: 2}
   m_Center: {x: 0, y: 0, z: -0.11}
 --- !u!224 &6862019461796236044
 RectTransform:
@@ -36682,7 +36703,6 @@ GameObject:
   - component: {fileID: 6916233772812543237}
   - component: {fileID: 6916233772812543235}
   - component: {fileID: 6916233772812543234}
-  - component: {fileID: 7777519003672266192}
   m_Layer: 0
   m_Name: TargetParticleSystem
   m_TagString: Untagged
@@ -41948,18 +41968,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7777519003672266192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6916233772812543232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7866678949397690231
 MonoBehaviour:
   m_ObjectHideFlags: 0

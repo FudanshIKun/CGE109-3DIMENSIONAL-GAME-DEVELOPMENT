@@ -1,21 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace Wonderland.GamePlay.BeatRunner
 {
-    public class NormalBehavior : MonoBehaviour
+    public class NormalBehavior : IPlayerBehavior
     {
-        // Start is called before the first frame update
-        void Start()
+        #region Systems
+
+        private MovementSystem MovementSystem { get;}
+        private AimSystem AimSystem { get;}
+
+        #endregion
+
+        public NormalBehavior(MovementSystem movementSystem, AimSystem aimSystem, WeaponSystem weaponSystem)
         {
+            MovementSystem = movementSystem;
+            AimSystem = aimSystem;
+            aimSystem.weaponSystem = weaponSystem;
+        }
         
+        public void EnterBehavior()
+        {
+            Logging.GamePlaySystemLogger.Log("Player Enter Behavior: " + this);
+        } 
+
+        public void UpdateBehavior()
+        {
+            MovementSystem.InputMagnitude();
+            MovementSystem.CheckGround();
+            AimSystem.Aim();
+
         }
 
-        // Update is called once per frame
-        void Update()
+        public void LateUpdateBehavior()
         {
-        
+            
         }
     }
 }

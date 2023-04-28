@@ -41,8 +41,7 @@ namespace Wonderland.GamePlay.BeatRunner
         [Header("Aiming Settings")] 
         public float interactMaxDistance;
         public float aimMaxDistance;
-        public LayerMask targetLayer;
-        
+
         [Header("UI settings")] 
         public float focusPointDeltaSpeed;
         public float reactSizeMultiplier;

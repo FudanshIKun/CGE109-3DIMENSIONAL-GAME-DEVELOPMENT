@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -36,53 +37,83 @@ namespace Wonderland.GamePlay.BeatRunner
 
         public void Aim()
         {
-            if (weaponSystem.type == WeaponSystem.Type.Ranged)
+            if (JoyStickDetection.IsAiming)
             {
-                if ( !weaponSystem.active) return;
-                if (JoyStickDetection.IsAiming)
+                var playerPos = player.transform.position;
+                var aimDir = new Vector3(JoyStickDetection.AimAmount.x, 0, JoyStickDetection.AimAmount.y);
+                aimIndicator.position = new Vector3(playerPos.x, 0.1f, playerPos.z);
+                aimIndicator.rotation = Quaternion.LookRotation(Vector3.down, aimDir);
+                aimIndicator.gameObject.SetActive(true);
+                aimDirection = aimDir;
+                
+                if (weaponSystem == null) return;
+                switch (weaponSystem.type)
                 {
-                    var playerPos = player.transform.position;
-                    var aimDir = new Vector3(JoyStickDetection.AimAmount.x, 0, JoyStickDetection.AimAmount.y);
-                    aimIndicator.position = new Vector3(playerPos.x, 0.1f, playerPos.z);
-                    aimIndicator.rotation = Quaternion.LookRotation(Vector3.down, aimDir);
-                    aimIndicator.gameObject.SetActive(true);
-                    aimDirection = aimDir;
-                    
-                    
-                    if (weaponSystem.style != WeaponSystem.Style.Tracking) return;
-                    if (Physics.Raycast(transform.position, aimDirection, out var hit, _setting.aiming.aimMaxDistance, _setting.aiming.targetLayer))
-                    {
-                        var target = hit.collider.GetComponent<Target>();
-                        if (target == null) return;
-                        if (!target.isAvailable || !target.isReachable) return;
-                        
-                        currentTarget = target;
-                    }
-
-                    if (currentTarget == null) return;
-                    if (weaponSystem.onCooldown) return;
-                    var targetDir = (currentTarget.transform.position - playerPos).normalized;
-                    if (Vector3.Dot(targetDir, transform.forward) < 0)
-                    {
-                        currentTarget = null;
-                        ClearStoredTarget();
-                        precisionRect.gameObject.SetActive(false);
-                        precisionRect.sizeDelta = Vector2.one;
-                        onTargetLost?.Invoke();
+                    case WeaponSystem.Type.Melee:
                         return;
-                    }
-                    
-                    SetFocusPoint();
-                    CheckTargetChange();
-                    SetPrecisionIndicator();
+                    case WeaponSystem.Type.Ranged:
+                        switch (weaponSystem.style)
+                        {
+                            case WeaponSystem.Style.Directional:
+                                break;
+                            case WeaponSystem.Style.Tracking:
+                            {
+                                if (Physics.Raycast(player.transform.position, aimDirection, out var hit, _setting.aiming.aimMaxDistance, _setting.aiming.targetLayerMask))
+                                {
+                                    var target = hit.collider.GetComponent<Target>();
+                                    if (target == null) return;
+                                    if (!target.isAvailable || !target.isReachable) return;
+
+                                    currentTarget = target;
+                                    Debug.DrawLine(player.transform.position, currentTarget.transform.position, Color.green);
+                                }
+
+                                if (currentTarget == null) return;
+                                if (weaponSystem.onCooldown) return;
+                                var targetDir = (currentTarget.transform.position - playerPos).normalized;
+                                if (Vector3.Dot(targetDir, transform.forward) < 0)
+                                {
+                                    currentTarget = null;
+                                    ClearStoredTarget();
+                                    precisionRect.gameObject.SetActive(false);
+                                    precisionRect.sizeDelta = Vector2.one;
+                                    onTargetLost?.Invoke();
+                                    return;
+                                }
+
+                                SetFocusPoint();
+                                CheckTargetChange();
+                                SetPrecisionIndicator();
+                                break;
+                            }
+                        }
+
+                        break;
                 }
-                else
+            }
+            else
+            {
+                if (weaponSystem == null) return;
+                switch (weaponSystem.type)
                 {
-                    ResetIndicators();
-                    onTargetLost.Invoke();
+                    case WeaponSystem.Type.Melee:
+                        return;
+                    case WeaponSystem.Type.Ranged:
+                        switch (weaponSystem.style)
+                        {
+                            case WeaponSystem.Style.Directional:
+                                break;
+                            case WeaponSystem.Style.Tracking:
+                                ResetIndicators();
+                                onTargetLost?.Invoke();
+                                break;
+                        }
+
+                        break;
                 }
             }
         }
+        
 
         #region Methods
 

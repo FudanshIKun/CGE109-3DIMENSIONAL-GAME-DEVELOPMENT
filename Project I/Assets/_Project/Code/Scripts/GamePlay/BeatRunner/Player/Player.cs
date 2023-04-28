@@ -22,7 +22,7 @@ namespace Wonderland.GamePlay.BeatRunner
         public Animator animator;
 
         private IPlayerBehavior CurrentBehavior { get; set; }
-        private EvaderBehavior  _evaderBehavior;
+        private NormalBehavior  _normalBehavior;
         
         public Player(PlayerSetting setting)
         {
@@ -41,7 +41,7 @@ namespace Wonderland.GamePlay.BeatRunner
         
         private void OnEnable()
         {
-            _evaderBehavior = new EvaderBehavior(movementSystem, aimSystem, weaponSystem);
+            _normalBehavior = new NormalBehavior(movementSystem, aimSystem, weaponSystem);
         }
 
         private void Start()
@@ -66,7 +66,7 @@ namespace Wonderland.GamePlay.BeatRunner
             switch (behavior)
             {
                 case Behavior.EvaderBehavior:
-                    CurrentBehavior = _evaderBehavior;
+                    CurrentBehavior = _normalBehavior;
                     CurrentBehavior?.EnterBehavior();
                     break;
                 default:
@@ -80,9 +80,11 @@ namespace Wonderland.GamePlay.BeatRunner
 
         #region Hashs
 
+        public static int MovementMagnitudeHash => Animator.StringToHash("MovementMagnitude");
+        public static int IsRunningHash => Animator.StringToHash("IsRunning");
+        public static int IsAimingHash => Animator.StringToHash("IsAiming");
         public static int IsGroundedHash => Animator.StringToHash("IsGrounded");
         public static int GroundValueHash => Animator.StringToHash("GroundValue");
-        public static int IsAimingHash => Animator.StringToHash("IsAiming");
         public static int IsDashingHash => Animator.StringToHash("IsDashing");
         public static int IsBoostingHash => Animator.StringToHash("IsBoosting");
 
