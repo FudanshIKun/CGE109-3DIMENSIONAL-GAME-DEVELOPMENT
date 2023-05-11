@@ -19,27 +19,26 @@ namespace Wonderland
 
         #region Dictionary
 
-        public Dictionary<string,object> UserInfo { get; set; }
-
-        public Dictionary<string, object> UserGameData{ get; set; }
+        public Dictionary<string,object> Info { get; set; }
+        public Dictionary<string, object> GameData{ get; set; }
 
         #endregion
 
         public User(FirebaseUser user)
         {
             FirebaseUser = user;
-            UserName = null;
             UserEmail = user.Email;
-            UserGameData = new Dictionary<string, object>()
+            GameData = new Dictionary<string, object>()
             {
-                
+                {"Last Checkpoint ID", 0},
+                {"Energy Level", 0},
+                //{"Inventory",  }
             };
-            UserInfo = new Dictionary<string, object>
+            Info = new Dictionary<string, object>
             {
-                {"UserID", user.UserId},
                 {"UserName", null},
                 {"DisplayName", user.DisplayName},
-                {"GameData", UserGameData}
+                {"GameData", GameData}
             };
         }
     }

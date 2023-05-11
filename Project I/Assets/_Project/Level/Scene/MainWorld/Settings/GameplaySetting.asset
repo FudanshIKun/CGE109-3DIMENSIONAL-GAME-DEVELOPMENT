@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f728e29a20ba4a46b0bc19cf9c8df49, type: 3}
+  m_Name: GameplaySetting
+  m_EditorClassIdentifier: 
+  layermask:
+    player:
+      serializedVersion: 2
+      m_Bits: 8
+    obstacle:
+      serializedVersion: 2
+      m_Bits: 2048
+  movement:
+    movementSpeed: 20
+    rotationSpeed: 20
+    turnDamping: 100
+    aimMovementSpeed: 10
+    runAcceleration: 3.2
+    boostMultiplier: 1.6
+    boostDuration: 0.75
+    accelerateLerp: 2
+    decelerateLerp: 4
+    runRotationSpeed: 200
+    chargeStrafeSpeed: 15
+    dashDistance: 0
+    groundLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+  detection:
+    viewRadius: 0
+    viewAngle: 0
+  aiming:
+    aimTurnDamping: 150
+    focusPointDeltaSpeed: 1500
+    reactSizeMultiplier: 2
+    targetLayerMask:
+      serializedVersion: 2
+      m_Bits: 512
+    obstacleLayerMask:
+      serializedVersion: 2
+      m_Bits: 2048
+  interaction:
+    interactionRadius: 0
+    interactableLayerMask:
+      serializedVersion: 2
+      m_Bits: 1024

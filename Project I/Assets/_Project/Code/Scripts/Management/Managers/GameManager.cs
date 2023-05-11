@@ -1,18 +1,33 @@
 using System;
-using System.Threading.Tasks;
+using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Wonderland.Management
 {
-    public class GameManager : Manager
+    public class GameManager : SerializedMonoBehaviour
     {
+        public enum State { IdleState, LoadState, PlayState }
+        public static GameManager Instance { get; private set; }
+        
         private static GameState CurrentGameState { get; set; }
         private static IdleState IdleState { get; set; }
         private static LoadState LoadState { get; set; }
-        public static event Action LoadNewScene;
-        
+        private static PlayState PlayState { get; set; }
+
         private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        private void OnEnable()
         {
             ChangeGameState(State.IdleState);
         }
@@ -30,6 +45,7 @@ namespace Wonderland.Management
                     if (CurrentGameState == LoadState) return true;
                     break;
                 case State.PlayState:
+                    if (CurrentGameState == PlayState) return true;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
@@ -43,41 +59,20 @@ namespace Wonderland.Management
             switch (state)
             {
                 case State.IdleState :
-                    IdleState = new IdleState();
-                    break;
+                    IdleState ??= new IdleState();
+                    CurrentGameState = IdleState;
+                        break;
                 case State.LoadState :
-                    LoadState = new LoadState();
+                    LoadState ??= new LoadState();
+                    CurrentGameState = LoadState;
                     break;
                 case State.PlayState:
+                    PlayState ??= new PlayState();
+                    CurrentGameState = PlayState;
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
-
-            CurrentGameState = IdleState;
+            
             CurrentGameState.EnterState();
-        }
-        
-        public static async void LoadSceneWithLoaderAsync(Scene newScene)
-        {
-            if (newScene == Scene.None){return;}
-            
-            // Load newScene
-            AsyncOperation load = SceneManager.LoadSceneAsync(newScene.ToString());
-            load.allowSceneActivation = false;
-            
-            // Show Loading UI
-            MainManager.Instance.UIManager.ShowLoadingScreen();
-            LoadNewScene?.Invoke();
-
-            do {
-                await Task.Delay(100);
-            } while (load.progress < 0.9f);
-
-            await Task.Delay(1500);
-            
-            load.allowSceneActivation = true;
-            await Task.Delay(1500);
         }
 
         #endregion

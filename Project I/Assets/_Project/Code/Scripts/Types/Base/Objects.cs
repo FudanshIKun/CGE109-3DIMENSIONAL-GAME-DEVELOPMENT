@@ -1,25 +1,23 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Wonderland.Types
 {
-    public class Objects : MonoBehaviour
+    public abstract class Objects : SerializedMonoBehaviour
     {
         public static bool IsBetween(float anyFloat, float min, float max)
         {
-            if (anyFloat >= min && anyFloat <= max) return true;
-            return false;
+            return anyFloat >= min && anyFloat <= max;
         }
 
         public static bool IsInSpace(Objects anyObject, Vector3 vA, Vector3 vG)
         {
-            if (IsBetween(anyObject.gameObject.transform.position.x, vA.x, vG.x)
-                && IsBetween(anyObject.gameObject.transform.position.y, vA.y, vG.y)
-                && IsBetween(anyObject.gameObject.transform.position.z, vA.z, vG.z))
-            {
-                return true;
-            }
-            
-            return false;
+            var position = anyObject.gameObject.transform.position;
+            return IsBetween(position.x, vA.x, vG.x)
+                   && IsBetween(position.y, vA.y, vG.y)
+                   && IsBetween(position.z, vA.z, vG.z);
         }
+        
+        protected static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
     }
 }

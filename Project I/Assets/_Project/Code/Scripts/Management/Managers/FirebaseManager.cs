@@ -1,145 +1,130 @@
 using System;
+using System.Threading.Tasks;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Firestore;
-using UnityEngine.UIElements;
+using Sirenix.OdinInspector;
+using UnityEngine;
 using Wonderland.API;
 
 namespace Wonderland.Management
 {
-    public class FirebaseManager : Manager
+    public class FirebaseManager : SerializedMonoBehaviour
     {
+        public static FirebaseManager Instance { get; private set; }
+        
+        [ShowInInspector]
+        private static User CurrentUser
+        {
+            get; 
+            set;
+        }
+        
+        public static bool IsSignedIn() => Auth.CurrentUser != null;
+
         #region Fields
 
         private static FirebaseAuth Auth { get; set; }
-        private static User CurrentUser { get; set; }
-        
         private static FirebaseFirestore Firestore { get; set; }
-        private static DocumentReference UserInfoDocumentReference{ get; set; }
+        private static DocumentReference UserDocumentReference{ get; set; }
 
         #endregion
 
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        private void OnEnable()
+        {
+            InitializeFirebase();
+        }
+
+        private void OnApplicationQuit()
+        {
+            SignOut();
+        }
+
         #region Methods
         
-        public static async void SignUpAsync(string userName, string email, string password, string confirmPassword, Label errorText)
+        public static User GetCurrentUser() => CurrentUser;
+        
+        public static async Task<FirebaseException> SignUpAsync(string userName, string email, string password)
         {
-            if(string.IsNullOrEmpty(userName))
+            FirebaseException firebaseException = null;
+            
+            try
             {
-                errorText.text = "Please Enter your Email";
-            }
-            else if (string.IsNullOrEmpty(email))
-            {
-                errorText.text = "Please Enter your Email";
-            }
-            else if (password != confirmPassword)
-            {
-                errorText.text = "Please Check Your Password Again";
-            }
-            else
-            {
-                try
+                CustomLog.Auth.Log("Signing Up...");
+                await AuthAPI.SignUp(Auth, email, password);
+                    
+                CurrentUser = new User(Auth.CurrentUser)
                 {
-                    GameManager.ChangeGameState(State.LoadState);
-                    await AuthAPI.SignUp(Auth, email, password);
-                    
-                    CurrentUser = new User(Auth.CurrentUser)
+                    UserName = userName,
+                    Info =
                     {
-                        UserName = userName,
-                        UserInfo =
-                        {
-                            ["UserName"] = userName
-                        } 
-                    };
-                    
-                    UserInfoDocumentReference =
-                        Firestore.Collection("Users").Document(Auth.CurrentUser.Email);
-                    
-                    await FirestoreAPI.PostToFirestore(UserInfoDocumentReference, CurrentUser.UserInfo);
-                    
-                    GameManager.LoadSceneWithLoaderAsync
-                        (Scene.BeatRunner);
-                }
-                catch (FirebaseException firebaseException)
-                {
-                    GameManager.ChangeGameState(State.IdleState);
-                    FirebaseException exception = (FirebaseException)firebaseException.GetBaseException();
-                    if (Enum.IsDefined(typeof(AuthError), exception.ErrorCode))
-                    {
-                        AuthError authError = (AuthError)exception.ErrorCode;
-                        errorText.text = AuthErrorHandling(authError);
+                        ["UserName"] = userName
                     }
-                    else if (Enum.IsDefined(typeof(FirestoreError), exception.ErrorCode))
-                    {
-                        FirestoreError firestoreError = (FirestoreError)exception.ErrorCode;
-                        errorText.text = FirestoreErrorHandling(firestoreError);
-                    }
-                    else
-                    {
-                        errorText.text = "Unknown Error, Please Try Again";
-                    }
-                }
+                };
+                    
+                UserDocumentReference = Firestore.Collection("Users").Document(Auth.CurrentUser.Email);
+                    
+                await FirestoreAPI.Post(UserDocumentReference, CurrentUser.Info);
             }
+            catch (FirebaseException exception)
+            {
+                firebaseException = exception;
+            }
+
+            return firebaseException;
         }
 
-        public static async void SignInAsync(string email, string password, Label errorText)
+        public static async Task<FirebaseException> SignInAsync(string email, string password)
         {
-            if (string.IsNullOrEmpty(email))
+            FirebaseException firebaseException = null;
+            
+            try
             {
-                errorText.text = "Please Enter your Email";
-            }
-            else if (string.IsNullOrEmpty(password))
-            {
-                errorText.text = "Please Enter your Password";
-            }
-            else
-            {
-                GameManager.ChangeGameState(State.LoadState);
-                try
-                {
-                    await AuthAPI.SignIn(Auth, email, password);
+                CustomLog.Auth.Log("Signing In...");
+                await AuthAPI.SignIn(Auth, email, password);
 
-                    CurrentUser = new User(Auth.CurrentUser);
+                CurrentUser = new User(Auth.CurrentUser);
                     
-                    UserInfoDocumentReference =
-                        Firestore.Collection("Users").Document(Auth.CurrentUser.Email);
-                    
-                    await FirestoreAPI.RetrieveFromFirestore(UserInfoDocumentReference).ContinueWith(loadUserInfoTask =>
-                    {
-                        CurrentUser.UserInfo = loadUserInfoTask.Result;
-                    });
-                    
-                    GameManager.LoadSceneWithLoaderAsync
-                        (Scene.BeatRunner);
-                }
-                catch (FirebaseException firebaseException)
+                UserDocumentReference = Firestore.Collection("Users").Document(Auth.CurrentUser.Email);
+
+                CustomLog.Auth.Log("Retrieving User Info...");
+                await FirestoreAPI.Retrieve(UserDocumentReference).ContinueWith(loadUserInfoTask =>
                 {
-                    var exception = (FirebaseException)firebaseException.GetBaseException();
-                    if (Enum.IsDefined(typeof(AuthError), exception.ErrorCode))
-                    {
-                        AuthError authError = (AuthError)exception.ErrorCode;
-                        errorText.text = AuthErrorHandling(authError);
-                    }
-                    else if (Enum.IsDefined(typeof(FirestoreError), exception.ErrorCode))
-                    {
-                        FirestoreError firestoreError = (FirestoreError)exception.ErrorCode;
-                        errorText.text = FirestoreErrorHandling(firestoreError);
-                    }
-                    else
-                    {
-                        errorText.text = "Unknown Error, Please Try Again";
-                    }
-                }
+                    CurrentUser.Info = loadUserInfoTask.Result;
+                });
+
+                CurrentUser.UserName = CurrentUser.Info["UserName"].ToString();
+                CurrentUser.DisplayName = CurrentUser.Info["DisplayName"].ToString();
+                
+                CustomLog.Auth.Log("Sign In User Success!");
             }
+            catch (FirebaseException exception)
+            {
+                firebaseException = exception;
+                
+            }
+
+            return firebaseException;
         }
 
-        public static void SignOutAsync()
+        public static void SignOut()
         {
             AuthAPI.SignOut(Auth);
         }
 
-        public static bool IsSignedIn() => Auth.CurrentUser != null;
-        public static User GetCurrentUser() => CurrentUser;
-        
         #endregion
         
         #region Initialize Firebase Methods
@@ -153,56 +138,11 @@ namespace Wonderland.Management
             }
             catch (InitializationException e)
             {
-                Logging.AuthLogger.Log(e);
+                CustomLog.Auth.Log(e);
                 throw;
             }
         }
-
+        
         #endregion
-
-        #region Error Handling
-
-        private static string AuthErrorHandling(AuthError error)
-        {
-            string output = "Unknown Error, Please Try Again";
-            switch (error)
-            {
-                case AuthError.InvalidEmail:
-                    output = "Invalid Email";
-                    break;
-                case AuthError.EmailAlreadyInUse:
-                    output = "Email Already In Use";
-                    break;
-                case AuthError.WeakPassword:
-                    output = "Weak Password";
-                    break;
-            }
-
-            return output;
-        }
-
-        private static string FirestoreErrorHandling(FirestoreError error)
-        {
-            var output = "Unknown Error, Please Try Again";
-            switch (error)
-            {
-                case FirestoreError.PermissionDenied:
-                    output = "Permission To Database Has Denied";
-                    break;
-            }
-            return output;
-        }
-
-        #endregion
-
-        private void Awake()
-        {
-            InitializeFirebase();
-        }
-
-        private void OnApplicationQuit()
-        {
-            SignOutAsync();
-        }
     }
 }

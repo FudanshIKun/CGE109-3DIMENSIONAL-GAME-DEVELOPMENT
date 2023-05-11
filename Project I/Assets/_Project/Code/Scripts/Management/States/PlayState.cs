@@ -6,7 +6,7 @@ namespace Wonderland.Management
     {
         public override void EnterState()
         {
-            Logging.ManagerLogger.Log("Game Enter " + this);
+            CustomLog.GameState.Log("Game Enter " + this);
         }
 
         public override void UpdateState()

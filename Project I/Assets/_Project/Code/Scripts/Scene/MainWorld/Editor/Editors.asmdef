@@ -1,0 +1,19 @@
+{
+    "name": "Editors",
+    "rootNamespace": "Wonderland.Scene.MainWorld.Editors",
+    "references": [
+        "GUID:790a8440a000eda46a0851692226dbef",
+        "GUID:b3517036fb008d14facb3f0506c68a17"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

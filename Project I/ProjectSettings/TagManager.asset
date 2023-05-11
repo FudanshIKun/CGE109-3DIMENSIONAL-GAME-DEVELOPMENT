@@ -10,6 +10,7 @@ TagManager:
   - Audio
   - Targetable
   - Interactable
+  - Handler
   layers:
   - Default
   - TransparentFX
@@ -19,11 +20,11 @@ TagManager:
   - UI
   - Object
   - Ground
-  - Shot
-  - Target
-  - Interact
-  - PostProcess
   - 
+  - Target
+  - Interactable
+  - Obstacle
+  - PostProcess
   - 
   - 
   - 
