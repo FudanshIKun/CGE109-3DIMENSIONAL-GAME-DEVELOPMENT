@@ -72,6 +72,14 @@ crashlytics-build.properties
 #Unity Package Files
 /[Aa]ssets/Unity.VisualScripting.Generated
 /[Aa]ssets/Unity.VisualScripting.Generated.meta
+/[Aa]ssets/[Tt]extMesh Pro
+/[Aa]ssets/[Tt]extMesh Pro.meta
+/[Aa]ssets/UI Toolkit
+/[Aa]ssets/UI Toolkit.meta
+/UIElementsSchema
+/UIElementsSchema.meta
+/UMotionData
+/UMotionData.meta
 
 # Firebase Packages Files
 /[Aa]ssets/Editor Default Resources
