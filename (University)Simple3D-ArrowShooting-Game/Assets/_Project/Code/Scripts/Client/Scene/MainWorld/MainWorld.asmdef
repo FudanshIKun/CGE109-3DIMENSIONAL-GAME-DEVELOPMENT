@@ -1,0 +1,24 @@
+{
+    "name": "MainWorld",
+    "rootNamespace": "Wonderland.Client.MainWorld",
+    "references": [
+        "GUID:4307f53044263cf4b835bd812fc161a4",
+        "GUID:7f7d1af65c2641843945d409d28f2e20",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:d6528bbe38306014da9a4564d6fe04ca",
+        "GUID:cbf3c212b1e49ef488dc3b7fe2795f5a",
+        "GUID:b3517036fb008d14facb3f0506c68a17",
+        "GUID:b9e759b2a788e0f4a8222d50d5e90578",
+        "GUID:ba54df8fc75f6e44682110606a0a5c24",
+        "GUID:f305bd8ecd807ff49bfce09c5f2ca825"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
